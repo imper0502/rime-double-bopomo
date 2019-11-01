@@ -148,7 +148,7 @@ speller:
     - derive/eq(\d)/ew$1/       # ㄝ
     - derive/eq(\d)/ep$1/       # ㄝ
     - derive/ie(\d)/iw$1/       # ㄧㄝ
-    - derive/ie(\d)/ip$1/       # ㄧㄝ
+    - derive/ie(\d)/iq$1/       # ㄧㄝ
     - derive/yq(\d)/ye$1/       # ㄩㄝ
     - derive/yq(\d)/yw$1/       # ㄩㄝ
     - derive/([jqx])l(\d)/$1f$2/
@@ -173,18 +173,17 @@ translator:
     #### (8) ####
     - xform/(O)l/$1R/       # ㄦ*
     - xform/(O)[qp]/$1ㄝ/   # ㄝ
-    - xform/(i)[wep]/$1ㄝ/  # ㄧㄝ
+    - xform/(i)[weq]/$1ㄝ/  # ㄧㄝ
     - xform/(y)[weq]/$1ㄝ/  # ㄩㄝ
     - xform/(y)[k]/$1ㄢ/    # ㄩㄢ
     - xform/(y)[d]/$1ㄣ/    # ㄩㄣ
     - xform/(y)[fl]/$1ㄥ/   # ㄩㄥ
     #### (15) ####
-    - xform/(y)j/$1ㄝ/
     - xform/([nljqx])q/$1ㄩㄝ/
     - xform/([jqx])[kt]/$1ㄩㄢ/
     - xform/([jqx])[dz]/$1ㄩㄣ/
     - xform/([jqx])[fl]/$1ㄩㄥ/
-    #### (20) ####/
+    #### (19) ####/
     - xform/([gkhZCSr])x/$1ㄨㄚ/
     - xform/([dtnlgkhZCSrzcs])o/$1ㄨㄛ/
     - xform/([gkhZCS])g/$1ㄨㄞ/
@@ -193,28 +192,28 @@ translator:
     - xform/(\w)z/$1ㄨㄣ/
     - xform/([^nljqx 'zcsrw])c/$1ㄨㄤ/
     - xform/(\w)l/$1ㄨㄥ/
-    #### (28) ####
+    #### (27) ####
     - xform/(\w)x/$1ㄧㄚ/
     - xform/(\w)p/$1ㄧㄝ/
     - xform/([bpmfdtnljqx])n/$1ㄧㄠ/
     - xform/(\w)b/$1ㄧㄡ/
-    #### (32) ####
+    #### (31) ####
     - xform/(\w)m/$1ㄧㄢ/
     - xform/(\w)v/$1ㄧㄣ/
     - xform/([jqxnl])c/$1ㄧㄤ/
     - xform/ig/if/
     - xform/(\w)g/$1ㄧㄥ/
-    #### (37) ####
+    #### (36) ####
     - xform/(\w)h/$1ㄞ/  # ㄞ
     - xform/(\w)w/$1ㄟ/  # ㄟ
     - xform/(\w)s/$1ㄠ/  # ㄠ
     - xform/(\w)r/$1ㄡ/  # ㄡ
-    #### (41) ####
+    #### (40) ####
     - xform/(\w)k/$1ㄢ/  # ㄢ
     - xform/(\w)d/$1ㄣ/  # ㄣ
     - xform/(\w)j/$1ㄤ/  # ㄤ
     - xform/(\w)f/$1ㄥ/  # ㄥ
-    #### (45) ####
+    #### (44) ####
     - xform/([jqx])u/$1y/
     - xform/1(?!$)//
     - xform/(..)5(?!$)/5$1/
@@ -223,7 +222,7 @@ translator:
     - xform/([iuy])\1$/$1⇦/
     - xform/([iuy])\1/$1/
     - xform/O([iuyR])$/$1⇦/
-    #### (53) ####
+    #### (52) ####
     - xform/(?<=[bpmfdtnlgkhjqxZCSrzcs][iuy])$/⇦/
     - xform/(?<=[bpmfdtnlgkhjqxZCSrzcsiuy])$/◌/
     - xlit/bpmfdtnlgkhjqxZCSrzcsO/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌/
