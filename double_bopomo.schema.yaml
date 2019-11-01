@@ -143,7 +143,7 @@ speller:
     - derive/YL(\d)/YF$1/       # ㄩㄥ
   ## (44) ###################################
     - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
-    - derive/z(.+)/w$1/         # ㄗ
+    - derive/z([a-z]+)/w$1/     # ㄗ
     - derive/ei/yi/
     - derive/eq(\d)/ew$1/       # ㄝ
     - derive/eq(\d)/ep$1/       # ㄝ
