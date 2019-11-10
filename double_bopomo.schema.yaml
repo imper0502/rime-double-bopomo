@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "20191031A.8"
+  version: "20191031A.9"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -14,6 +14,7 @@ schema:
     會注音就可以學會，不需額外學習漢語拼音。
     -----------------------------------------
     layout version: 20191031A
+    main version: 0.9
 
   dependencies:
     - cangjie5
@@ -30,7 +31,7 @@ switches:
     states: [ "。，", "．，" ]
   - name: t2tw                  # 正繁轉換
     reset: 1
-    states: [ "傳承字", "標準字" ]
+#    states: [ "傳承字", "標準字" ]
   - name: s2tw                  # 簡繁轉換
     reset: 1
     states: [ "简化字", "標準字" ]
@@ -82,33 +83,33 @@ menu:
   alternative_select_keys: 67890ABCDE
  
 speller:
-  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyeo12345"
+  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyeo12345'"
   initials: "bpmfdtnlgkhjqxvwarzcsiuyeo"
-  finals: "12345"
-  delimiter: " '"                   # 音節間分音符
+  finals: "12345'"
+  delimiter: " "
   algebra:
   ## (0) ㄅㄆㄇㄈ　ㄉㄊㄋㄌ　ㄍㄎㄏ　ㄐㄑㄒ　ㄓㄔㄕㄖ　ㄗㄘ厶　ㄧㄨㄩ＇　ㄧㄨㄩ　ㄚㄛㄜㄝ　ㄞㄟㄠㄡ　ㄢㄣㄤㄥ　ㄦ
-    - erase/^xx$/                   #
-    - xform/^r5$/er5/               #
+    - erase/^xx$/              #
+    - xform/^r5$/er5/          #
   ## (2) #################################
-    - xform/^eh(?=\d)/OQ/           # ㄝ
-    - xform/^er(?=\d)/OL/           # ㄦ
-    - xform/^([aoe].*\d)/O$1/       # 零聲母Ø、影聲母ʔ
+    - xform/^([aoe].*\d)/O$1/  # 零聲母Ø、影聲母ʔ
+    - xform/eh(?=\d)/Q/        # ㄝ
+    - xform/er(?=\d)/L/        # ㄦ
   ## (5) #################################
-    - xform/^zh/Z/                  # ㄓ
-    - xform/^ch/C/                  # ㄔ
-    - xform/^sh/S/                  # ㄕ
-    - xlit/OZCS/EAVO/               #
+    - xform/^zh/Z/             # ㄓ
+    - xform/^ch/C/             # ㄔ
+    - xform/^sh/S/             # ㄕ
+    - xlit/OZCS/EAVO/          #
   ## (9) ##########################################
     - xform/^y(?=[uv]|ong)/Y/  # 分開ㄧ、ㄩ聲母韻
     - xform/^y/I/              # 處理ㄧ聲母
     - xform/^w/U/              # 處理ㄨ聲母
   ## (12) ##########################################
-    - xform/^([jqxY])[uv]an(?=\d)/$1yan/     # 分開ㄩㄢ、ㄨㄢ韻
-    - xform/^([nl])v(e|n)(?=\d)/$1y$2/       # 處理ㄩㄝ韻、分開ㄩㄣ、ㄨㄣ韻
-    - xform/^([jqxY])[uv](e|n)(?=\d)/$1y$2/  # 處理ㄩㄝ韻、分開ㄩㄣ、ㄨㄣ韻
-    - xform/^([nljqxY])v(?=\d)/$1y/          # 處理ㄩ韻母
-    - derive/^([jqxY])u(?=\d)/$1y/           # 處理ㄩ韻母
+    - xform/^([jqxY])[uv]an(?=\d)/$1yan/     # 分開ㄩㄢ、ㄨㄢ韻（ㄐㄑㄒ）（故意忽略ㄌㄩㄢ）
+    - xform/^([nl])v(e|n)(?=\d)/$1y$2/       # 處理ㄩㄝ韻、分開ㄩㄣ、ㄨㄣ韻（ㄋㄌ）
+    - xform/^([jqxY])u(e|n)(?=\d)/$1y$2/     # 處理ㄩㄝ韻、分開ㄩㄣ、ㄨㄣ韻（ㄐㄑㄒ）
+    - xform/^([nljqxY])v(?=\d)/$1y/          # 處理ㄩ韻母（ㄋㄌ）
+    - derive/^([jqxY])u(?=\d)/$1y/           # 處理ㄩ韻母（ㄐㄑㄒ）
   ## (17) ####################################################
     - xform/[iu]a(?=\d)/X/      #     ；◌ㄧㄚ；◌ㄨㄚ；
     - xform/uo(?=\d)/O/         #     ；      ；◌ㄨㄛ；
@@ -133,27 +134,26 @@ speller:
     - xform/[ye]n(?=\d)/D/      # ◌ㄣ；      ；      ；◌ㄩㄣ
     - xform/ang/J/              # ◌ㄤ
     - xform/eng/F/              # ◌ㄥ
-  ## (38) ###################################
-    - derive/Ii/EI/             # ◌ㄧ
-    - derive/Uu/EU/             # ◌ㄨ
-    - derive/Yy/EY/             # ◌ㄩ
-  ## (41) ###################################
-    - derive/IV(\d)/ID$1/       # ㄧㄣ
-    - derive/IG(\d)/IF$1/       # ㄧㄥ
-    - derive/YL(\d)/YF$1/       # ㄩㄥ
-  ## (44) ###################################
+  ## (38)衍生ㄧㄨㄩ #########################
+    - derive/Ii/ei/             # ◌ㄧ
+    - derive/Ii/yi/             # ◌ㄧ
+    - derive/Uu/eu/             # ◌ㄨ
+    - derive/Yy/ey/             # ◌ㄩ
+  ## () ###################################
+    - derive/z([a-zA-Z]+)/w$1/  # 衍生ㄗ
+    - derive/EQ(\d)/ew$1/       # 衍生ㄝ
+    - derive/EQ(\d)/ep$1/       # 衍生ㄝ
+    - derive/IE(\d)/iw$1/       # 衍生ㄧㄝ
+    - derive/IE(\d)/iq$1/       # 衍生ㄧㄝ
+    - derive/YQ(\d)/ye$1/       # 衍生ㄩㄝ
+    - derive/YQ(\d)/yw$1/       # 衍生ㄩㄝ
+    - derive/IV(\d)/id$1/       # 衍生／改寫ㄧㄣ
+    - derive/IG(\d)/if$1/       # 衍生／改寫ㄧㄥ
+    - derive/([jqxY])L(\d)/$1f$2/ # 衍生ㄩㄥ
+  ## () ###################################
     - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
-    - derive/z([a-z]+)/w$1/     # ㄗ
-    - derive/ei/yi/
-    - derive/eq(\d)/ew$1/       # ㄝ
-    - derive/eq(\d)/ep$1/       # ㄝ
-    - derive/ie(\d)/iw$1/       # ㄧㄝ
-    - derive/ie(\d)/iq$1/       # ㄧㄝ
-    - derive/yq(\d)/ye$1/       # ㄩㄝ
-    - derive/yq(\d)/yw$1/       # ㄩㄝ
-    - derive/([jqx])l(\d)/$1f$2/
-    ## (54)
-    - derive/(..)\d/$1/
+    - derive/([a-z]{2})\d/$1/
+    - abbrev/^([a-z])\w+$/$1'/
     - abbrev/([a-z])[a-z](\d)/$1$2/
 
 translator:
@@ -295,9 +295,7 @@ comment_bopomo:
     - xform/([iv])e/$1E/
     - xform/1//
     - xform/([a-zA-Z]+)5/5$1/
-    - xform/([a-zA-Z1-5]+)(?:$|[ ])/$1〕/
-    - xform/〕(?=[a-zA-Z1-5]+)/〕〔/
-    - xform/^/〔/
+    - xform/([a-zA-Z1-5]+)($|[ ])/〔$1〕/
     - xform/([ZCSr])i(\d*)/$1$2/
     - xform/([zcs])i(\d*)/$1$2/
     - xlit/bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙/
@@ -308,9 +306,7 @@ comment_cangjie:
   overwrite_comment: false
   dictionary: cangjie5
   comment_format:
-    - xform/([a-z;]+)($|[ ])/$1〕/
-    - xform/〕(?=[a-z;]+)/〕〔/
-    - xform/^/〔/
+    - xform/([^ ]+)($|[ ])/〔$1〕/
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
 
 comment_key:
@@ -321,10 +317,10 @@ comment_key:
     ####################################  施工中  ############################################
     - erase/^xx(?:$| )/
     - xform/([a-zA-Z]*)[1-5]/$1/
+    ##
     - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
-    - xform/([a-z]+)($|[ ])/$1】/
-    - xform/】(?=[a-z]+)/】【/
-    - xform/^/【/
+    - xlit/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/
+    - xform/([a-z]+)($|[ ])/【$1】/
 
 comment_pinyin:
   tags: [ none ]
@@ -360,9 +356,7 @@ comment_pinyin:
     - xform/([nljqxy])v/$1ü/
     - xform/eh[0-5]?/ê/
     - xform/([a-z]+)[0-5]/$1/
-    - xform/(.+)($|[ ])/$1〕/
-    - xform/〕(?=.+)/〕〔/
-    - xform/^/〔/
+    - xform/(.+)($|[ ])/〔$1〕/
 
 punctuator:
   import_preset: symbols
@@ -384,4 +378,3 @@ recognizer:
     assistant: "`[a-z]*'?$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
-
