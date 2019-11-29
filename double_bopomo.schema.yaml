@@ -83,10 +83,10 @@ menu:
   alternative_select_keys: 67890ABCDE
  
 speller:
-  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyeo12345'"
+  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyeo12345"
   initials: "bpmfdtnlgkhjqxvwarzcsiuyeo"
-  finals: "12345'"
-  delimiter: " "
+  finals: "12345"
+  delimiter: " '"
   algebra:
   ## (0) ㄅㄆㄇㄈ　ㄉㄊㄋㄌ　ㄍㄎㄏ　ㄐㄑㄒ　ㄓㄔㄕㄖ　ㄗㄘ厶　ㄧㄨㄩ＇　ㄧㄨㄩ　ㄚㄛㄜㄝ　ㄞㄟㄠㄡ　ㄢㄣㄤㄥ　ㄦ
     - erase/^xx$/              #
@@ -153,7 +153,7 @@ speller:
   ## () ###################################
     - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
     - derive/([a-z]{2})\d/$1/
-    - abbrev/^([a-z])\w+$/$1'/
+    - abbrev/([a-z])[a-z]\d/$1/
     - abbrev/([a-z])[a-z](\d)/$1$2/
 
 translator:
