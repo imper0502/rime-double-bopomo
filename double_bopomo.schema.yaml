@@ -140,18 +140,18 @@ speller:
     - derive/Uu/eu/             # ◌ㄨ
     - derive/Yy/ey/             # ◌ㄩ
   ## () ###################################
-    - derive/z([a-zA-Z]+)/w$1/  # 衍生ㄗ
-    - derive/EQ(\d)/ew$1/       # 衍生ㄝ
-    - derive/EQ(\d)/ep$1/       # 衍生ㄝ
-    - derive/IE(\d)/iw$1/       # 衍生ㄧㄝ
-    - derive/IE(\d)/iq$1/       # 衍生ㄧㄝ
-    - derive/YQ(\d)/ye$1/       # 衍生ㄩㄝ
-    - derive/YQ(\d)/yw$1/       # 衍生ㄩㄝ
-    - derive/IV(\d)/id$1/       # 衍生／改寫ㄧㄣ
-    - derive/IG(\d)/if$1/       # 衍生／改寫ㄧㄥ
-    - derive/([jqxY])L(\d)/$1f$2/ # 衍生ㄩㄥ
-  ## () ###################################
     - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
+    - derive/z([a-zA-Z]+)/w$1/  # 衍生ㄗ
+    - derive/eq(\d)/ew$1/       # 衍生ㄝ
+    - derive/eq(\d)/ep$1/       # 衍生ㄝ
+    - derive/ie(\d)/iw$1/       # 衍生ㄧㄝ
+    - derive/ie(\d)/iq$1/       # 衍生ㄧㄝ
+    - derive/yq(\d)/ye$1/       # 衍生ㄩㄝ
+    - derive/yq(\d)/yw$1/       # 衍生ㄩㄝ
+    - derive/iv(\d)/id$1/       # 衍生／改寫ㄧㄣ
+    - derive/ig(\d)/if$1/       # 衍生／改寫ㄧㄥ
+    - derive/([jqxy])l(\d)/$1f$2/ # 衍生ㄩㄥ
+  ## () ###################################
     - derive/([a-z]{2})\d/$1/
     - abbrev/([a-z])[a-z]\d/$1/
     - abbrev/([a-z])[a-z](\d)/$1$2/
