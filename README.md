@@ -3,7 +3,7 @@
   給注音使用者的雙拼輸入法。不需要額外學習漢語拼音。
 
 ## 鍵位圖
-  ![KB layout](https://github.com/imper0502/double-bopomo/blob/master/double-bopomo-keyboard-layout.jpg)
+  ![KB layout](https://github.com/imper0502/double-bopomo/blob/master/double_bopomo_keyboard_layout.jpg)
 
 ## 說明
   目前，這是一個 Rime 輸入法引擎與 cin 碼表的輸入方案，需要安裝以下任何一款 Rime 輸入法（推薦）或其他可讀 cin 碼表的輸入法，方可使用：
@@ -11,10 +11,10 @@
 ### Rime 輸入法列表   
   - 小狼毫（官方，Windows）
   - Prime（Windows）
-  - 鼠鬚管（macOS）
+  - 鼠鬚管（官方，macOS）
   - XIME（macOS）
-  - ibus-rime（Linux， 推薦）
-  - Fcitx-rime（Linux, 推薦）
+  - ibus-rime（Linux，官方，推薦）
+  - Fcitx-rime（Linux，推薦）
   - 同文輸入法（Android）
   - iRime（iPhone, iOS）
 
