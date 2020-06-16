@@ -150,6 +150,7 @@ speller:
     - derive/yq(\d)/yw$1/       # 衍生ㄩㄝ
     - derive/iv(\d)/id$1/       # 衍生／改寫ㄧㄣ
     - derive/ig(\d)/if$1/       # 衍生／改寫ㄧㄥ
+    - derive/([jqxy])q(\d)/$1e$2/ # 衍生ㄩㄝ
     - derive/([jqxy])l(\d)/$1f$2/ # 衍生ㄩㄥ
   ## () ###################################
     - derive/([a-z]{2})\d/$1/
@@ -180,6 +181,7 @@ translator:
     - xform/(y)[fl]/$1ㄥ/   # ㄩㄥ
     #### (15) ####
     - xform/([nljqx])q/$1ㄩㄝ/
+    - xform/([jqx])e/$1ㄩㄝ/
     - xform/([jqx])[kt]/$1ㄩㄢ/
     - xform/([jqx])[dz]/$1ㄩㄣ/
     - xform/([jqx])[fl]/$1ㄩㄥ/
@@ -199,6 +201,7 @@ translator:
     - xform/(\w)b/$1ㄧㄡ/
     #### (31) ####
     - xform/(\w)m/$1ㄧㄢ/
+    - xform/iv/id/
     - xform/(\w)v/$1ㄧㄣ/
     - xform/([jqxnl])c/$1ㄧㄤ/
     - xform/ig/if/
