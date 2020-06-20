@@ -4,20 +4,20 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "20191031A.9"
+  version: "1.0"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
-    ㄧㄨㄩ在 IUY；E 當〇聲母
-    -----------------------------------------
     注音的雙拼方案。
     會注音就可以學會，不需額外學習漢語拼音。
     -----------------------------------------
+    ㄧㄨㄩ在 IUY；E 當〇聲母
+    -----------------------------------------
     layout version: 20191031A
-    main version: 0.9
 
   dependencies:
     - cangjie5
+    - terra_pinyin
 
 switches:
   - name: ascii_mode
@@ -80,11 +80,11 @@ s2tw: # 簡繁轉換
   tips: none
 
 menu:
-  alternative_select_keys: 67890ABCDE
+  alternative_select_keys: 67890
  
 speller:
-  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyeo12345"
-  initials: "bpmfdtnlgkhjqxvwarzcsiuyeo"
+  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoe12345IUYAOEQHWSRKDJFL"
+  initials: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL"
   finals: "12345"
   delimiter: " '"
   algebra:
@@ -154,8 +154,24 @@ speller:
     - derive/([jqxy])l(\d)/$1f$2/ # 衍生ㄩㄥ
   ## () ###################################
     - derive/([a-z]{2})\d/$1/
-    - abbrev/([a-z])[a-z]\d/$1/
-    - abbrev/([a-z])[a-z](\d)/$1$2/
+    - fuzz/([a-z])[a-z]\d/$1/
+    - fuzz/([a-z])[a-z](\d)/$1$2/
+    - fuzz/ei/I/
+    - fuzz/eu/U/
+    - fuzz/ey/Y/
+    - fuzz/ea/A/
+    - fuzz/eo/O/
+    - fuzz/ee/E/
+    - fuzz/eq/Q/
+    - fuzz/eh/H/
+    - fuzz/ew/W/
+    - fuzz/es/S/
+    - fuzz/er/R/
+    - fuzz/ek/K/
+    - fuzz/ed/D/
+    - fuzz/ej/J/
+    - fuzz/ef/F/
+    - fuzz/el/L/
 
 translator:
   enable_charset_filter: true
@@ -251,7 +267,7 @@ assistant:
   disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
   enable_sentence:  false               # 是否開啓自動造句
   enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
-  prefix: "`"
+  prefix: "`C"
   tips: "【倉頡】"
   suffix: "'"
   closing_tips: "【注音】"
@@ -378,6 +394,6 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
-    assistant: "`[a-z]*'?$"
+    assistant: "`C[a-z]*'?$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
