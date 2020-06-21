@@ -1,0 +1,61 @@
+# trime.custom.yaml  
+patch:  
+  "preset_keyboards/double_bopomo":
+    name: 雙碼注音
+    author: "imper0502 <yoj845@gmail.com>"
+    ascii_mode: 0
+    width: 10
+    height: 49
+    keys:
+    ### 第一排：數字 ###
+    - {click: '1', hint: "一聲", long_click: '!', swipe_up: '！', swipe_down: "一"}
+    - {click: '2', hint: "二聲", long_click: '@', swipe_up: '＠', swipe_down: "二"}
+    - {click: '3', hint: "三聲", long_click: '#', swipe_up: '＃', swipe_down: "三"}
+    - {click: '4', hint: "四聲", long_click: '$', swipe_up: '＄', swipe_down: "四"}
+    - {click: '5', hint: "輕聲", long_click: '%', swipe_up: '％', swipe_down: "五"}
+    - {click: '6', hint: "    ", long_click: '^', swipe_up: '……', swipe_down: "六"}
+    - {click: '7', hint: "下滑", long_click: '&', swipe_up: '＆', swipe_down: "七"}
+    - {click: '8', hint: "中文", long_click: '*', swipe_up: '＊', swipe_down: "八"}
+    - {click: '9', hint: "數字", long_click: '(', swipe_up: '（', swipe_down: "九"}
+    - {click: '0', hint: "    ", long_click: ')', swipe_up: '）', swipe_down: "〇"}
+    ### 第二排：上排 ###
+    - {label: 'ㄑ', hint: "ㄝ|ㄩㄝ", click: 'q', long_click: '~', swipe_up: '～'}
+    - {label: 'ㄗ', hint: "ㄟ", click: 'w', long_click: '-', swipe_up: '——'}
+    - {label: '🈳', hint: "ㄜ(ㄝ)", click: 'e', long_click: '=', swipe_up: '+'}
+    - {label: 'ㄖ', hint: "ㄡ", click: 'r', long_click: Date}
+    - {label: 'ㄊ', hint: "ㄨㄢ", click: 't', long_click: '々'}
+    - {label: 'ㄩ', hint: "", click: 'y', long_click: '〃'}
+    - {label: 'ㄨ', hint: "(ㄩ)", click: 'u', long_click: '`'}
+    - {label: 'ㄧ', hint: "😬", click: 'i', long_click: Hide}
+    - {label: 'ㄕ', hint: "ㄛ|ㄨㄛ", click: 'o', long_click: Time}
+    - {label: 'ㄆ', hint: "ㄧㄝ", click: 'p', long_click: "「」{Left}", swipe_up: "『』{Left}"}
+    ### 第三排：定位排 ###
+    - {label: 'ㄓ', hint: "ㄚ", click: 'a', long_click: select_all}
+    - {label: 'ㄙ', hint: "ㄠ", click: 's', long_click: '¦', swipe_up: '‖'}
+    - {label: 'ㄉ', hint: "ㄣ|ㄩㄣ", click: 'd', long_click: '·', swipe_up: '・'}
+    - {label: 'ㄈ', hint: "ㄥ|ㄩㄥ", click: 'f', long_click: '§'}
+    - {label: 'ㄍㄨㄞ', hint: "ㄧㄥ", click: 'g', long_click: '|', swipe_up: '｜'}
+    - {label: 'ㄏ', hint: "ㄞ", click: 'h', long_click: Left}
+    - {label: 'ㄐ', hint: "ㄤ", click: 'j', long_click: Down}
+    - {label: 'ㄎ', hint: "ㄢ|ㄩㄢ", click: 'k', long_click: Up}
+    - {label: 'ㄌ', hint: "ㄦ|ㄨㄥ", click: 'l', long_click: Right}
+    - {label: '；', hint: ";", click: ';', long_click: ':'}
+    ### 第四排：下排 ###
+    - {label: 'ㄗ', hint: "ㄨㄣ", click: 'z', long_click: ''}
+    - {label: 'ㄒ', hint: "ㄧ/ㄨㄚ", click: 'x', long_click: cut}
+    - {label: 'ㄘ', hint: "ㄧ/ㄨㄤ", click: 'c', long_click: copy}
+    - {label: 'ㄔㄨㄟ', hint: "ㄧㄣ", click: 'v', long_click: paste}
+    - {label: 'ㄅ', hint: "ㄧㄡ", click: 'b', long_click: ''}
+    - {label: 'ㄋ', hint: "ㄧㄠ", click: 'n', long_click: ''}
+    - {label: 'ㄇ', hint: "ㄧㄢ", click: 'm', long_click: ''}
+    - {label: '，', hint: ",", click: ',', long_click: '<'}
+    - {label: '。', hint: ".", click: ".", long_click: '>'}
+    - {label: '、', hint: "/", click: '/', long_click: '?'}
+    ### 第五排：控制排 ###
+    - {label: '韻母', click: Shift_L, width: 15, send_bindings: false}
+    - {click: Keyboard_symbols, width: 10, long_click: Keyboard_number}
+    - {click: Mode_switch, width: 10, long_click: Menu}
+    - {click: space, width: 30}
+    - {click: "'", width: 10, long_click: '"'}
+    - {click: BackSpace, width: 10}
+    - {click: Return, long_click: CommitComment, width: 15}

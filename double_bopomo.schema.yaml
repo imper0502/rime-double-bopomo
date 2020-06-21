@@ -154,8 +154,8 @@ speller:
     - derive/([jqxy])l(\d)/$1f$2/ # 衍生ㄩㄥ
   ## () ###################################
     - derive/([a-z]{2})\d/$1/
-    - fuzz/([a-z])[a-z]\d/$1/
-    - fuzz/([a-z])[a-z](\d)/$1$2/
+    - abbrev/([a-z])[a-z]\d/$1/
+    - abbrev/([a-z])[a-z](\d)/$1$2/
     - fuzz/ei/I/
     - fuzz/eu/U/
     - fuzz/ey/Y/
