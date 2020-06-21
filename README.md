@@ -40,16 +40,20 @@
   - CNS_double_bopomo_with_tone.cin：全字庫「三碼」注音CIN檔，雙碼注音+一碼聲調
   - double_bopomo.schema.yaml：Rime輸入方案檔，字典檔使用 Rime 內建的「地球拼音」字典檔，使之與「地球拼音」、「注音」等方案共用詞庫。
   - double_bopomo_keyboard_layout.jpg：雙碼注音的基本鍵盤佈局圖
+  - trime.custom.yaml：同文輸入法鍵盤設定檔。
   - README.md：本檔案
 
 ## 相關連結
   [PTT發佈頁、討論頁](https://www.ptt.cc/bbs/IME/M.1572622340.A.FEA.html)
 
-## 使用截圖
-  ![Heatmap](https://imgur.com/UUiUJxB.jpg)
-  ![使用 fcitx-rime on kde](https://imgur.com/DS9ZpnG.jpg)
+## 截圖
   ![使用同文輸入法 on Android](https://i.imgur.com/9hi4wRF.jpg)
   ![使用 iRime on iOS](https://i.imgur.com/oPuEzOj.jpg)
+  > ![同文輸入法鍵盤](https://i.imgur.com/AEGzJVi.png)  
+  此圖是目前提供的同文輸入法鍵盤設定檔的截圖。
+  
+  ![使用 fcitx-rime on kde](https://imgur.com/DS9ZpnG.jpg)
+  ![Heatmap](https://imgur.com/UUiUJxB.jpg)
 
 ## 網友提供的相關圖片
   > ![Layout by xcv123321](https://i.imgur.com/xq0NrR6.png)  
