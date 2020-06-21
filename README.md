@@ -33,7 +33,7 @@
 	
 ### 其他規則（不知道也不影響正常使用）
   1. ㄧㄨㄩ ㄚㄛㄜㄝ ㄞㄟㄠㄡ ㄢㄣㄤㄥ ㄦ 也可以直接 `Shift` + 【對應按鍵】，效果和（3.）相同。
-  2. prefix【\`C】臨時切換倉頡輸入法（可以自行設定備用輸入法）；【\`】在【Tab】的上面，【數字１】的左邊。
+  2. prefix【`C】臨時切換倉頡輸入法（可以自行設定備用輸入法）；【`】在【Tab】的上面，【數字１】的左邊。
   
 ### 檔名解釋
   - CNS_double_bopomo_NO_tone.cin：全字庫雙碼注音CIN檔
@@ -49,9 +49,8 @@
 ## 截圖
   ![使用同文輸入法 on Android](https://i.imgur.com/9hi4wRF.jpg)
   ![使用 iRime on iOS](https://i.imgur.com/oPuEzOj.jpg)
-  > ![同文輸入法鍵盤](https://i.imgur.com/AEGzJVi.png)  
-  此圖是目前提供的同文輸入法鍵盤設定檔的截圖。
-  
+  ![同文輸入法鍵盤](https://i.imgur.com/AEGzJVi.png)
+  > 上圖是目前提供的同文輸入法鍵盤設定檔。
   ![使用 fcitx-rime on kde](https://imgur.com/DS9ZpnG.jpg)
   ![Heatmap](https://imgur.com/UUiUJxB.jpg)
 
