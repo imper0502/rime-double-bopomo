@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.0"
+  version: "1.01"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -50,6 +50,8 @@ engine:
     - ascii_segmentor
     - matcher
     - affix_segmentor@assistant
+    - affix_segmentor@cangjie
+    - affix_segmentor@pinyin
     - abc_segmentor
     - punct_segmentor
     - fallback_segmentor
@@ -57,7 +59,9 @@ engine:
     - echo_translator
     - punct_translator
     - script_translator
-    - table_translator@assistant
+    - script_translator@assistant
+    - script_translator@pinyin
+    - table_translator@cangjie
     - table_translator@custom_phrase
   filters:
     - simplifier@t2tw  # 正繁轉換
@@ -249,33 +253,57 @@ translator:
     - xform/(?<![⇦◌])$/⇦/ #[⇦　◌⇨]
     - xform/◌◌$/◌/
     - xform/◌(?!$)/$1/
+    
+
 
 affix_segmentor@assistant:
   extra_tags:
     - reverse_lookup
-
+affix_segmentor@cangjie:
+  extra_tags:
+    - reverse_lookup
+affix_segmentor@pinyin:
+  extra_tags:
+    - reverse_lookup
 assistant:
   tag: assistant
+  dictionary: terra_pinyin
+  prism: double_bopomo_vocabulary
+  prefix: "`"
+  tips: "【簡拼模式】"
+  suffix: "="
+  closing_tips: "【雙碼注音】"
+  disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
+  enable_sentence:  false # 是否開啓自動造句
+  enable_user_dict: false # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
+  enable_charset_filter: true # 是否開啓字符集過濾〔僅table_translator有效。啓用cjk_minifier後可適用於script_translator〕
+  preedit_format:
+    - xlit/bpmfdtnlgkhjqxavorzcse/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌/
+    - xlit/IUYAOEQHWSRKDJFL/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/
+    - xform/$/【簡拼】/
+
+cangjie:
+  tag: cangjie
   dictionary: cangjie5
-  enable_charset_filter: true           # 是否開啓字符集過濾〔僅table_translator有效。啓用cjk_minifier後可適用於script_translator〕
-  enable_encoder: false                 # 是否開啓自動造詞〔僅table_translator有效〕
-  encode_commit_history: false          # 是否對已上屛詞自動成詞〔僅table_translator有效〕
+  prefix: "C"
+  tips: "【倉頡模式】"
+  suffix: "="
+  closing_tips: "【雙碼注音】"
   max_phrase_length: 1                  # 最大自動成詞詞長〔僅table_translator有效〕
-  enable_completion: true               # 提前顯示尚未輸入完整碼的字〔僅table_translator有效〕
-  sentence_over_completion: false       # 在無全碼對應字而僅有逐鍵提示時也開啓智能組句〔僅table_translator有效〕
-  strict_spelling: false                # 配合speller中的fuzz規則，僅以畧拼碼組詞〔僅table_translator有效〕
   disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
   enable_sentence:  false               # 是否開啓自動造句
   enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
-  prefix: "`C"
-  tips: "【倉頡】"
-  suffix: "'"
-  closing_tips: "【注音】"
+  enable_charset_filter: true           # 是否開啓字符集過濾〔僅table_translator有效。啓用cjk_minifier後可適用於script_translator〕
+  enable_encoder: false                 # 是否開啓自動造詞〔僅table_translator有效〕
+  encode_commit_history: false          # 是否對已上屛詞自動成詞〔僅table_translator有效〕
+  enable_completion: true               # 提前顯示尚未輸入完整碼的字〔僅table_translator有效〕
+  sentence_over_completion: false       # 在無全碼對應字而僅有逐鍵提示時也開啓智能組句〔僅table_translator有效〕
+  strict_spelling: false                # 配合speller中的fuzz規則，僅以畧拼碼組詞〔僅table_translator有效〕
   preedit_format:
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
+    - xform|$|【倉】|
   comment_format:
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
-
 custom_phrase:
   dictionary: ""
   user_dict: custom_phrase
@@ -283,9 +311,54 @@ custom_phrase:
   enable_completion: false
   enable_sentence: false
   initial_quality: 1
+pinyin:
+  tag: pinyin
+  dictionary: terra_pinyin
+  prism: terra_pinyin
+  prefix: "P"
+  tips: "【拼音模式】"
+  suffix: "="
+  closing_tips: "【雙碼注音】"
+  spelling_hints: 5  # ～字以內候選標註完整帶調拼音
+  disable_user_dict_for_patterns: false
+  enable_charset_filter: true
+  enable_sentence:  false
+  enable_user_dict: false
+  preedit_format:
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+    - xform/eh/ê/
+    - 'xform ([aeiou])(ng?|r)([-;/<,>\\]) $1$3$2'
+    - 'xform ([aeo])([iuo])([-;/<,>\\]) $1$3$2'
+    - 'xform a[-;] ā'
+    - 'xform a/ á'
+    - 'xform a[<,] ǎ'
+    - 'xform a[>\\] à'
+    - 'xform e[-;] ē'
+    - 'xform e/ é'
+    - 'xform e[<,] ě'
+    - 'xform e[>\\] è'
+    - 'xform o[-;] ō'
+    - 'xform o/ ó'
+    - 'xform o[<,] ǒ'
+    - 'xform o[>\\] ò'
+    - 'xform i[-;] ī'
+    - 'xform i/ í'
+    - 'xform i[<,] ǐ'
+    - 'xform i[>\\] ì'
+    - 'xform u[-;] ū'
+    - 'xform u/ ú'
+    - 'xform u[<,] ǔ'
+    - 'xform u[>\\] ù'
+    - 'xform ü[-;] ǖ'
+    - 'xform ü/ ǘ'
+    - 'xform ü[<,] ǚ'
+    - 'xform ü[>\\] ǜ'
+    - xform/$/【漢拼】/
 
 comment_bopomo:
-  tags: [ none ]
+  tags: [ cangjie, pinyin ]
   overwrite_comment: true
   dictionary: terra_pinyin
   comment_format:
@@ -394,6 +467,8 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
-    assistant: "`C[a-z]*'?$"
+    assistant: "`[a-zIUYAOEQHWSRKDJFL]*=?$"
+    cangjie: "C[a-z]*=?$"
+    pinyin: "P[a-z]*=?$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
