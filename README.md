@@ -49,8 +49,9 @@
 ## 截圖
   ![使用同文輸入法 on Android](https://i.imgur.com/9hi4wRF.jpg)
   ![使用 iRime on iOS](https://i.imgur.com/oPuEzOj.jpg)
-  ![同文輸入法鍵盤](https://i.imgur.com/AEGzJVi.png)
-  > 上圖是目前提供的同文輸入法鍵盤設定檔。
+  > ![同文輸入法鍵盤](https://i.imgur.com/AEGzJVi.png)  
+  此圖是目前提供的同文輸入法鍵盤設定檔的截圖。
+  
   ![使用 fcitx-rime on kde](https://imgur.com/DS9ZpnG.jpg)
   ![Heatmap](https://imgur.com/UUiUJxB.jpg)
 
