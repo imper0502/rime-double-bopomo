@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.0"
+  version: "1.1"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -12,11 +12,12 @@ schema:
     會注音就可以學會，不需額外學習漢語拼音。
     -----------------------------------------
     ㄧㄨㄩ在 IUY；E 當〇聲母
+    為了和「地球拼音」、「注音。臺灣正體」 共用詞庫，所以依賴地球拼音的詞庫。
+    未來也許會有雙碼拼音專用的詞庫吧
     -----------------------------------------
     layout version: 20191031A
 
   dependencies:
-    - cangjie5
     - terra_pinyin
 
 switches:
@@ -49,7 +50,7 @@ engine:
   segmentors:
     - ascii_segmentor
     - matcher
-    - affix_segmentor@assistant
+    - affix_segmentor@abbreviation
     - abc_segmentor
     - punct_segmentor
     - fallback_segmentor
@@ -57,7 +58,7 @@ engine:
     - echo_translator
     - punct_translator
     - script_translator
-    - table_translator@assistant
+    - script_translator@abbreviation
     - table_translator@custom_phrase
   filters:
     - simplifier@t2tw  # 正繁轉換
@@ -66,7 +67,6 @@ engine:
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
     - reverse_lookup_filter@comment_bopomo
     - reverse_lookup_filter@comment_cangjie
-    - reverse_lookup_filter@comment_key
     - reverse_lookup_filter@comment_pinyin
 
 t2tw: # 正繁轉換
@@ -250,31 +250,33 @@ translator:
     - xform/◌◌$/◌/
     - xform/◌(?!$)/$1/
 
-affix_segmentor@assistant:
+recognizer:
+  import_preset: default
+  patterns:
+    abbreviation: "`[a-zIUYAOEQHWSRKDJFL]*=?$"
+    punct: "^/([0-9]0?|[A-Za-z]+)$"
+    url: "^(www[.]|https?:|ftp:|mailto:).*$"
+
+affix_segmentor@abbreviation:
   extra_tags:
     - reverse_lookup
 
-assistant:
-  tag: assistant
-  dictionary: cangjie5
-  enable_charset_filter: true           # 是否開啓字符集過濾〔僅table_translator有效。啓用cjk_minifier後可適用於script_translator〕
-  enable_encoder: false                 # 是否開啓自動造詞〔僅table_translator有效〕
-  encode_commit_history: false          # 是否對已上屛詞自動成詞〔僅table_translator有效〕
-  max_phrase_length: 1                  # 最大自動成詞詞長〔僅table_translator有效〕
-  enable_completion: true               # 提前顯示尚未輸入完整碼的字〔僅table_translator有效〕
-  sentence_over_completion: false       # 在無全碼對應字而僅有逐鍵提示時也開啓智能組句〔僅table_translator有效〕
-  strict_spelling: false                # 配合speller中的fuzz規則，僅以畧拼碼組詞〔僅table_translator有效〕
+abbreviation:
+  tag: abbreviation
+  dictionary: terra_pinyin
+  prism: double_bopomo_vocabulary
+  prefix: "`"
+  tips: "【簡拼模式】"
+  suffix: "="
+  closing_tips: "【雙碼注音】"
   disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
   enable_sentence:  false               # 是否開啓自動造句
   enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
-  prefix: "`C"
-  tips: "【倉頡】"
-  suffix: "'"
-  closing_tips: "【注音】"
+  enable_charset_filter: true           # 是否開啓字符集過濾
   preedit_format:
-    - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
-  comment_format:
-    - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
+    - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌ㄧㄨㄩ/
+    - xlit/IUYAOEQHWSRKDJFL/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/
+    - xform/$/【簡拼】/
 
 custom_phrase:
   dictionary: ""
@@ -283,6 +285,20 @@ custom_phrase:
   enable_completion: false
   enable_sentence: false
   initial_quality: 1
+
+punctuator:
+  import_preset: symbols
+  full_shape:
+    '<' : '<'
+    '>' : '>'
+    '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤', '￥' ]
+  half_shape:
+    '<' : '<'
+    '>' : '>'
+    '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤', '￥' ]
+
+key_binder:
+  import_preset: default
 
 comment_bopomo:
   tags: [ none ]
@@ -318,7 +334,6 @@ comment_bopomo:
     - xform/([ZCSr])i(\d*)/$1$2/
     - xform/([zcs])i(\d*)/$1$2/
     - xlit/bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙/
-    # ↗✔↘Ⓔⓔ⋁⋎．😬🈳
 
 comment_cangjie:
   tags: [ none ]
@@ -327,19 +342,6 @@ comment_cangjie:
   comment_format:
     - xform/([^ ]+)($|[ ])/〔$1〕/
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
-
-comment_key:
-  tags: [ none ]
-  overwrite_comment: false
-  dictionary: luna_pinyin
-  comment_format:
-    ####################################  施工中  ############################################
-    - erase/^xx(?:$| )/
-    - xform/([a-zA-Z]*)[1-5]/$1/
-    ##
-    - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
-    - xlit/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/
-    - xform/([a-z]+)($|[ ])/【$1】/
 
 comment_pinyin:
   tags: [ none ]
@@ -375,25 +377,4 @@ comment_pinyin:
     - xform/([nljqxy])v/$1ü/
     - xform/eh[0-5]?/ê/
     - xform/([a-z]+)[0-5]/$1/
-    - xform/(.+)($|[ ])/〔$1〕/
-
-punctuator:
-  import_preset: symbols
-  full_shape:
-    '<' : '<'
-    '>' : '>'
-    '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤', '￥' ]
-  half_shape:
-    '<' : '<'
-    '>' : '>'
-    '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤', '￥' ]
-
-key_binder:
-  import_preset: default
-
-recognizer:
-  import_preset: default
-  patterns:
-    assistant: "`C[a-z]*'?$"
-    punct: "^/([0-9]0?|[A-Za-z]+)$"
-    url: "^(www[.]|https?:|ftp:|mailto:).*$"
+    - xform/(.+)($|[ ])/〔$1〕/U.S.A。，。；
