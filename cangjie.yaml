@@ -1,0 +1,34 @@
+# prefix【\`C】臨時切換倉頡輸入法；【\`】在【Tab】的上面，【數字１】的左邊。
+# ⚠️此檔案參考用，誤直接複製。請編輯你自己的 `double_bopomo.custom.yaml`
+# ⚠️`double_bopomo.custom.yaml`中，只能有一個 `patch:`
+
+patch:
+  schema/dependencies/@next: cangjie5
+  engine/segmentors/@next: affix_segmentor@cangjie
+  engine/translators/@next: table_translator@cangjie
+  affix_segmentor@cangjie/extra_tags@0: reverse_lookup
+  recognizer/patterns/cangjie: "`C[a-z]*=?$"
+  comment_bopomo/tags: [ cangjie ]
+  # comment_bopomo/tags: [ cangjie, pinyin ]
+  cangjie:
+    tag: cangjie
+    dictionary: cangjie5
+    prefix: "`C"
+    tips: "【倉頡模式】"
+    suffix: "="
+    closing_tips: "【雙碼注音】"
+    max_phrase_length: 1                  # 最大自動成詞詞長〔僅table_translator有效〕
+    disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
+    enable_sentence:  false               # 是否開啓自動造句
+    enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
+    enable_charset_filter: true           # 是否開啓字符集過濾〔僅table_translator有效。啓用cjk_minifier後可適用於script_translator〕
+    enable_encoder: false                 # 是否開啓自動造詞〔僅table_translator有效〕
+    encode_commit_history: false          # 是否對已上屛詞自動成詞〔僅table_translator有效〕
+    enable_completion: true               # 提前顯示尚未輸入完整碼的字〔僅table_translator有效〕
+    sentence_over_completion: false       # 在無全碼對應字而僅有逐鍵提示時也開啓智能組句〔僅table_translator有效〕
+    strict_spelling: false                # 配合speller中的fuzz規則，僅以畧拼碼組詞〔僅table_translator有效〕
+    preedit_format:
+      - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
+      - xform|$|【倉】|
+    comment_format:  # 目前在提示下一碼時作用
+      - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
