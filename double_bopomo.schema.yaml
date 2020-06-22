@@ -279,7 +279,7 @@ assistant:
   enable_user_dict: false # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
   enable_charset_filter: true # 是否開啓字符集過濾〔僅table_translator有效。啓用cjk_minifier後可適用於script_translator〕
   preedit_format:
-    - xlit/bpmfdtnlgkhjqxavorzcse/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌/
+    - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/
     - xform/$/【簡拼】/
 
@@ -437,7 +437,7 @@ comment_pinyin:
     - xform/([nljqxy])v/$1ü/
     - xform/eh[0-5]?/ê/
     - xform/([a-z]+)[0-5]/$1/
-    - xform/(.+)($|[ ])/〔$1〕/
+    - xform/(.+)($|[ ])/〔$1〕/U.S.A。，。；
 
 punctuator:
   import_preset: symbols
