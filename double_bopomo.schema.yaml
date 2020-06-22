@@ -253,18 +253,19 @@ translator:
     - xform/(?<![⇦◌])$/⇦/ #[⇦　◌⇨]
     - xform/◌◌$/◌/
     - xform/◌(?!$)/$1/
-    
-
 
 affix_segmentor@assistant:
   extra_tags:
     - reverse_lookup
+
 affix_segmentor@cangjie:
   extra_tags:
     - reverse_lookup
+
 affix_segmentor@pinyin:
   extra_tags:
     - reverse_lookup
+
 assistant:
   tag: assistant
   dictionary: terra_pinyin
@@ -302,8 +303,9 @@ cangjie:
   preedit_format:
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
     - xform|$|【倉】|
-  comment_format:
+  comment_format:  # 目前在提示下一碼時作用
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
+
 custom_phrase:
   dictionary: ""
   user_dict: custom_phrase
@@ -311,6 +313,7 @@ custom_phrase:
   enable_completion: false
   enable_sentence: false
   initial_quality: 1
+
 pinyin:
   tag: pinyin
   dictionary: terra_pinyin
@@ -391,7 +394,6 @@ comment_bopomo:
     - xform/([ZCSr])i(\d*)/$1$2/
     - xform/([zcs])i(\d*)/$1$2/
     - xlit/bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙/
-    # ↗✔↘Ⓔⓔ⋁⋎．😬🈳
 
 comment_cangjie:
   tags: [ none ]
@@ -400,19 +402,6 @@ comment_cangjie:
   comment_format:
     - xform/([^ ]+)($|[ ])/〔$1〕/
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
-
-comment_key:
-  tags: [ none ]
-  overwrite_comment: false
-  dictionary: luna_pinyin
-  comment_format:
-    ####################################  施工中  ############################################
-    - erase/^xx(?:$| )/
-    - xform/([a-zA-Z]*)[1-5]/$1/
-    ##
-    - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
-    - xlit/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/
-    - xform/([a-z]+)($|[ ])/【$1】/
 
 comment_pinyin:
   tags: [ none ]
