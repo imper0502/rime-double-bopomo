@@ -251,6 +251,7 @@ translator:
     - xform/(?<![⇦◌])$/⇦/ #[⇦　◌⇨]
     - xform/◌◌$/◌/
     - xform/◌(?!$)/$1/
+    - xform/$/【雙注】/
 
 recognizer:
   import_preset: default
@@ -277,7 +278,7 @@ abbreviation:
   enable_charset_filter: true           # 是否開啓字符集過濾
   preedit_format:
     - xform/1(?!$)//
-    - xform/(.)5(?!$)/5$15/
+    # - xform/(.)5(?!$)/5$1/
     - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
     - xform/$/【簡拼】/
@@ -381,4 +382,4 @@ comment_pinyin:
     - xform/([nljqxy])v/$1ü/
     - xform/eh[0-5]?/ê/
     - xform/([a-z]+)[0-5]/$1/
-    - xform/(.+)($|[ ])/〔$1〕/U.S.A。，。；
+    - xform/(.+)($|[ ])/〔$1〕/
