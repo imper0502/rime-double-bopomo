@@ -18,7 +18,8 @@ schema:
     layout version: 20191031A
 
   dependencies:
-    - terra_pinyin
+    - cangjie5      # 
+    - terra_pinyin  #
 
 switches:
   - name: ascii_mode
@@ -254,7 +255,7 @@ translator:
 recognizer:
   import_preset: default
   patterns:
-    abbreviation: "`[a-zIUYAOEQHWSRKDJFL]*=?$"
+    abbreviation: "`[a-zIUYAOEQHWSRKDJFL1-5]*=?$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
 
@@ -275,8 +276,10 @@ abbreviation:
   enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
   enable_charset_filter: true           # 是否開啓字符集過濾
   preedit_format:
+    - xform/1(?!$)//
+    - xform/(.)5(?!$)/5$15/
     - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌ㄧㄨㄩ/
-    - xlit/IUYAOEQHWSRKDJFL/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/
+    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
     - xform/$/【簡拼】/
 
 custom_phrase:
