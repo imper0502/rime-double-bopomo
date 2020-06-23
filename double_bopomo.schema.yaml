@@ -64,9 +64,9 @@ engine:
     - table_translator@cangjie
     - table_translator@custom_phrase
   filters:
+    - cjk_minifier     # 過濾少用字
     - simplifier@t2tw  # 正繁轉換
     - simplifier@s2tw  # 簡繁轉換
-    - cjk_minifier     # 過濾少用字
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
     - reverse_lookup_filter@comment_bopomo
     - reverse_lookup_filter@comment_cangjie
@@ -179,6 +179,7 @@ speller:
 
 translator:
   enable_charset_filter: true
+  strict_spelling: true
   dictionary: terra_pinyin
   prism: double_bopomo
   preedit_format:
