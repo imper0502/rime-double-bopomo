@@ -1,15 +1,18 @@
-# prefix【\`P】臨時切換地球拼音輸入法；【\`】在【Tab】的上面，【數字１】的左邊。
-# ⚠️此檔案參考用，誤直接複製。請編輯你自己的 `double_bopomo.custom.yaml`
+# 外掛拼音輸入法
+# 📝首次設定、部署時，應在「default.custom.yaml」中，「schema_list:」底下，依照格式加入：「- schema: terra_pinyin」
+# 📝prefix【\`P】臨時切換地球拼音輸入法；【\`】在【Tab】的上面，【數字１】的左邊。
+#
+# ⚠️此檔案參考用，勿直接複製。請編輯你自己的 `double_bopomo.custom.yaml`
 # ⚠️`double_bopomo.custom.yaml`中，只能有一個 `patch:`
+# ⚠️若是部署失敗，在「Rime 使用者資料夾」中，放入地球拼音，再試一次。
 
 patch:
   # schema/dependencies/@next: terra_pinyin #這行目前不需要
   engine/segmentors/@next: affix_segmentor@pinyin
   engine/translators/@next: script_translator@pinyin
-  affix_segmentor@pinyin/extra_tags@0: reverse_lookup
   recognizer/patterns/pinyin: "`P[a-z]*=?$"
   comment_bopomo/tags: [ pinyin ]
-  # comment_bopomo/tags: [ cangjie, pinyin ]
+  # comment_bopomo/tags: [ cangjie, pinyin ] # 整個檔案設定一次就好
   pinyin:
     tag: pinyin
     dictionary: terra_pinyin

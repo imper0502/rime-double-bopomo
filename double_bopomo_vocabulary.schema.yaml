@@ -3,12 +3,12 @@
 
 schema:
   schema_id: double_bopomo_vocabulary
-  name: "雙碼注音。簡拼"
+  name: "雙碼注音．簡拼"
   version: "1.0"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |  
-    雙碼注音Ｘ簡拼
+    雙碼注音．簡拼
 
 switches:
   - name: ascii_mode
@@ -48,9 +48,9 @@ engine:
     - punct_translator
     - script_translator
   filters:
+    - cjk_minifier     # 過濾少用字
     - simplifier@t2tw  # 正繁轉換
     - simplifier@s2tw  # 簡繁轉換
-    - cjk_minifier     # 過濾少用字
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
 
 t2tw: # 正繁轉換
@@ -153,14 +153,15 @@ speller:
 
 translator:
   enable_charset_filter: true
+  strict_spelling: true
   dictionary: terra_pinyin
   prism: double_bopomo_vocabulary
   preedit_format:
-    - xlit/bpmfdtnlgkhjqxavorzcse/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌/
+    - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘ厶◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/ 
 
 punctuator:
-  import_preset: symbols  full_shape:
+  import_preset: symbols
 
 key_binder:
   import_preset: default
