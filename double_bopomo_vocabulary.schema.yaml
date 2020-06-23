@@ -172,7 +172,7 @@ translator:
   prism: double_bopomo_vocabulary
   preedit_format:
     - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘ厶◌ㄧㄨㄩ/
-    - xlit/IUYAOEQHWSRKDJFL/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/ 
+    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 
 
 punctuator:
   import_preset: symbols
