@@ -64,11 +64,11 @@ s2tw: # 簡繁轉換
   tips: none
 
 menu:
-  alternative_select_keys: 1234567890
+  alternative_select_keys: 67890
  
 speller:
-  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL"
-  finals: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL"
+  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL12345"
+  finals: "12345"
   delimiter: " '"
   algebra:
   ## (0) ㄅㄆㄇㄈ　ㄉㄊㄋㄌ　ㄍㄎㄏ　ㄐㄑㄒ　ㄓㄔㄕㄖ　ㄗㄘ厶　ㄧㄨㄩ＇　ㄧㄨㄩ　ㄚㄛㄜㄝ　ㄞㄟㄠㄡ　ㄢㄣㄤㄥ　ㄦ
@@ -137,6 +137,7 @@ speller:
     - derive/([jqxy])l(\d)/$1f$2/ # 衍生ㄩㄥ
   ## () ###################################
     - fuzz/([a-z])[a-z]\d/$1/
+    - fuzz/([a-z])[a-z](\d)/$1$2/
     - fuzz/ea\d/A/
     - fuzz/eo\d/O/
     - fuzz/ee\d/E/
@@ -150,6 +151,19 @@ speller:
     - fuzz/ej\d/J/
     - fuzz/ef\d/F/
     - fuzz/el\d/L/
+    - fuzz/ea(\d)/A$1/
+    - fuzz/eo(\d)/O$1/
+    - fuzz/ee(\d)/E$1/
+    - fuzz/eq(\d)/Q$1/
+    - fuzz/eh(\d)/H$1/
+    - fuzz/ew(\d)/W$1/
+    - fuzz/es(\d)/S$1/
+    - fuzz/er(\d)/R$1/
+    - fuzz/ek(\d)/K$1/
+    - fuzz/ed(\d)/D$1/
+    - fuzz/ej(\d)/J$1/
+    - fuzz/ef(\d)/F$1/
+    - fuzz/el(\d)/L$1/
 
 translator:
   enable_charset_filter: true

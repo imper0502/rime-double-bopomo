@@ -254,7 +254,7 @@ translator:
 recognizer:
   import_preset: default
   patterns:
-    abbreviation: "`[a-zIUYAOEQHWSRKDJFL]*=?$"
+    abbreviation: "`[a-zIUYAOEQHWSRKDJFL1-5]*=?$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
 
