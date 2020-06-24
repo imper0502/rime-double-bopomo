@@ -33,7 +33,7 @@ switches:
     states: [ "。，", "．，" ]
   - name: t2tw                  # 正繁轉換
     reset: 1
-#    states: [ "傳承字", "標準字" ]
+#    states: [ "傳承字", "標準字" ] # OpenCC
   - name: s2tw                  # 簡繁轉換
     reset: 1
     states: [ "简化字", "標準字" ]
@@ -113,7 +113,7 @@ speller:
     - derive/^([jqxY])u(?=\d)/$1y/           # 處理ㄩ韻母（ㄐㄑㄒ）
   ## (17) ####################################################
     - xform/[iu]a(?=\d)/X/      #     ；◌ㄧㄚ；◌ㄨㄚ；
-    - xform/uo(?=\d)/O/         #     ；      ；◌ㄨㄛ；
+    - xform/uo(?=\d)/O/         #     ；     ；◌ㄨㄛ；
     - xform/ie(?=\d)/P/         #     ；◌ㄧㄝ；      ；
     - xform/ye(?=\d)/Q/         #     ；      ；      ；◌ㄩㄝ
   ## (21) ####################################################
@@ -187,9 +187,11 @@ translator:
     - xform/(^|[ '])a/$1Z/
     - xform/(^|[ '])v/$1C/
     - xform/(^|[ '])o/$1S/
-    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/  ##　虛韻母ㄭㆨ。
+    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/   # 虛韻母ㄭㆨ
     - xform/(^|[ '])([ZCSrzcs])i/$1$2/
-    #### (8) ####
+    #### () ####
+    - xform/yu/ㄩ/          # 衍生yu
+    - xform/f([ixpnbmvcgyuqetzl])/x$1/      # 衍生ㄒ
     - xform/(O)l/$1R/       # ㄦ*
     - xform/(O)[qp]/$1ㄝ/   # ㄝ
     - xform/(i)[weq]/$1ㄝ/  # ㄧㄝ
@@ -197,13 +199,13 @@ translator:
     - xform/(y)[k]/$1ㄢ/    # ㄩㄢ
     - xform/(y)[d]/$1ㄣ/    # ㄩㄣ
     - xform/(y)[fl]/$1ㄥ/   # ㄩㄥ
-    #### (15) ####
+    #### () ####
     - xform/([nljqx])q/$1ㄩㄝ/
     - xform/([jqx])e/$1ㄩㄝ/
     - xform/([jqx])[kt]/$1ㄩㄢ/
     - xform/([jqx])[dz]/$1ㄩㄣ/
     - xform/([jqx])[fl]/$1ㄩㄥ/
-    #### (19) ####/
+    #### () ####/
     - xform/([gkhZCSr])x/$1ㄨㄚ/
     - xform/([dtnlgkhZCSrzcs])o/$1ㄨㄛ/
     - xform/([gkhZCS])g/$1ㄨㄞ/
@@ -212,19 +214,19 @@ translator:
     - xform/(\w)z/$1ㄨㄣ/
     - xform/([^nljqx 'zcsrw])c/$1ㄨㄤ/
     - xform/(\w)l/$1ㄨㄥ/
-    #### (27) ####
+    #### () ####
     - xform/(\w)x/$1ㄧㄚ/
     - xform/(\w)p/$1ㄧㄝ/
     - xform/([bpmfdtnljqx])n/$1ㄧㄠ/
     - xform/(\w)b/$1ㄧㄡ/
-    #### (31) ####
+    #### () ####
     - xform/(\w)m/$1ㄧㄢ/
     - xform/iv/id/
     - xform/(\w)v/$1ㄧㄣ/
     - xform/([jqxnl])c/$1ㄧㄤ/
     - xform/ig/if/
     - xform/(\w)g/$1ㄧㄥ/
-    #### (36) ####
+    #### () ####
     - xform/(\w)h/$1ㄞ/  # ㄞ
     - xform/(\w)w/$1ㄟ/  # ㄟ
     - xform/(\w)s/$1ㄠ/  # ㄠ
@@ -234,7 +236,7 @@ translator:
     - xform/(\w)d/$1ㄣ/  # ㄣ
     - xform/(\w)j/$1ㄤ/  # ㄤ
     - xform/(\w)f/$1ㄥ/  # ㄥ
-    #### (44) ####
+    #### () ####
     - xform/([jqx])u/$1y/
     - xform/1(?!$)//
     - xform/(..)5(?!$)/5$1/
@@ -243,7 +245,7 @@ translator:
     - xform/([iuy])\1$/$1⇦/
     - xform/([iuy])\1/$1/
     - xform/O([iuyR])$/$1⇦/
-    #### (52) ####
+    #### () ####
     - xform/(?<=[bpmfdtnlgkhjqxZCSrzcs][iuy])$/⇦/
     - xform/(?<=[bpmfdtnlgkhjqxZCSrzcsiuy])$/◌/
     - xlit/bpmfdtnlgkhjqxZCSrzcsO/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌/
@@ -251,12 +253,11 @@ translator:
     - xform/(?<![⇦◌])$/⇦/ #[⇦　◌⇨]
     - xform/◌◌$/◌/
     - xform/◌(?!$)/$1/
-    - xform/$/【雙注】/
 
 recognizer:
   import_preset: default
   patterns:
-    abbreviation: "`[a-zIUYAOEQHWSRKDJFL1-5]*=?$"
+    abbreviation: ";[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
 
@@ -268,9 +269,9 @@ abbreviation:
   tag: abbreviation
   dictionary: terra_pinyin
   prism: double_bopomo_vocabulary
-  prefix: "`"
+  prefix: ";"
   tips: "【簡拼模式】"
-  suffix: "="
+  suffix: "'"
   closing_tips: "【雙碼注音】"
   disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
   enable_sentence:  false               # 是否開啓自動造句
