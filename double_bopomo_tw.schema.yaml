@@ -111,54 +111,56 @@ speller:
     - xform/[UY]D/z/
     - xform/[IU]J/c/
     - xform/[UY]F/l/
-    # 到此，基本指法完成，接下來加入進階指法。（或是大寫轉小寫；xform/😬/I/）
-    ## [iuy] + [IUY][AOEQHWSRKDJFL] = [iuy] + [AOEQHWSRKDJFL]——影響簡拼，還是不加好了。
-    ##
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    - derive/
-    
-    - fuzz/([a-z])[a-z]\d/$1/
-    - fuzz/([a-z])[a-z](\d)/$1$2/
-    - fuzz/ea\d/A/
-    - fuzz/eo\d/O/
-    - fuzz/ee\d/E/
-    - fuzz/eq\d/Q/
-    - fuzz/eh\d/H/
-    - fuzz/ew\d/W/
-    - fuzz/es\d/S/
-    - fuzz/er\d/R/
-    - fuzz/ek\d/K/
-    - fuzz/ed\d/D/
-    - fuzz/ej\d/J/
-    - fuzz/ef\d/F/
-    - fuzz/el\d/L/
-    - fuzz/ea(\d)/A$1/
-    - fuzz/eo(\d)/O$1/
-    - fuzz/ee(\d)/E$1/
-    - fuzz/eq(\d)/Q$1/
-    - fuzz/eh(\d)/H$1/
-    - fuzz/ew(\d)/W$1/
-    - fuzz/es(\d)/S$1/
-    - fuzz/er(\d)/R$1/
-    - fuzz/ek(\d)/K$1/
-    - fuzz/ed(\d)/D$1/
-    - fuzz/ej(\d)/J$1/
-    - fuzz/ef(\d)/F$1/
-    - fuzz/el(\d)/L$1/
+    ## Up Caps to Down Caps
+    - xlit/AOEQHWSRKDJFL/aoeqhwsrkdjfl/
+    # 到此，基本指法完成，接下來加入進階指法。（memo: 空韻還沒轉換/😬/I/）
+    ## [jqx] 真特殊！遇韻母，先補 [y]，再補 [i]，自動組合結合韻。
+    - derive/([jqx])x/$1a/  # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
+    - derive/([jqx])n/$1s/  # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
+    - derive/([jqx])b/$1r/  # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
+    - derive/([jqx])c/$1j/  # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
+    ## [x] 有些時候可以用【F】鍵代替。
+    - derive/x([ixpnbmvcgyuqetzls])/f$1/  # ㄈ優先權較高，ㄒ較低。
+    ### | 注音 | 基本指法 | 進階指法 | 推薦指法 |
+    ### |------+---------------------+----------|
+    ### |ㄒㄧ  |    xi    |    fi    |    fi    |
+    ### |ㄒㄧㄚ|  xx, xa  |    fx    |    fx    |
+    ### |ㄒㄧㄝ|    xp    |    fp    |    fp    |
+    ### |ㄒㄧㄠ|  xn, xs  |  fn, fs  |    fs    |
+    ### |ㄒㄧㄡ|  xb, xr  |    fb    |    xb    |
+    ### |ㄒㄧㄢ|    xm    |    fm    |    fm    |
+    ### |ㄒㄧㄣ|    xv    |    fv    |    fv    |
+    ### |ㄒㄧㄤ|  xc, xj  |    fc    |    xj    |
+    ### |ㄒㄧㄥ|    xg    |    fg    |    fg    |
+    ### |ㄒㄩ  |  xy, xu  |  fy, fu  |    fu    |
+    ### |ㄒㄩㄝ|  xq, xe  |  fq, fe  |    fe    |
+    ### |ㄒㄩㄢ|  xk, xt  |    ft    |    xk    |
+    ### |ㄒㄩㄣ|  xd, xz  |    fz    |    xz    |
+    ### |ㄒㄩㄥ|  xf, xl  |    fl    |    fl    |
+    ## 大寫字母 = e + 韻母
+    - derive/ei(\d)/I$1/
+    - derive/eu(\d)/U$1/
+    - derive/ey(\d)/Y$1/
+    - derive/ea(\d)/A$1/
+    - derive/eo(\d)/O$1/
+    - derive/ee(\d)/E$1/
+    - derive/eq(\d)/Q$1/
+    - derive/eh(\d)/H$1/
+    - derive/ew(\d)/W$1/
+    - derive/es(\d)/S$1/
+    - derive/er(\d)/R$1/
+    - derive/ek(\d)/K$1/
+    - derive/ed(\d)/D$1/
+    - derive/ej(\d)/J$1/
+    - derive/ef(\d)/F$1/
+    - derive/el(\d)/L$1/
+    # 到此，進階指法完成。（memo: 空韻還沒轉換/😬/I/）
+    - derive/😬//
+    - xform/😬/i/
+    - derive/([a-z][a-z])\d/$1/
+    - abbrev/([a-z])[a-z]\d/$1/
+    - abbrev/([a-z])[a-z](\d)/$1$2/
+    - abbrev/([AOEQHWSRKDJFL])\d/$1/
 
 translator:
   enable_charset_filter: true
