@@ -33,7 +33,7 @@ switches:
     states: [ "。，", "．，" ]
   - name: t2tw                  # 正繁轉換
     reset: 1
-#    states: [ "傳承字", "標準字" ]
+#    states: [ "傳承字", "標準字" ] # OpenCC
   - name: s2tw                  # 簡繁轉換
     reset: 1
     states: [ "简化字", "標準字" ]
@@ -113,7 +113,7 @@ speller:
     - derive/^([jqxY])u(?=\d)/$1y/           # 處理ㄩ韻母（ㄐㄑㄒ）
   ## (17) ####################################################
     - xform/[iu]a(?=\d)/X/      #     ；◌ㄧㄚ；◌ㄨㄚ；
-    - xform/uo(?=\d)/O/         #     ；      ；◌ㄨㄛ；
+    - xform/uo(?=\d)/O/         #     ；     ；◌ㄨㄛ；
     - xform/ie(?=\d)/P/         #     ；◌ㄧㄝ；      ；
     - xform/ye(?=\d)/Q/         #     ；      ；      ；◌ㄩㄝ
   ## (21) ####################################################
@@ -136,23 +136,31 @@ speller:
     - xform/ang/J/              # ◌ㄤ
     - xform/eng/F/              # ◌ㄥ
   ## (38)衍生ㄧㄨㄩ #########################
-    - derive/Ii/ei/             # ◌ㄧ
     - derive/Ii/yi/             # ◌ㄧ
+    - derive/Ii/ei/             # ◌ㄧ
     - derive/Uu/eu/             # ◌ㄨ
     - derive/Yy/ey/             # ◌ㄩ
   ## () ###################################
     - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
     - derive/z([a-zA-Z]+)/w$1/  # 衍生ㄗ
-    - derive/eq(\d)/ew$1/       # 衍生ㄝ
-    - derive/eq(\d)/ep$1/       # 衍生ㄝ
-    - derive/ie(\d)/iw$1/       # 衍生ㄧㄝ
-    - derive/ie(\d)/iq$1/       # 衍生ㄧㄝ
-    - derive/yq(\d)/ye$1/       # 衍生ㄩㄝ
-    - derive/yq(\d)/yw$1/       # 衍生ㄩㄝ
-    - derive/iv(\d)/id$1/       # 衍生／改寫ㄧㄣ
-    - derive/ig(\d)/if$1/       # 衍生／改寫ㄧㄥ
-    - derive/([jqxy])q(\d)/$1e$2/ # 衍生ㄩㄝ
-    - derive/([jqxy])l(\d)/$1f$2/ # 衍生ㄩㄥ
+    - derive/eq(?=\d)/ew/       # 衍生ㄝ
+    - derive/eq(?=\d)/ep/       # 衍生ㄝ（棄？W = ㄟ or ㄝ）
+    - derive/ie(?=\d)/iw/       # 衍生ㄧㄝ（棄？W = ㄟ or ㄝ）
+    - derive/ie(?=\d)/iq/       # 衍生ㄧㄝ
+    - derive/yq(?=\d)/ye/       # 衍生ㄩㄝ
+    - derive/yq(?=\d)/yw/       # 衍生ㄩㄝ(棄？W = ㄟ or ㄝ)
+    - derive/iv(?=\d)/id/       # 衍生ㄧㄣ
+    - derive/ig(?=\d)/if/       # 衍生ㄧㄥ
+  ## () ###################################
+    - derive/([jqxy])q(?=\d)/$1e/ # 衍生ㄩㄝ
+    - derive/([jqxY])k(?=\d)/$1t/ # 衍生ㄩㄢ
+    - derive/([jqxY])d(?=\d)/$1z/ # 衍生ㄩㄣ
+    - derive/([jqxy])l(?=\d)/$1f/ # 衍生ㄩㄥ
+  ## () ###################################
+    - derive/([jqx])x/$1a/  # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
+    - derive/([jqx])n/$1s/  # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
+    - derive/([jqx])b/$1r/  # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
+    - derive/x([ixpnbmvcgyuqetzls])/f$1/  # 衍生ㄒ=ㄈ（ㄈ優先較高）
   ## () ###################################
     - derive/([a-z]{2})\d/$1/
     - abbrev/([a-z])[a-z]\d/$1/
@@ -187,9 +195,11 @@ translator:
     - xform/(^|[ '])a/$1Z/
     - xform/(^|[ '])v/$1C/
     - xform/(^|[ '])o/$1S/
-    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/  ##　虛韻母ㄭㆨ。
+    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/   # 虛韻母ㄭㆨ
     - xform/(^|[ '])([ZCSrzcs])i/$1$2/
-    #### (8) ####
+    #### () ####
+    - xform/yu/ㄩ/          # 衍生yu
+    - xform/f([ixpnbmvcgyuqetzl])/x$1/      # 衍生ㄒ
     - xform/(O)l/$1R/       # ㄦ*
     - xform/(O)[qp]/$1ㄝ/   # ㄝ
     - xform/(i)[weq]/$1ㄝ/  # ㄧㄝ
@@ -197,13 +207,13 @@ translator:
     - xform/(y)[k]/$1ㄢ/    # ㄩㄢ
     - xform/(y)[d]/$1ㄣ/    # ㄩㄣ
     - xform/(y)[fl]/$1ㄥ/   # ㄩㄥ
-    #### (15) ####
+    #### () ####
     - xform/([nljqx])q/$1ㄩㄝ/
     - xform/([jqx])e/$1ㄩㄝ/
     - xform/([jqx])[kt]/$1ㄩㄢ/
     - xform/([jqx])[dz]/$1ㄩㄣ/
     - xform/([jqx])[fl]/$1ㄩㄥ/
-    #### (19) ####/
+    #### () ####/
     - xform/([gkhZCSr])x/$1ㄨㄚ/
     - xform/([dtnlgkhZCSrzcs])o/$1ㄨㄛ/
     - xform/([gkhZCS])g/$1ㄨㄞ/
@@ -212,19 +222,19 @@ translator:
     - xform/(\w)z/$1ㄨㄣ/
     - xform/([^nljqx 'zcsrw])c/$1ㄨㄤ/
     - xform/(\w)l/$1ㄨㄥ/
-    #### (27) ####
+    #### () ####
     - xform/(\w)x/$1ㄧㄚ/
     - xform/(\w)p/$1ㄧㄝ/
     - xform/([bpmfdtnljqx])n/$1ㄧㄠ/
     - xform/(\w)b/$1ㄧㄡ/
-    #### (31) ####
+    #### () ####
     - xform/(\w)m/$1ㄧㄢ/
     - xform/iv/id/
     - xform/(\w)v/$1ㄧㄣ/
     - xform/([jqxnl])c/$1ㄧㄤ/
     - xform/ig/if/
     - xform/(\w)g/$1ㄧㄥ/
-    #### (36) ####
+    #### () ####
     - xform/(\w)h/$1ㄞ/  # ㄞ
     - xform/(\w)w/$1ㄟ/  # ㄟ
     - xform/(\w)s/$1ㄠ/  # ㄠ
@@ -234,7 +244,7 @@ translator:
     - xform/(\w)d/$1ㄣ/  # ㄣ
     - xform/(\w)j/$1ㄤ/  # ㄤ
     - xform/(\w)f/$1ㄥ/  # ㄥ
-    #### (44) ####
+    #### () ####
     - xform/([jqx])u/$1y/
     - xform/1(?!$)//
     - xform/(..)5(?!$)/5$1/
@@ -243,7 +253,7 @@ translator:
     - xform/([iuy])\1$/$1⇦/
     - xform/([iuy])\1/$1/
     - xform/O([iuyR])$/$1⇦/
-    #### (52) ####
+    #### () ####
     - xform/(?<=[bpmfdtnlgkhjqxZCSrzcs][iuy])$/⇦/
     - xform/(?<=[bpmfdtnlgkhjqxZCSrzcsiuy])$/◌/
     - xlit/bpmfdtnlgkhjqxZCSrzcsO/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌/
@@ -255,7 +265,7 @@ translator:
 recognizer:
   import_preset: default
   patterns:
-    abbreviation: "`[a-zIUYAOEQHWSRKDJFL1-5]*=?$"
+    abbreviation: ";[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
 
@@ -267,9 +277,9 @@ abbreviation:
   tag: abbreviation
   dictionary: terra_pinyin
   prism: double_bopomo_vocabulary
-  prefix: "`"
+  prefix: ";"
   tips: "【簡拼模式】"
-  suffix: "="
+  suffix: "'"
   closing_tips: "【雙碼注音】"
   disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
   enable_sentence:  false               # 是否開啓自動造句
@@ -277,7 +287,7 @@ abbreviation:
   enable_charset_filter: true           # 是否開啓字符集過濾
   preedit_format:
     - xform/1(?!$)//
-    - xform/(.)5(?!$)/5$15/
+    # - xform/(.)5(?!$)/5$1/
     - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
     - xform/$/【簡拼】/
@@ -381,4 +391,4 @@ comment_pinyin:
     - xform/([nljqxy])v/$1ü/
     - xform/eh[0-5]?/ê/
     - xform/([a-z]+)[0-5]/$1/
-    - xform/(.+)($|[ ])/〔$1〕/U.S.A。，。；
+    - xform/(.+)($|[ ])/〔$1〕/
