@@ -160,6 +160,7 @@ speller:
     - derive/([jqx])x/$1a/  # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
     - derive/([jqx])n/$1s/  # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
     - derive/([jqx])b/$1r/  # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
+    - derive/([jqx])c/$1j/  # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
     - derive/x([ixpnbmvcgyuqetzls])/f$1/  # 衍生ㄒ=ㄈ（ㄈ優先較高）
   ## () ###################################
     - derive/([a-z]{2})\d/$1/
@@ -199,6 +200,10 @@ translator:
     - xform/(^|[ '])([ZCSrzcs])i/$1$2/
     #### () ####
     - xform/yu/ㄩ/          # 衍生yu
+    - xform/([jqx])a/$1x/   # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
+    - xform/([jqx])s/$1n/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
+    - xform/([jqx])r/$1b/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
+    - xform/([jqx])j/$1c/   # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
     - xform/f([ixpnbmvcgyuqetzl])/x$1/      # 衍生ㄒ
     - xform/(O)l/$1R/       # ㄦ*
     - xform/(O)[qp]/$1ㄝ/   # ㄝ
