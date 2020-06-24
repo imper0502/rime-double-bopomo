@@ -136,23 +136,31 @@ speller:
     - xform/ang/J/              # ◌ㄤ
     - xform/eng/F/              # ◌ㄥ
   ## (38)衍生ㄧㄨㄩ #########################
-    - derive/Ii/ei/             # ◌ㄧ
     - derive/Ii/yi/             # ◌ㄧ
+    - derive/Ii/ei/             # ◌ㄧ
     - derive/Uu/eu/             # ◌ㄨ
     - derive/Yy/ey/             # ◌ㄩ
   ## () ###################################
     - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
     - derive/z([a-zA-Z]+)/w$1/  # 衍生ㄗ
-    - derive/eq(\d)/ew$1/       # 衍生ㄝ
-    - derive/eq(\d)/ep$1/       # 衍生ㄝ
-    - derive/ie(\d)/iw$1/       # 衍生ㄧㄝ
-    - derive/ie(\d)/iq$1/       # 衍生ㄧㄝ
-    - derive/yq(\d)/ye$1/       # 衍生ㄩㄝ
-    - derive/yq(\d)/yw$1/       # 衍生ㄩㄝ
-    - derive/iv(\d)/id$1/       # 衍生／改寫ㄧㄣ
-    - derive/ig(\d)/if$1/       # 衍生／改寫ㄧㄥ
-    - derive/([jqxy])q(\d)/$1e$2/ # 衍生ㄩㄝ
-    - derive/([jqxy])l(\d)/$1f$2/ # 衍生ㄩㄥ
+    - derive/eq(?=\d)/ew/       # 衍生ㄝ
+    - derive/eq(?=\d)/ep/       # 衍生ㄝ（棄？W = ㄟ or ㄝ）
+    - derive/ie(?=\d)/iw/       # 衍生ㄧㄝ（棄？W = ㄟ or ㄝ）
+    - derive/ie(?=\d)/iq/       # 衍生ㄧㄝ
+    - derive/yq(?=\d)/ye/       # 衍生ㄩㄝ
+    - derive/yq(?=\d)/yw/       # 衍生ㄩㄝ(棄？W = ㄟ or ㄝ)
+    - derive/iv(?=\d)/id/       # 衍生ㄧㄣ
+    - derive/ig(?=\d)/if/       # 衍生ㄧㄥ
+  ## () ###################################
+    - derive/([jqxy])q(?=\d)/$1e/ # 衍生ㄩㄝ
+    - derive/([jqxY])k(?=\d)/$1t/ # 衍生ㄩㄢ
+    - derive/([jqxY])d(?=\d)/$1z/ # 衍生ㄩㄣ
+    - derive/([jqxy])l(?=\d)/$1f/ # 衍生ㄩㄥ
+  ## () ###################################
+    - derive/([jqx])x/$1a/  # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
+    - derive/([jqx])n/$1s/  # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
+    - derive/([jqx])b/$1r/  # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
+    - derive/x([ixpnbmvcgyuqetzls])/f$1/  # 衍生ㄒ=ㄈ（ㄈ優先較高）
   ## () ###################################
     - derive/([a-z]{2})\d/$1/
     - abbrev/([a-z])[a-z]\d/$1/
