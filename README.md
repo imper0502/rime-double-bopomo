@@ -71,4 +71,4 @@
   由[jamessa](https://github.com/jamessa)提供的雙碼注音按鍵熱力圖
   
 ## 銘謝
-  1. [Rime](https://rime.im/) 輸入法引擎開發者 [佛振](https://github.com/lotem) 先生及所有貢獻者；
+  1. [Rime](https://rime.im/) 輸入法引擎開發者 [佛振](https://github.com/lotem) 先生及所有貢獻者。
