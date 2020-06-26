@@ -76,22 +76,13 @@ speller:
   algebra:
     - xlit/ˉˊˇˋ˙/12345/
     - xlit/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶/bpmfdtnlgkhjqxavorzcs/
-    - derive/z/w/
-    - xform/(^| )ㄧ(\d)/$1iI$2/
-    - xform/(^| )ㄨ(\d)/$1uU$2/
-    - xform/(^| )ㄩ(\d)/$1yY$2/
-    - xform/(^| )ㄧ/$1i/
-    - xform/(^| )ㄨ/$1u/
-    - xform/(^| )ㄩ/$1y/
-    - xform/([a-z])ㄧ/$1I/
-    - xform/([a-z])ㄨ/$1U/
-    - xform/([a-z])ㄩ/$1Y/
-    - xlit/ㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/AOEQHWSRKDJFL/
-    - xform/(^| )([AOEQHWSRKDJFL]\d)/$1e$2/
-    - derive/(^| )i(I\d)/$1e$2/
-    - derive/(^| )u(U\d)/$1e$2/
-    - derive/(^| )y(Y\d)/$1e$2/
+    - xlit/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/IUYAOEQHWSRKDJFL/
+    - xform/( |^)I(?=[AOEQHWSRKDJF])/$1i/
+    - xform/( |^)U(?=[AOEQHWSRKDJF])/$1u/
+    - xform/( |^)Y(?=[AOEQHWSRKDJF])/$1y/
+    - xform/(^| )([IUYAOEQHWSRKDJFL]\d)/$1e$2/
     - derive/(^| )([eiy])Q(\d)/$1$2E$3/
+    - derive/z/w/
     
     # 到此，注音被轉換為小寫（聲母）、大寫（韻母）、數字（聲調）；空韻😬/I/先不轉換
     ## ㄚㄛㄜㄝ　   AOEQ
@@ -112,8 +103,9 @@ speller:
     - xform/[IU]J/c/
     - xform/[UY]F/l/
     ## Up Caps to Down Caps
-    - xlit/AOEQHWSRKDJFL/aoeqhwsrkdjfl/
+    - xlit/IUYAOEQHWSRKDJFL/iuyaoeqhwsrkdjfl/
     # 到此，基本指法完成，接下來加入進階指法。（memo: 空韻還沒轉換/😬/I/）
+    - derive/([jqx])y(\d)/$1u$2/
     ## [jqx] 真特殊！遇韻母，先補 [y]，再補 [i]，自動組合結合韻。
     - derive/([jqx])x/$1a/  # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
     - derive/([jqx])n/$1s/  # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
@@ -135,7 +127,7 @@ speller:
     ### |ㄒㄩ  |  xy, xu  |  fy, fu  |    fu    |
     ### |ㄒㄩㄝ|  xq, xe  |  fq, fe  |    fe    |
     ### |ㄒㄩㄢ|  xk, xt  |    ft    |    xk    |
-    ### |ㄒㄩㄣ|  xd, xz  |    fz    |    xz    |
+    ### |ㄒㄩㄣ|  xd, xz  |    fz    |    xz    |義務與
     ### |ㄒㄩㄥ|  xf, xl  |    fl    |    fl    |
     ## 大寫字母 = e + 韻母
     - derive/ei(\d)/I$1/
@@ -160,14 +152,16 @@ speller:
     - derive/([a-z][a-z])\d/$1/
     - abbrev/([a-z])[a-z]\d/$1/
     - abbrev/([a-z])[a-z](\d)/$1$2/
-    - abbrev/([AOEQHWSRKDJFL])\d/$1/
+    - abbrev/([IUYAOEQHWSRKDJFL])\d/$1/
 
 translator:
   enable_charset_filter: true
   strict_spelling: true
   dictionary: double_bopomo_tw
   prism: double_bopomo_tw
-  # preedit_format:
+  preedit_format:
+    - xform/ /$1¦/
+    - xform/^(.+)$/[$1]/
     # - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘ厶◌ㄧㄨㄩ/
     # - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 
 
