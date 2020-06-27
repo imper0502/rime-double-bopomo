@@ -5,7 +5,7 @@
 name: double_bopomo_tw
 version: "2020.0616"
 sort: by_weight
-use_preset_vocabulary: false
+use_preset_vocabulary: true
 ...
 
 一	ㄧ1	98%
