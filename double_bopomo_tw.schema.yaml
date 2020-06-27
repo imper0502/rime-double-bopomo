@@ -22,7 +22,13 @@ switches:
     states: [ "。，", "．，" ]
   - name: tw2t
     reset: 0
-    states: [ "教部標準", "傳承正體" ]  # OpenCC 標準
+    states: [ "台灣標準", "OpenCC標準" ]  # OpenCC 標準
+  - name: t2tw
+    reset: 1
+    states: [ "OpenCC標準", "台灣標準" ]  # 正繁轉換
+  - name: s2tw
+    reset: 1
+    states: [ "简化字體", "台灣標準" ]  # 簡繁轉換
 
 engine:
   processors:
@@ -46,12 +52,22 @@ engine:
     - script_translator
   filters:
     - cjk_minifier     # 過濾少用字
-    - simplifier@tw2t  # 簡繁轉換
+    - simplifier@tw2t  #
+    - simplifier@t2tw  # 正繁轉換
+    - simplifier@s2tw  # 簡繁轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
 
 tw2t: # 正繁轉換
   option_name: tw2t
   opencc_config: tw2t.json
+  tips: none
+t2tw: # 正繁轉換
+  option_name: t2tw
+  opencc_config: t2tw.json
+  tips: none
+s2tw: # 簡繁轉換
+  option_name: s2tw
+  opencc_config: s2tw.json
   tips: none
 
 menu:
@@ -67,8 +83,8 @@ speller:
   # ㄐㄑㄒ    jqx
   # ㄓㄔㄕㄖ  avor
   # ㄗㄘㄙ    zcs/wcs
-  # ㄧㄨㄩ（聲） iuy
-  # ㄧㄨㄩ（韻） IUY
+  # ㄧㄨㄩ（聲） iuy 丨ㄨㄩ
+  # ㄧㄨㄩ（韻） IUY 丨ㄨㄩ
   # ㄚㄛㄜㄝ　   AOEQ
   # ㄞㄟㄠㄡ　   HWSR
   # ㄢㄣㄤㄥ　   KDJF
@@ -162,7 +178,6 @@ translator:
   prism: double_bopomo_tw
   preedit_format:
     - xform/ /$1¦/
-    - xform/^(.+)$/[$1]/
     # - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘㄙ◌ㄧㄨㄩ/
     # - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 
 
