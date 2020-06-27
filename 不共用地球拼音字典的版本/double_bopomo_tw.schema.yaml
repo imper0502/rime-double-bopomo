@@ -1,0 +1,194 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: double_bopomo_tw
+  name: "雙碼注音．臺灣"
+  version: "0.1"
+  author:
+    - imper0502 <yoj845@gmail.com>
+  description: |  
+    雙碼注音．臺灣（注音詞庫，非漢語拼音詞庫）
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ "中", "En" ]
+  - name: full_shape
+    reset: 0
+    states: [ "半形", "全形" ]
+  - name: ascii_punct
+    reset: 0
+    states: [ "。，", "．，" ]
+  - name: tw2t
+    reset: 0
+    states: [ "台灣標準", "OpenCC標準" ]  # OpenCC 標準
+  - name: t2tw
+    reset: 1
+    states: [ "OpenCC標準", "台灣標準" ]  # 正繁轉換
+  - name: s2tw
+    reset: 1
+    states: [ "简化字體", "台灣標準" ]  # 簡繁轉換
+
+engine:
+  processors:
+    - key_binder
+    - ascii_composer
+    - recognizer
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - echo_translator
+    - punct_translator
+    - script_translator
+  filters:
+    - cjk_minifier     # 過濾少用字
+    - simplifier@tw2t  #
+    - simplifier@t2tw  # 正繁轉換
+    - simplifier@s2tw  # 簡繁轉換
+    - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
+
+tw2t: # 正繁轉換
+  option_name: tw2t
+  opencc_config: tw2t.json
+  tips: none
+t2tw: # 正繁轉換
+  option_name: t2tw
+  opencc_config: t2tw.json
+  tips: none
+s2tw: # 簡繁轉換
+  option_name: s2tw
+  opencc_config: s2tw.json
+  tips: none
+
+menu:
+  alternative_select_keys: 67890
+ 
+speller:
+  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL12345"
+  finals: "12345"
+  delimiter: " '"
+  # ㄅㄆㄇㄈ  bpmf
+  # ㄉㄊㄋㄌ  dtnl
+  # ㄍㄎㄏ    gkh 
+  # ㄐㄑㄒ    jqx
+  # ㄓㄔㄕㄖ  avor
+  # ㄗㄘㄙ    zcs/wcs
+  # ㄧㄨㄩ（聲） iuy 丨ㄨㄩ
+  # ㄧㄨㄩ（韻） IUY 丨ㄨㄩ
+  # ㄚㄛㄜㄝ　   AOEQ
+  # ㄞㄟㄠㄡ　   HWSR
+  # ㄢㄣㄤㄥ　   KDJF
+  # ㄦˉˊˇˋ˙      L12345
+  algebra:
+    - xlit/i😬ˉˊˇˋ˙/II12345/
+    - xlit/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ/bpmfdtnlgkhjqxavorzcs/
+    - xlit/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/IUYAOEQHWSRKDJFL/
+    - xform/( |^)I(?=[AOEQHWSRKDJF])/$1i/
+    - xform/( |^)U(?=[AOEQHWSRKDJF])/$1u/
+    - xform/( |^)Y(?=[AOEQHWSRKDJF])/$1y/
+    - xform/(^| )([IUYAOEQHWSRKDJFL]\d)/$1e$2/
+    - derive/(^| )([eiy])Q(\d)/$1$2E$3/
+    - derive/z/w/
+    
+    # 到此，注音被轉換為小寫（聲母）、大寫（韻母）、數字（聲調）
+    ## ㄚㄛㄜㄝ　   AOEQ
+    - xform/[IU]A/x/
+    - xform/UO/o/
+    - xform/IQ/p/
+    - xform/YQ/q/
+    ## ㄞㄟㄠㄡ　   HWSR
+    - xform/(UH|IF)/g/
+    - xform/(UW|ID)/v/
+    - xform/IS/n/
+    - xform/IR/b/
+    ## ㄢㄣㄤㄥ　   KDJF
+    - derive/Y([KDF])/$1/
+    - xform/IK/m/
+    - xform/[UY]K/t/
+    - xform/[UY]D/z/
+    - xform/[IU]J/c/
+    - xform/[UY]F/l/
+    ## Up Caps to Down Caps
+    - xlit/IUYAOEQHWSRKDJFL/iuyaoeqhwsrkdjfl/
+    # 到此，基本指法完成，接下來加入進階指法。
+    ## [jqx] + [u] = [jqx] + [y]
+    - derive/([jqx])y(\d)/$1u$2/
+    ## [jqx] 遇韻母，先補 [y]，再補 [i]，自動組合結合韻。
+    - derive/([jqx])x/$1a/  # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
+    - derive/([jqx])n/$1s/  # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
+    - derive/([jqx])b/$1r/  # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
+    - derive/([jqx])c/$1j/  # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
+    ## [x] 有些時候可以用【F】鍵代替。
+    - derive/x([ixpnbmvcgyqetzls])/f$1/  # ㄈ優先權較高，ㄒ較低。
+    ### | 注音 | 基本指法 | 進階指法 | 推薦指法 |
+    ### |------+---------------------+----------|
+    ### |ㄒㄧ  |    xi    |    fi    |    fi    |
+    ### |ㄒㄧㄚ|  xx, xa  |    fx    |    fx    |
+    ### |ㄒㄧㄝ|    xp    |    fp    |    fp    |
+    ### |ㄒㄧㄠ|  xn, xs  |  fn, fs  |    fs    |
+    ### |ㄒㄧㄡ|  xb, xr  |    fb    |    xb    |
+    ### |ㄒㄧㄢ|    xm    |    fm    |    fm    |
+    ### |ㄒㄧㄣ|    xv    |    fv    |    fv    |
+    ### |ㄒㄧㄤ|  xc, xj  |    fc    |    xj    |
+    ### |ㄒㄧㄥ|    xg    |    fg    |    fg    |
+    ### |ㄒㄩ  |  xy, xu  |  fy, fu  |    fu    |
+    ### |ㄒㄩㄝ|  xq, xe  |  fq, fe  |    fe    |
+    ### |ㄒㄩㄢ|  xk, xt  |    ft    |    xk    |
+    ### |ㄒㄩㄣ|  xd, xz  |    fz    |    xz    |
+    ### |ㄒㄩㄥ|  xf, xl  |    fl    |    fl    |
+    ## 大寫字母 = e + 韻母
+    - derive/ei(\d)/I$1/
+    - derive/eu(\d)/U$1/
+    - derive/ey(\d)/Y$1/
+    - derive/ea(\d)/A$1/
+    - derive/eo(\d)/O$1/
+    - derive/ee(\d)/E$1/
+    - derive/eq(\d)/Q$1/
+    - derive/eh(\d)/H$1/
+    - derive/ew(\d)/W$1/
+    - derive/es(\d)/S$1/
+    - derive/er(\d)/R$1/
+    - derive/ek(\d)/K$1/
+    - derive/ed(\d)/D$1/
+    - derive/ej(\d)/J$1/
+    - derive/ef(\d)/F$1/
+    - derive/el(\d)/L$1/
+    # 到此，進階指法完成。
+    ## 定義雙拼
+    - derive/([a-z][a-z])\d/$1/
+    ## 定義簡拼
+    - abbrev/([a-z])[a-z]\d/$1/
+    - abbrev/([a-z])[a-z](\d)/$1$2/
+    - abbrev/([IUYAOEQHWSRKDJFL])\d/$1/
+
+translator:
+  enable_charset_filter: true
+  strict_spelling: true
+  dictionary: double_bopomo_tw
+  prism: double_bopomo_tw
+  preedit_format:
+    - xform/ /$1¦/
+    # - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘㄙ◌ㄧㄨㄩ/
+    # - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 
+
+punctuator:
+  import_preset: symbols
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    punct: "^/([0-9]0?|[A-Za-z]+)$"
+    url: "^(www[.]|https?:|ftp:|mailto:).*$"
