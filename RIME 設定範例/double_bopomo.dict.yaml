@@ -1,0 +1,22 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# 可擴充的字典檔
+# 使用方式：
+# １）編輯本檔案，把要擴充的字典檔【檔名】，依照格式加入 `import_tables` 底下。
+# ２）將本檔案及擴充字典檔【一起】放入ＲＩＭＥ使用者資料夾。
+# ３）編輯 `double_bopomo.custom.yaml` 加入：
+#  ```
+#  patch:
+#    translator/dictionary: double_bopomo
+#  ```
+# ４）重新部署。如有錯誤，右鍵，退出算法服務，刪除ＲＩＭＥ使用者資料夾【底下的build資料夾】，重啟服務，重新部署。
+
+---
+name: double_bopomo
+version: "2020.0623"
+sort: by_weight
+use_preset_vocabulary: true
+import_tables:
+  - terra_pinyin
+...
