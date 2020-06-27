@@ -89,7 +89,7 @@ speller:
   finals: "12345"
   delimiter: " '"
   algebra:
-  ## (0) ㄅㄆㄇㄈ　ㄉㄊㄋㄌ　ㄍㄎㄏ　ㄐㄑㄒ　ㄓㄔㄕㄖ　ㄗㄘ厶　ㄧㄨㄩ＇　ㄧㄨㄩ　ㄚㄛㄜㄝ　ㄞㄟㄠㄡ　ㄢㄣㄤㄥ　ㄦ
+  ## (0) ㄅㄆㄇㄈ　ㄉㄊㄋㄌ　ㄍㄎㄏ　ㄐㄑㄒ　ㄓㄔㄕㄖ　ㄗㄘㄙ　ㄧㄨㄩ＇　ㄧㄨㄩ　ㄚㄛㄜㄝ　ㄞㄟㄠㄡ　ㄢㄣㄤㄥ　ㄦ
     - erase/^xx$/              #
     - xform/^r5$/er5/          #
   ## (2) #################################
@@ -161,7 +161,7 @@ speller:
     - derive/([jqx])n/$1s/  # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
     - derive/([jqx])b/$1r/  # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
     - derive/([jqx])c/$1j/  # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
-    - derive/x([ixpnbmvcgyuqetzls])/f$1/  # 衍生ㄒ=ㄈ（ㄈ優先較高）
+    - derive/x([iyxpnbmvcgqetzls])/f$1/  # 衍生ㄒ=ㄈ（ㄈ優先較高）
   ## () ###################################
     - derive/([a-z]{2})\d/$1/
     - abbrev/([a-z])[a-z]\d/$1/
@@ -204,7 +204,7 @@ translator:
     - xform/([jqx])s/$1n/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
     - xform/([jqx])r/$1b/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
     - xform/([jqx])j/$1c/   # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
-    - xform/f([ixpnbmvcgyuqetzl])/x$1/      # 衍生ㄒ
+    - xform/f([ixpnbmvcgyqetzl])/x$1/      # 衍生ㄒ
     - xform/(O)l/$1R/       # ㄦ*
     - xform/(O)[qp]/$1ㄝ/   # ㄝ
     - xform/(i)[weq]/$1ㄝ/  # ㄧㄝ
@@ -261,7 +261,7 @@ translator:
     #### () ####
     - xform/(?<=[bpmfdtnlgkhjqxZCSrzcs][iuy])$/⇦/
     - xform/(?<=[bpmfdtnlgkhjqxZCSrzcsiuy])$/◌/
-    - xlit/bpmfdtnlgkhjqxZCSrzcsO/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌/
+    - xlit/bpmfdtnlgkhjqxZCSrzcsO/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌/
     - xlit/iuyaoeR 12345/ㄧㄨㄩㄚㄛㄜㄦ　ˉˊˇˋ˙/
     - xform/(?<![⇦◌])$/⇦/ #[⇦　◌⇨]
     - xform/◌◌$/◌/
@@ -293,7 +293,7 @@ abbreviation:
   preedit_format:
     - xform/1(?!$)//
     # - xform/(.)5(?!$)/5$1/
-    - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘ厶◌ㄧㄨㄩ/
+    - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
     - xform/$/【簡拼】/
 
