@@ -3,7 +3,7 @@
   給**注音**使用者的雙拼輸入法。學習高效率的雙拼輸入法之前不再需要額外學習漢語拼音。
 
 ## 鍵位圖
-  ![KB layout](https://github.com/imper0502/rime-double-bopomo/blob/readme-editor/double_bopomo_keyboard_layout.jpg)
+  ![KB layout](https://github.com/imper0502/rime-double-bopomo/blob/master/double_bopomo_keyboard_layout.jpg)
 
 ## 說明
   目前，這是一個 Rime 輸入法引擎與 cin 碼表的輸入方案，需要安裝以下任何一款 Rime 輸入法（推薦）或其他可讀 cin 碼表的輸入法，方可使用：
