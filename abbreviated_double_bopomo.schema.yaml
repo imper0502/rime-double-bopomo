@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 schema:
-  schema_id: double_bopomo_vocabulary
+  schema_id: abbreviated_double_bopomo
   name: "雙碼注音．簡拼"
   version: "1.0"
   author:
@@ -169,7 +169,7 @@ translator:
   enable_charset_filter: true
   strict_spelling: true
   dictionary: terra_pinyin
-  prism: double_bopomo_vocabulary
+  prism: abbreviated_double_bopomo
   preedit_format:
     - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘ厶◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 

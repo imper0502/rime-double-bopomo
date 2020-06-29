@@ -23,20 +23,20 @@ schema:
 
 switches:
   - name: ascii_mode
-    reset: 0
+#    reset: 0
     states: [ "中", "En" ]
   - name: full_shape
-    reset: 0
+#    reset: 0
     states: [ "半形", "全形" ]
   - name: ascii_punct
-    reset: 0
+#    reset: 0
     states: [ "。，", "．，" ]
   - name: t2tw                  # 正繁轉換
     reset: 1
 #    states: [ "傳承字", "標準字" ] # OpenCC
   - name: s2tw                  # 簡繁轉換
     reset: 1
-    states: [ "简化字", "標準字" ]
+#    states: [ "简化字", "標準字" ]
 
 engine:
   processors:
@@ -90,8 +90,11 @@ speller:
   delimiter: " '"
   algebra:
   ## (0) ㄅㄆㄇㄈ　ㄉㄊㄋㄌ　ㄍㄎㄏ　ㄐㄑㄒ　ㄓㄔㄕㄖ　ㄗㄘㄙ　ㄧㄨㄩ＇　ㄧㄨㄩ　ㄚㄛㄜㄝ　ㄞㄟㄠㄡ　ㄢㄣㄤㄥ　ㄦ
-    - erase/^xx$/              #
-    - xform/^r5$/er5/          #
+    - erase/^xx$/
+    - xform/^m([1-5])$/mu$1/  # 鼻音m（呣）轉化為mu
+    - xform/^r5$/er5/         # r5（兒）轉化為er5
+    # - xform/^eh([1-5])$/e$1/  # 模糊音：eh（誒欸）、e合併
+    # - xform/^wong([1-5])$/weng$1/  # 模糊音：wong、weng合併
   ## (2) #################################
     - xform/^([aoe].*\d)/O$1/  # 零聲母Ø、影聲母ʔ
     - xform/eh(?=\d)/Q/        # ㄝ
@@ -144,11 +147,8 @@ speller:
     - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
     - derive/z([a-zA-Z]+)/w$1/  # 衍生ㄗ
     - derive/eq(?=\d)/ew/       # 衍生ㄝ
-    - derive/eq(?=\d)/ep/       # 衍生ㄝ（棄？W = ㄟ or ㄝ）
-    - derive/ie(?=\d)/iw/       # 衍生ㄧㄝ（棄？W = ㄟ or ㄝ）
     - derive/ie(?=\d)/iq/       # 衍生ㄧㄝ
     - derive/yq(?=\d)/ye/       # 衍生ㄩㄝ
-    - derive/yq(?=\d)/yw/       # 衍生ㄩㄝ(棄？W = ㄟ or ㄝ)
     - derive/iv(?=\d)/id/       # 衍生ㄧㄣ
     - derive/ig(?=\d)/if/       # 衍生ㄧㄥ
   ## () ###################################
@@ -281,7 +281,7 @@ affix_segmentor@abbreviation:
 abbreviation:
   tag: abbreviation
   dictionary: terra_pinyin
-  prism: double_bopomo_vocabulary
+  prism:  abbreviated_double_bopomo
   prefix: ";"
   tips: "【簡拼模式】"
   suffix: "'"
