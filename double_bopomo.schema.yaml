@@ -9,6 +9,7 @@ schema:
     - imper0502 <yoj845@gmail.com>
   description: |
     注音的雙拼方案。
+    
     會注音就可以學會，不需額外學習漢語拼音。
     -----------------------------------------
     ㄧㄨㄩ在 IUY；E 當〇聲母
@@ -18,25 +19,26 @@ schema:
     layout version: 20191031A
 
   dependencies:
-    - cangjie5      # 
-    - terra_pinyin  #
+    - cangjie5
+    - terra_pinyin
 
 switches:
   - name: ascii_mode
-#    reset: 0
+    reset: 0
     states: [ "中", "En" ]
   - name: full_shape
-#    reset: 0
     states: [ "半形", "全形" ]
   - name: ascii_punct
-#    reset: 0
+    reset: 0
     states: [ "。，", "．，" ]
   - name: t2tw                  # 正繁轉換
     reset: 1
-#    states: [ "傳承字", "標準字" ] # OpenCC
+    # 啓用 opencc 字形轉換，但不在選單中顯示。
+    # states: [ "傳承字", "標準字" ]
   - name: s2tw                  # 簡繁轉換
     reset: 1
-#    states: [ "简化字", "標準字" ]
+    # 啓用 opencc 字形轉換，但不在選單中顯示。
+    # states: [ "简化字", "標準字" ]
 
 engine:
   processors:
@@ -69,16 +71,6 @@ engine:
     - reverse_lookup_filter@comment_bopomo
     - reverse_lookup_filter@comment_cangjie
     - reverse_lookup_filter@comment_pinyin
-
-t2tw: # 正繁轉換
-  option_name: t2tw
-  opencc_config: t2tw.json
-  tips: none
-
-s2tw: # 簡繁轉換
-  option_name: s2tw
-  opencc_config: s2tw.json
-  tips: none
 
 menu:
   alternative_select_keys: 67890
@@ -267,13 +259,6 @@ translator:
     - xform/◌◌$/◌/
     - xform/◌(?!$)/$1/
 
-recognizer:
-  import_preset: default
-  patterns:
-    abbreviation: ";[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
-    punct: "^/([0-9]0?|[A-Za-z]+)$"
-    url: "^(www[.]|https?:|ftp:|mailto:).*$"
-
 affix_segmentor@abbreviation:
   extra_tags:
     - reverse_lookup
@@ -305,19 +290,36 @@ custom_phrase:
   enable_sentence: false
   initial_quality: 1
 
+t2tw: # 正繁轉換
+  option_name: t2tw
+  opencc_config: t2tw.json
+
+s2tw: # 簡繁轉換
+  option_name: s2tw
+  opencc_config: s2tw.json
+
 punctuator:
   import_preset: symbols
   full_shape:
-    '<' : '<'
-    '>' : '>'
-    '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤', '￥' ]
+    '<' : [ <, 《, 〈, «, ‹ ]
+    '>' : [ >, 》, 〉, », › ]
+    '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤' ]
   half_shape:
-    '<' : '<'
-    '>' : '>'
-    '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤', '￥' ]
+    '<' : [ <, 《, 〈, «, ‹ ]
+    '>' : [ >, 》, 〉, », › ]
+    '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤' ]
 
 key_binder:
   import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    abbreviation: ";[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
+    email: "^[a-z][-_.0-9a-z]*@.*$"
+    punct: "^/([0-9]0?|[A-Za-z]+)$"
+    uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
+    url: "^(www[.]|https?:|ftp:|mailto:).*$"
 
 comment_bopomo:
   tags: [ none ]
