@@ -3,7 +3,7 @@
   給**注音**使用者的雙拼輸入法。學習高效率的雙拼輸入法之前不再需要額外學習漢語拼音。
 
 ## 鍵位圖
-  ![KB layout](https://github.com/imper0502/rime-double-bopomo/blob/readme-editor/double_bopomo_keyboard_layout.jpg)
+  ![KB layout](https://github.com/imper0502/rime-double-bopomo/blob/master/double_bopomo_keyboard_layout.jpg)
 
 ## 說明
   目前，這是一個 Rime 輸入法引擎與 cin 碼表的輸入方案，需要安裝以下任何一款 Rime 輸入法（推薦）或其他可讀 cin 碼表的輸入法，方可使用：
@@ -39,11 +39,11 @@
   1. ㄧㄨㄩ ㄚㄛㄜㄝ ㄞㄟㄠㄡ ㄢㄣㄤㄥ ㄦ 也可以直接 `Shift` + 【對應按鍵】，效果和「輸入規則 3.」相同。**簡拼模式時非常有用。**
   
 ### 學習指引（銜接方案）
-  可以先從**全碼注音**—— `full_bopomofo.schema.yaml` 這個銜接方案開始，這個方案沒有結合韻；保留0️⃣聲母、😬韻母。  
-  ㄓㄔㄕㄖ ㄗㄘㄙ 有輸入聲調時，可以省略😬韻母。  
-  ㄧㄨㄩ 有輸入聲調時，可以省略0️⃣聲母。
-  聲調可以省略。
-  !(full bopomofo KB layout)[https://i.imgur.com/dskVzSG.jpg]
+  可以先從**全碼注音**—— `full_bopomofo.schema.yaml`，這個銜接方案開始。這個方案沒有結合韻；保留0️⃣聲母、😬韻母。  
+    - ㄓㄔㄕㄖ ㄗㄘㄙ 有輸入聲調時，可以省略😬韻母。  
+    - ㄧㄨㄩ 有輸入聲調時，可以省略0️⃣聲母。  
+    - 聲調可以省略。  
+  ![full bopomofo KB layout](https://i.imgur.com/dskVzSG.jpg)
   
 ### 檔名解釋
   - `double_bopomo.schema.yaml`：Rime 輸入方案檔，字典檔使用 Rime 內建的「地球拼音」字典檔，使之與「地球拼音」、「注音」等方案共用詞庫。
