@@ -4,7 +4,7 @@
 schema:
   schema_id: full_bopomofo
   name: "全碼注音"
-  version: '1.0'
+  version: '1.01'
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -55,9 +55,6 @@ engine:
     - simplifier@t2tw  # 正繁轉換
     - simplifier@s2tw  # 簡繁轉換
     - uniquifier
-    - reverse_lookup_filter@comment_bopomo
-    - reverse_lookup_filter@comment_cangjie
-    - reverse_lookup_filter@comment_pinyin
 
 menu:
   alternative_select_keys: 67890
@@ -69,47 +66,58 @@ speller:
   algebra:
   # 預處理
     - erase/^xx$/          # 移除【xx】編碼
-    - xform/^m(\d)$/mu$1/  # 呣
+    - xform/^m(\d)$/mu$1/  # ㄇ調 → ㄇㄨ調
     - xform/^r5$/er5/      # 〜兒
-    - xform/v/ü/
+    - xform/v/ü/           # v → ü/
     - xform/iu/iou/        # 補上漏音
-    - xform/ui/uei/
+    - xform/ui/uei/        # 補上漏音
     - xform/iong/üng/      # [jqx]iong → [jqx]üng
     - xform/ong/ung/       # yong, -ong → yung, -ung
     - xform/^yu/ü/         # yue, yuan, yun, yung  → üe, üan, ün, üng
-    - xform/^yi?/i/
-    - xform/^wu?/u/
-    - xform/^([jqx])u/$1ü/
-    - xform/([iuü])n/$1en/
+    - xform/^yi?/i/        # yi, y- → i, i-
+    - xform/^wu?/u/        # wu, w- → u, u-
+    - xform/^([jqx])u/$1ü/ # 取消ㄐㄑㄒ的省略表示法
+    - xform/([iuü])n/$1en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng
+  # 開始轉換輸入鍵
+    # 三個「二合聲母」ㄓㄔㄕ
     - xform/^zh/A/
     - xform/^ch/V/
     - xform/^sh/O/
-  # 開始轉換輸入鍵
+    # 兩個「三合韻母」ㄤㄥ
+    - xform/ang/J/
+    - xform/eng/F/
+    # 六個「二合韻母」ㄞㄟㄠㄡㄢㄣ
     - xform/ai/H/
     - xform/ei/W/
     - xform/ao/S/
     - xform/ou/R/
-    - xform/ang/J/
-    - xform/eng/F/
     - xform/an/K/
     - xform/en/D/
+    # ㄦ及ㄝ
     - xform/er/L/
     - xform/eh/Q/
     - xform/([iü])e/$1Q/
-    - xlit/AVO/avo/
-    - xform/ü/y/
-    - xform/^([iuyaoeQHWSRKDJFL]\d)/e$1/ # 零聲母
-    - xlit/QHWSRKDJFL/qhwsrkdjfl/
-    - derive/^x([iy])/f$1/          # 衍生ㄒ
-    - derive/^([avorzcs])i(\d)/$1$2/
-    - derive/^z([a-z]+|[1-5])/w$1/  # 衍生ㄗ
-    - derive/^e([iuy])(\d)/$1$2/
-    - derive/([eiy])q(?=\d)/$1e/   # 衍生ㄝ
+    # 到此，【terra pinyin】→【bopomofo】
+  # 輸入鍵轉換
+    - xlit/AVO/avo/  # 聲母一律小寫
+    - xform/ü/y/     # `Y鍵`輸入ü
+    - xlit/QHWSRKDJFL/qhwsrkdjfl/  # 韻母也一律小寫
+  # 使用零聲母表示韻母獨立音節
+    - xform/^([iuyaoeqhwsrkdjfl]\d)/e$1/
+    # 到此，基本拼寫規則完成
+  # 進階的拼寫規則，使用更方便
+    - derive/^x([iy])/f$1/           # ㄈㄒ共用`F鍵`
+    - derive/^([avorzcs])i(\d)/$1$2/ # ㄓㄔㄕㄖㄗㄘㄙ的韻母可以省略
+    - derive/^z([a-z]+|[1-5])/w$1/   # `W鍵`也可以輸入ㄗ
+    - derive/^e([iuy])(\d)/$1$2/     # 介音有聲調時，不需前綴零聲母
+    - derive/([eiy])q(?=\d)/$1e/     # ㄝㄜ共用`E鍵`
+  # 輸入聲調（不用數字鍵）
     - derive/^(.+)1/$1m/
     - derive/^(.+)2/$1n/
     - derive/^(.+)3/$1c/
     - derive/^(.+)4/$1v/
     - derive/^(.+)5/$1b/
+  # 省略聲調
     - derive/^(.+)\d/$1/
 
 translator:
@@ -117,14 +125,18 @@ translator:
   prism: full_bopomofo
   enable_completion: true
   preedit_format:
+  # 聲調的預覽（不用數字鍵輸入時）
     - xform/(^| )([a-z]{1, 3})m(| |$)/$1$2ˉ$3/
     - xform/(^| )([a-z]{1, 3})n(| |$)/$1$2ˊ$3/
     - xform/(^| )([a-z]{1, 3})c(| |$)/$1$2ˇ$3/
     - xform/(^| )([a-z]{1, 3})v(| |$)/$1$2ˋ$3/
     - xform/(^| )([a-z]{1, 3})[b5](| |$)/$1˙$2$3/
+  # 特殊聲母處理
     - xform/(^| )f(?=[iy])/$1x/
     - xform/(^| )w/$1z/
+  # 特殊韻母處理
     - xform/([iy])e/$1q/
+  # 聲母的預覽
     - xform/(^| )b/$1ㄅ/
     - xform/(^| )p/$1ㄆ/
     - xform/(^| )m/$1ㄇ/
@@ -150,8 +162,10 @@ translator:
     - xform/(^| )u/$1ㄨ/
     - xform/(^| )y/$1ㄩ/
     - xform/(^| )e/$1◌/
+  # 省略的韻母只提示一次
     - xform/(^| )(ㄓ|ㄔ|ㄕ|ㄖ|ㄗ|ㄘ|ㄙ)i$/$1$2😬/
     - xform/(^| )(ㄓ|ㄔ|ㄕ|ㄖ|ㄗ|ㄘ|ㄙ)i/$1$2/
+  # 韻母的預覽、聲調的預覽（使用數字鍵）
     - xlit/iuyaoeqhwsrkdjfl 12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ　ˉˊˇˋ˙/
 
 custom_phrase:
@@ -165,7 +179,7 @@ custom_phrase:
 reverse_lookup:
   dictionary: cangjie5
   enable_completion: true
-  prefix: ";"
+  prefix: ","
   suffix: "'"
   tips: 〔倉頡〕
   preedit_format:
@@ -200,6 +214,7 @@ reverse_lookup:
 t2tw:  # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
+  tips: char
 
 s2tw:  # 簡繁轉換
   option_name: s2tw
@@ -224,85 +239,6 @@ recognizer:
   patterns:
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
-    reverse_lookup: ";[a-z]*'?$"
+    reverse_lookup: ",[a-z]*'?$"
     uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
-
-comment_bopomo:
-  tags: [ none ]
-  overwrite_comment: true
-  dictionary: terra_pinyin
-  comment_format:
-    - xform/e?r5$/er5/
-    - xform/iu/iou/
-    - xform/ui/uei/
-    - xform/ong/ung/
-    - xform/(^|[ ])yi?/$1i/
-    - xform/(^|[ ])wu?/$1u/
-    - xform/iu/v/
-    - xform/(^|[ ])([jqx])u/$1$2v/
-    - xform/([iuv])n/$1en/
-    - xform/zh/Z/
-    - xform/ch/C/
-    - xform/sh/S/
-    - xform/ai/A/
-    - xform/ei/I/
-    - xform/ao/O/
-    - xform/ou/U/
-    - xform/ang/K/
-    - xform/eng/G/
-    - xform/an/M/
-    - xform/en/N/
-    - xform/er/R/
-    - xform/eh/E/
-    - xform/([iv])e/$1E/
-    - xform/1//
-    - xform/([a-zA-Z]+)5/5$1/
-    # - xform/([a-zA-Z1-5]+)($|[ ])/〔$1〕/
-    - xform/([ZCSr])i(\d*)/$1$2/
-    - xform/([zcs])i(\d*)/$1$2/
-    - xlit/bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙/
-
-comment_cangjie:
-  tags: [ none ]
-  overwrite_comment: false
-  dictionary: cangjie5
-  comment_format:
-    # - xform/([^ ]+)($|[ ])/〔$1〕/
-    - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|
-
-comment_pinyin:
-  tags: [ none ]
-  overwrite_comment: false
-  dictionary: terra_pinyin
-  comment_format:
-    - xform ([aeiou])(ng?|r)([1234]) $1$3$2
-    - xform ([aeo])([iuo])([1234]) $1$3$2
-    - xform a1 ā
-    - xform a2 á
-    - xform a3 ǎ
-    - xform a4 à
-    - xform e1 ē
-    - xform e2 é
-    - xform e3 ě
-    - xform e4 è
-    - xform o1 ō
-    - xform o2 ó
-    - xform o3 ǒ
-    - xform o4 ò
-    - xform i1 ī
-    - xform i2 í
-    - xform i3 ǐ
-    - xform i4 ì
-    - xform u1 ū
-    - xform u2 ú
-    - xform u3 ǔ
-    - xform u4 ù
-    - xform v1 ǖ
-    - xform v2 ǘ
-    - xform v3 ǚ
-    - xform v4 ǜ
-    - xform/([nljqxy])v/$1ü/
-    - xform/eh[0-5]?/ê/
-    - xform/([a-z]+)[0-5]/$1/
-    # - xform/(.+)($|[ ])/〔$1〕/
