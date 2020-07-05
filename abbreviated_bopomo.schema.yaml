@@ -2,13 +2,13 @@
 # encoding: utf-8
 
 schema:
-  schema_id: abbreviated_double_bopomo
-  name: "雙碼注音．簡拼"
+  schema_id: abbreviated_bopomo
+  name: "簡拼注音"
   version: "1.0"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |  
-    雙碼注音．簡拼
+    簡拼注音
 
 switches:
   - name: ascii_mode
@@ -169,7 +169,7 @@ translator:
   enable_charset_filter: true
   strict_spelling: true
   dictionary: terra_pinyin
-  prism: abbreviated_double_bopomo
+  prism: abbreviated_bopomo
   preedit_format:
     - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘ厶◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 
