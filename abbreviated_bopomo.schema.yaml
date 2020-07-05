@@ -4,10 +4,10 @@
 schema:
   schema_id: abbreviated_bopomo
   name: "簡拼注音"
-  version: "1.0"
+  version: "1.1"
   author:
     - imper0502 <yoj845@gmail.com>
-  description: |  
+  description: |
     簡拼注音
 
 switches:
@@ -20,14 +20,15 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ "。，", "．，" ]
-  - name: t2tw                  
+  - name: t2tw
     reset: 1
+    # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 繁
     # states: [ "傳承字", "標準字" ]
-    # 正繁轉換
-  - name: s2tw                  
+  - name: s2tw
     reset: 1
+    # 啓用 opencc 字形轉換，但不在選單中顯示。簡 → 繁
     # states: [ "简化字", "標準字" ]
-    # 簡繁轉換
+
 engine:
   processors:
     - ascii_composer
@@ -64,7 +65,7 @@ s2tw: # 簡 → 繁
 
 menu:
   alternative_select_keys: 67890
- 
+
 speller:
   alphabet: "bpmfdtnlgkhjqxavorzcsiuyewIUYAOEQHWSRKDJFL12345"
   finals: "12345"
@@ -83,7 +84,7 @@ speller:
     - xform/^yi?/i/        # yi, y- → i, i-
     - xform/^wu?/u/        # wu, w- → u, u-
     - xform/^([jqx])u/$1ü/ # 取消省略的寫法
-    - xform/([iuü])n/$1en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng 
+    - xform/([iuü])n/$1en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng
   # 開始轉換輸入鍵
     # 三個「二合聲母」ㄓㄔㄕ
     - xform/^zh/A/
@@ -140,7 +141,7 @@ translator:
   prism: abbreviated_bopomo
   preedit_format:
     - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘ厶◌ㄧㄨㄩ/
-    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 
+    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
 
 punctuator:
   import_preset: symbols
@@ -161,5 +162,4 @@ recognizer:
   patterns:
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
-    reverse_lookup: ",[a-z]*'?$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
