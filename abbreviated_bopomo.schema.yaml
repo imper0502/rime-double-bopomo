@@ -20,18 +20,19 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ "。，", "．，" ]
-  - name: t2tw                  # 正繁轉換
+  - name: t2tw                  
     reset: 1
-#    states: [ "傳承字", "標準字" ]
-  - name: s2tw                  # 簡繁轉換
+    # states: [ "傳承字", "標準字" ]
+    # 正繁轉換
+  - name: s2tw                  
     reset: 1
-    states: [ "简化字", "標準字" ]
-
+    # states: [ "简化字", "標準字" ]
+    # 簡繁轉換
 engine:
   processors:
-    - key_binder
     - ascii_composer
     - recognizer
+    - key_binder
     - speller
     - punctuator
     - selector
@@ -48,122 +49,89 @@ engine:
     - punct_translator
     - script_translator
   filters:
-    - cjk_minifier     # 過濾少用字
-    - simplifier@t2tw  # 正繁轉換
-    - simplifier@s2tw  # 簡繁轉換
+    - simplifier@t2tw  # 正 → 繁
+    - simplifier@s2tw  # 簡 → 繁
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
 
-t2tw: # 正繁轉換
+t2tw: # 正 → 繁
   option_name: t2tw
   opencc_config: t2tw.json
-  tips: none
+  tips: char
 
-s2tw: # 簡繁轉換
+s2tw: # 簡 → 繁
   option_name: s2tw
   opencc_config: s2tw.json
-  tips: none
 
 menu:
   alternative_select_keys: 67890
  
 speller:
-  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL12345"
+  alphabet: "bpmfdtnlgkhjqxavorzcsiuyewIUYAOEQHWSRKDJFL12345"
   finals: "12345"
   delimiter: " '"
   algebra:
-  ## (0) ㄅㄆㄇㄈ　ㄉㄊㄋㄌ　ㄍㄎㄏ　ㄐㄑㄒ　ㄓㄔㄕㄖ　ㄗㄘ厶　ㄧㄨㄩ＇　ㄧㄨㄩ　ㄚㄛㄜㄝ　ㄞㄟㄠㄡ　ㄢㄣㄤㄥ　ㄦ
-    - erase/^xx$/              #
-    - xform/^r5$/er5/          #
-  ## (2) #################################
-    - xform/^([aoe].*\d)/O$1/  # 零聲母Ø、影聲母ʔ
-    - xform/eh(?=\d)/Q/        # ㄝ
-    - xform/er(?=\d)/L/        # ㄦ
-  ## (5) #################################
-    - xform/^zh/Z/             # ㄓ
-    - xform/^ch/C/             # ㄔ
-    - xform/^sh/S/             # ㄕ
-    - xlit/OZCS/EAVO/          #
-  ## (9) ##########################################
-    - xform/^y(?=[uv]|ong)/Y/  # 分開ㄧ、ㄩ聲母韻
-    - xform/^y/I/              # 處理ㄧ聲母
-    - xform/^w/U/              # 處理ㄨ聲母
-  ## (12) ##########################################
-    - xform/^([jqxY])[uv]an(?=\d)/$1yan/     # 分開ㄩㄢ、ㄨㄢ韻（ㄐㄑㄒ）（故意忽略ㄌㄩㄢ）
-    - xform/^([nl])v(e|n)(?=\d)/$1y$2/       # 處理ㄩㄝ韻、分開ㄩㄣ、ㄨㄣ韻（ㄋㄌ）
-    - xform/^([jqxY])u(e|n)(?=\d)/$1y$2/     # 處理ㄩㄝ韻、分開ㄩㄣ、ㄨㄣ韻（ㄐㄑㄒ）
-    - xform/^([nljqxY])v(?=\d)/$1y/          # 處理ㄩ韻母（ㄋㄌ）
-    - derive/^([jqxY])u(?=\d)/$1y/           # 處理ㄩ韻母（ㄐㄑㄒ）
-  ## (17) ####################################################
-    - xform/[iu]a(?=\d)/X/      #     ；◌ㄧㄚ；◌ㄨㄚ；
-    - xform/uo(?=\d)/O/         #     ；      ；◌ㄨㄛ；
-    - xform/ie(?=\d)/P/         #     ；◌ㄧㄝ；      ；
-    - xform/ye(?=\d)/Q/         #     ；      ；      ；◌ㄩㄝ
-  ## (21) ####################################################
-    - xform/iao(?=\d)/N/        #     ；◌ㄧㄠ；      ；
-    - xform/iu(?=\d)/B/         #     ；◌ㄧㄡ；      ；
-    - xform/ian(?=\d)/M/        #     ；◌ㄧㄢ；      ；
-    - xform/(in|ui)(?=\d)/V/    #     ；◌ㄧㄣ；◌ㄨㄟ；
-    - xform/[iu]ang(?=\d)/C/    #     ；◌ㄧㄤ；◌ㄨㄤ；
-    - xform/(ing|uai)(?=\d)/G/  #     ；◌ㄧㄥ；◌ㄨㄞ；
-    - xform/uan(?=\d)/T/        #     ；      ；◌ㄨㄢ；
-    - xform/un(?=\d)/Z/         #     ；      ；◌ㄨㄣ；
-    - xform/i?ong(?=\d)/L/      #     ；      ；◌ㄨㄥ；◌ㄩㄥ
-  ## (30) ####################################################
-    - xform/ai/H/               # ◌ㄞ
-    - xform/ei/W/               # ◌ㄟ
-    - xform/ao/S/               # ◌ㄠ
-    - xform/ou/R/               # ◌ㄡ
-    - xform/y?an(?=\d)/K/       # ◌ㄢ；      ；      ；◌ㄩㄢ
-    - xform/[ye]n(?=\d)/D/      # ◌ㄣ；      ；      ；◌ㄩㄣ
-    - xform/ang/J/              # ◌ㄤ
-    - xform/eng/F/              # ◌ㄥ
-  ## (38)衍生ㄧㄨㄩ #########################
-    - derive/Ii(\d)/ei$1/             # ◌ㄧ
-    - derive/Ii(\d)/yi$1/             # ◌ㄧ
-    - derive/Uu(\d)/eu$1/             # ◌ㄨ
-    - derive/Yy(\d)/ey$1/             # ◌ㄩ
-  ## (42) ###################################
-    - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
-    - derive/z([a-zA-Z]+)/w$1/  # 衍生ㄗ
-    - derive/eq(\d)/ew$1/       # 衍生ㄝ
-    - derive/eq(\d)/ep$1/       # 衍生ㄝ
-    - derive/ie(\d)/iw$1/       # 衍生ㄧㄝ
-    - derive/ie(\d)/iq$1/       # 衍生ㄧㄝ
-    - derive/yq(\d)/ye$1/       # 衍生ㄩㄝ
-    - derive/yq(\d)/yw$1/       # 衍生ㄩㄝ
-    - derive/iv(\d)/id$1/       # 衍生／改寫ㄧㄣ
-    - derive/ig(\d)/if$1/       # 衍生／改寫ㄧㄥ
-    - derive/([jqxy])q(\d)/$1e$2/ # 衍生ㄩㄝ
-    - derive/([jqxy])l(\d)/$1f$2/ # 衍生ㄩㄥ
-  ## () ###################################
-    - fuzz/([a-z])[a-z]\d/$1/
-    - fuzz/([a-z])[a-z](\d)/$1$2/
-    - fuzz/ea\d/A/
-    - fuzz/eo\d/O/
-    - fuzz/ee\d/E/
-    - fuzz/eq\d/Q/
-    - fuzz/eh\d/H/
-    - fuzz/ew\d/W/
-    - fuzz/es\d/S/
-    - fuzz/er\d/R/
-    - fuzz/ek\d/K/
-    - fuzz/ed\d/D/
-    - fuzz/ej\d/J/
-    - fuzz/ef\d/F/
-    - fuzz/el\d/L/
-    - fuzz/ea(\d)/A$1/
-    - fuzz/eo(\d)/O$1/
-    - fuzz/ee(\d)/E$1/
-    - fuzz/eq(\d)/Q$1/
-    - fuzz/eh(\d)/H$1/
-    - fuzz/ew(\d)/W$1/
-    - fuzz/es(\d)/S$1/
-    - fuzz/er(\d)/R$1/
-    - fuzz/ek(\d)/K$1/
-    - fuzz/ed(\d)/D$1/
-    - fuzz/ej(\d)/J$1/
-    - fuzz/ef(\d)/F$1/
-    - fuzz/el(\d)/L$1/
+  # 預處理
+    - erase/^xx$/          # 移除【xx】編碼
+    - xform/^m(\d)$/mu$1/  # ㄇ調 → ㄇㄨ調
+    - xform/^r5$/er5/      # 〜兒
+    - xform/v/ü/           # v → ü/
+    - xform/iu/iou/        # 補上漏音
+    - xform/ui/uei/        # 補上漏音
+    - xform/iong/üng/      # [jqx]iong → [jqx]üng
+    - xform/ong/ung/       # yong, -ong → yung, -ung
+    - xform/^yu/ü/         # yue, yuan, yun, yung  → üe, üan, ün, üng
+    - xform/^yi?/i/        # yi, y- → i, i-
+    - xform/^wu?/u/        # wu, w- → u, u-
+    - xform/^([jqx])u/$1ü/ # 取消省略的寫法
+    - xform/([iuü])n/$1en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng 
+  # 開始轉換輸入鍵
+    # 三個「二合聲母」ㄓㄔㄕ
+    - xform/^zh/A/
+    - xform/^ch/V/
+    - xform/^sh/O/
+    # 兩個「三合韻母」ㄤㄥ
+    - xform/ang/J/
+    - xform/eng/F/
+    # 六個「二合韻母」ㄞㄟㄠㄡㄢㄣ
+    - xform/ai/H/
+    - xform/ei/W/
+    - xform/ao/S/
+    - xform/ou/R/
+    - xform/an/K/
+    - xform/en/D/
+    # ㄦ及ㄝ
+    - xform/er/L/
+    - xform/eh/Q/
+    - xform/([iü])e/$1Q/
+    # 到此，【terra pinyin】→【bopomofo】
+  # 輸入鍵轉換
+    - xlit/AVO/avo/  # 聲母一律小寫
+    - xform/ü/y/     # y鍵輸入ü
+    - xlit/QHWSRKDJFL/qhwsrkdjfl/ # 韻母也一律小寫
+  # 不使用零聲母，而是用大寫表示韻母獨立音節
+    - xform/^i(\d)/I$1/
+    - xform/^u(\d)/U$1/
+    - xform/^y(\d)/Y$1/
+    - xform/^a(\d)/A$1/
+    - xform/^o(\d)/O$1/
+    - xform/^e(\d)/E$1/
+    - xform/^q(\d)/Q$1/
+    - xform/^h(\d)/H$1/
+    - xform/^w(\d)/W$1/
+    - xform/^s(\d)/S$1/
+    - xform/^r(\d)/R$1/
+    - xform/^k(\d)/K$1/
+    - xform/^d(\d)/D$1/
+    - xform/^j(\d)/J$1/
+    - xform/^f(\d)/F$1/
+    - xform/^l(\d)/L$1/
+    # ㄓㄔㄕㄖㄗㄘㄙ的韻母省略，才是注音
+    - xform/^([avorzcs])i(\d)/$1$2/
+    # 到此，基本注音拼寫規則完成
+  # 輸入簡拼
+    - fuzz/([A-Z])\d/$1/
+    - fuzz/([a-z])[a-z]*\d/$1/
+    - fuzz/([a-z])[a-z]*(\d)/$1$2/
 
 translator:
   enable_charset_filter: true
@@ -176,6 +144,14 @@ translator:
 
 punctuator:
   import_preset: symbols
+  full_shape:
+    "<" : [ "<", "《", "〈", "«", "‹" ]
+    ">" : [ ">", "》", "〉", "»", "›" ]
+    "$" : [ "NT$", "$", "€", "£", "¥", "¢", "¤" ]
+  half_shape:
+    "<" : [ "<", "《", "〈", "«", "‹" ]
+    ">" : [ ">", "》", "〉", "»", "›" ]
+    "$" : [ "NT$", "$", "€", "£", "¥", "¢", "¤" ]
 
 key_binder:
   import_preset: default
@@ -183,5 +159,7 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
+    email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
+    reverse_lookup: ",[a-z]*'?$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
