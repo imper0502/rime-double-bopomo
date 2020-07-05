@@ -31,13 +31,13 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ "。，", "．，" ]
-  - name: t2tw                  # 正繁轉換
+  - name: t2tw
     reset: 1
-    # 啓用 opencc 字形轉換，但不在選單中顯示。
+    # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
     # states: [ "傳承字", "標準字" ]
-  - name: s2tw                  # 簡繁轉換
+  - name: s2tw
     reset: 1
-    # 啓用 opencc 字形轉換，但不在選單中顯示。
+    # 啓用 opencc 字形轉換，但不在選單中顯示。簡 → 臺
     # states: [ "简化字", "標準字" ]
 
 engine:
@@ -64,7 +64,6 @@ engine:
     - script_translator@abbreviation
     - table_translator@custom_phrase
   filters:
-    - cjk_minifier     # 過濾少用字
     - simplifier@t2tw  # 正繁轉換
     - simplifier@s2tw  # 簡繁轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
@@ -266,8 +265,8 @@ affix_segmentor@abbreviation:
 abbreviation:
   tag: abbreviation
   dictionary: terra_pinyin
-  prism:  abbreviated_double_bopomo
-  prefix: ";"
+  prism:  abbreviated_bopomo
+  prefix: ","
   tips: "【簡拼模式】"
   suffix: "'"
   closing_tips: "【雙碼注音】"
@@ -276,11 +275,10 @@ abbreviation:
   enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
   enable_charset_filter: true           # 是否開啓字符集過濾
   preedit_format:
-    - xform/1(?!$)//
-    # - xform/(.)5(?!$)/5$1/
     - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
     - xform/$/【簡拼】/
+    - xform/1(?!$)//
 
 custom_phrase:
   dictionary: ""
@@ -293,6 +291,7 @@ custom_phrase:
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
+  tips: char
 
 s2tw: # 簡繁轉換
   option_name: s2tw
@@ -301,12 +300,12 @@ s2tw: # 簡繁轉換
 punctuator:
   import_preset: symbols
   full_shape:
-    '<' : [ <, 《, 〈, «, ‹ ]
-    '>' : [ >, 》, 〉, », › ]
+    '<' : [ '<', '《', '〈', '«', '‹' ]
+    '>' : [ '>', '》', '〉', '»', '›' ]
     '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤' ]
   half_shape:
-    '<' : [ <, 《, 〈, «, ‹ ]
-    '>' : [ >, 》, 〉, », › ]
+    '<' : [ '<', '《', '〈', '«', '‹' ]
+    '>' : [ '>', '》', '〉', '»', '›' ]
     '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤' ]
 
 key_binder:
@@ -315,7 +314,7 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
-    abbreviation: ";[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
+    abbreviation: ",[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
