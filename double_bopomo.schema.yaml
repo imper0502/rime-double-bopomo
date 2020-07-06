@@ -345,7 +345,7 @@ abbreviation:
   prism:  abbreviated_bopomo
   prefix: ","
   tips: "【簡拼模式】"
-  suffix: "'"
+  suffix: "e"
   closing_tips: "【雙碼注音】"
   disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
   enable_sentence:  false               # 是否開啓自動造句
@@ -354,7 +354,7 @@ abbreviation:
   preedit_format:
     - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
-    - xform/$/【簡拼】/
+    - xform/^/【簡拼】/
     - xform/1(?!$)//
 
 custom_phrase:
@@ -402,7 +402,7 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
-    abbreviation: ",[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
+    abbreviation: ",[a-df-zIUYAOEQHWSRKDJFL1-5]*e?$"
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     # uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
