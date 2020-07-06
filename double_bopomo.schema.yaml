@@ -36,11 +36,11 @@ switches:
   - name: t2tw
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
-    # states: [ "傳承字", "標準字" ]
-  - name: s2tw
-    reset: 1
+    # states: [ "傳承字", "教標字" ]
+  - name: tw2s
+    reset: 0
     # 啓用 opencc 字形轉換，但不在選單中顯示。簡 → 臺
-    # states: [ "简化字", "標準字" ]
+    states: [ "教標字", "简化字" ]
     
 engine:
   processors:
@@ -68,7 +68,7 @@ engine:
   filters:
     - cjk_minifier     # 字符集過濾〔用於script_translator，使之支援extended_charset開關〕
     - simplifier@t2tw  # 正繁轉換
-    - simplifier@s2tw  # 簡繁轉換
+    - simplifier@tw2s  # 簡繁轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
     - reverse_lookup_filter@comment_bopomo
     - reverse_lookup_filter@comment_cangjie
@@ -330,9 +330,10 @@ t2tw: # 正繁轉換
   tips: char
   show_in_comment: true
 
-s2tw: # 簡繁轉換
-  option_name: s2tw
-  opencc_config: s2tw.json
+tw2s: # 簡繁轉換
+  option_name: tw2s
+  opencc_config: tw2s.json
+  tips: all
 
 punctuator:
   import_preset: symbols
