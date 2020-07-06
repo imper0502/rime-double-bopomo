@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.1"
+  version: "1.2"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -203,8 +203,8 @@ speller:
     - fuzz/([a-z])[a-z](\d)/$1$2/
 
 translator:
-  enable_charset_filter: true
-  strict_spelling: true
+  strict_spelling: true  # 影響 speller 中，fuzz運算的行爲。
+  spelling_hints: 3
   dictionary: terra_pinyin
   prism: double_bopomo
   preedit_format:
@@ -285,7 +285,66 @@ translator:
     - xform/(?<![⇦◌])$/⇦/ #[⇦　◌⇨]
     - xform/◌◌$/◌/
     - xform/◌(?!$)/$1/
-
+  comment_format:          # 提示按鍵
+    - erase/^xx$/          # 移除【xx】編碼
+    - xform/^m(\d)$/mu$1/  # ㄇ調 → ㄇㄨ調
+    - xform/^r5$/er5/      # 〜兒
+    - xform/v/ü/           # v → ü/
+    - xform/iu/iou/        # 補上漏音
+    - xform/ui/uei/        # 補上漏音
+    - xform/iong/üng/      # [jqx]iong → [jqx]üng
+    - xform/ong/ung/       # yong, -ong → yung, -ung
+    - xform/(^| )yu/ü/     # yue, yuan, yun, yung  → üe, üan, ün, üng
+    - xform/(^| )yi?/i/    # yi, y- → i, i-
+    - xform/(^| )wu?/u/    # wu, w- → u, u-
+    - xform/^([jqx])u/$1ü/ # 取消ㄐㄑㄒ的省略表示法
+    - xform/([iuü])n/$1en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng
+    - xform/(^| )zh/A/
+    - xform/(^| )ch/V/
+    - xform/(^| )sh/O/
+    - xform/ang/J/
+    - xform/eng/F/
+    - xform/ai/H/
+    - xform/ei/W/
+    - xform/ao/S/
+    - xform/ou/R/
+    - xform/an/K/
+    - xform/en/D/
+    - xform/er/L/
+    - xform/eh/Q/
+    - xform/([iü])e/$1Q/
+    - xlit/AVO/avo/  # 聲母一律小寫
+    - xform/ü/y/     # `Y鍵`輸入ü
+    - xlit/QHWSRKDJFL/qhwsrkdjfl/  # 韻母也一律小寫
+    - xform/^([iuyaoeqhwsrkdjfl]\d)/e$1/
+    - derive/(^| )x([iy])/f$1/           # ㄈㄒ共用`F鍵`
+    - derive/(^| )([avorzcs])i(\d)/$1$2/ # ㄓㄔㄕㄖㄗㄘㄙ的韻母可以省略
+    - derive/(^| )z([a-z]*[1-5])/w$1/    # `W鍵`也可以輸入ㄗ
+    - derive/^e([iuy])(\d)/$1$2/     # 介音有聲調時，不需前綴零聲母
+    - derive/([eiy])q(?=\d)/$1e/     # ㄝㄜ共用`E鍵`
+    - xform/([a-z])y[qe](?=\d)/$1_q/ # ㄩㄝ
+    - xform/([a-z])[uy]k(?=\d)/$1_t/ # ㄨㄢ、ㄩㄢ
+    - xform/([a-z])(if|uh)(?=\d)/$1_g/ # ㄧㄥ、ㄨㄞ
+    - xform/([a-z])[uy]d(?=\d)/$1_z/   # ㄨㄣ、ㄩㄣ
+    - xform/([a-z])[iu]a(?=\d)/$1_x/   # ㄧㄚ、ㄨㄚ
+    - xform/([a-z])[iu]j(?=\d)/$1_c/   # ㄧㄤ、ㄨㄤ
+    - xform/([a-z])(id|uw)(?=\d)/$1_v/ # ㄧㄣ、ㄨㄟ
+    - xform/([a-z])ir(?=\d)/$1_b/      # ㄧㄡ
+    - xform/([a-z])u?o(?=\d)/$1_o/   # ㄛ、ㄨㄛ
+    - xform/([a-z])i[qe](?=\d)/$1_p/ # ㄧㄝ
+    - xform/([a-z])[uy]f(?=\d)/$1_l/ # ㄨㄥ、ㄩㄥ
+    - xform/([a-z])is(?=\d)/$1_n/ # ㄧㄠ
+    - xform/([a-z])ik(?=\d)/$1_m/ # ㄧㄢ
+    - xform/([a-z])_([a-z])/$1$2/ # 去除底線
+    - derive/([jqx])r/$1k/  # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
+    - derive/([jqx])z/$1d/  # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
+    - derive/([jqx])l/$1f/  # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
+    - derive/([a-zA-Z]{1,2})5/$1;g /
+    - derive/([a-zA-Z]{1,2})4/$1;f /
+    - derive/([a-zA-Z]{1,2})3/$1;d /
+    - derive/([a-zA-Z]{1,2})2/$1;s /
+    - derive/([a-zA-Z]{1,2})1/$1; /
+    
 affix_segmentor@abbreviation:
   extra_tags:
     - reverse_lookup
@@ -356,7 +415,7 @@ recognizer:
     abbreviation: ",[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
-    uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
+    # uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
 
 comment_bopomo:
