@@ -343,9 +343,9 @@ abbreviation:
   tag: abbreviation
   dictionary: terra_pinyin
   prism:  abbreviated_bopomo
-  prefix: ","
+  prefix: ";"
   tips: "【簡拼模式】"
-  suffix: "e"
+  suffix: "'"
   closing_tips: "【雙碼注音】"
   disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
   enable_sentence:  false               # 是否開啓自動造句
@@ -402,7 +402,7 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
-    abbreviation: ",[a-df-zIUYAOEQHWSRKDJFL1-5]*e?$"
+    abbreviation: ";[a-df-zIUYAOEQHWSRKDJFL1-5]*'?$"
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     # uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
