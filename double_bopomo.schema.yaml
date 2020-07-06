@@ -186,7 +186,7 @@ speller:
     - xform/([a-z])_([a-z])/$1$2/ # 去除底線
     # 到此，「雙拼 + 調」完成
   # 進階的雙拼規則，使用更方便
-    - derive/([jqx])r/$1k/  # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
+    - derive/([jqx])t/$1k/  # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
     - derive/([jqx])z/$1d/  # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
     - derive/([jqx])l/$1f/  # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
   # 輸入聲調（不用數字鍵）
@@ -196,10 +196,9 @@ speller:
     - derive/([a-zA-Z]{1,2})2/$1;s/
     - derive/([a-zA-Z]{1,2})1/$1;/
   # 省略聲調
+    - derive/([A-Z])\d/$1/
     - derive/([a-z]{2})\d/$1/
   # 設定簡拼（abbrev）、略拼（fuzz）
-    # - abbrev/[A-Z]\d/$0/
-    # - abbrev/([A-Z])\d/$1/
     - abbrev/([a-z])[a-z]\d/$1/
     - abbrev/([a-z])[a-z](\d)/$1$2/
 
