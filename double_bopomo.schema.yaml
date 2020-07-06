@@ -62,14 +62,17 @@ engine:
   translators:
     - echo_translator
     - punct_translator
-    - script_translator
+    # - script_translator
+    - table_translator
     - script_translator@abbreviation
     - table_translator@custom_phrase
   filters:
-    - cjk_minifier     # 字符集過濾〔用於script_translator，使之支援extended_charset開關〕
     - simplifier@t2tw  # 正繁轉換
     - simplifier@s2tw  # 簡繁轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
+    # - cjk_minifier        # 最新版已刪除該功能；字符集過濾：用於script_translator，使之支援extended_charset開關
+    # - charset_filter@big5 # 最新版已刪除該功能
+    # - charset_filter@gbk  # 最新版已刪除該功能
     - reverse_lookup_filter@comment_bopomo
     - reverse_lookup_filter@comment_cangjie
     - reverse_lookup_filter@comment_pinyin
@@ -212,7 +215,7 @@ translator:
     - xform/(^|[ '])a/$1Z/
     - xform/(^|[ '])v/$1C/
     - xform/(^|[ '])o/$1S/
-    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/   # 虛韻母ㄭㆨ
+    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/
     - xform/(^|[ '])([ZCSrzcs])i/$1$2/
     #### () ####
     - xform/yu/ㄩ/          # 衍生yu
@@ -313,15 +316,25 @@ custom_phrase:
   enable_sentence: false
   initial_quality: 1
 
+# big5:
+  # option_name: big5
+  # charset: big5
+
+# gbk:
+  # option_name: gbk
+  # charset: gbk
+
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
-  tips: char
   show_in_comment: true
+  tips: char
 
 s2tw: # 簡繁轉換
   option_name: s2tw
   opencc_config: s2tw.json
+  show_in_comment: true
+  tips: char
 
 punctuator:
   import_preset: symbols
