@@ -36,11 +36,11 @@ switches:
   - name: t2tw
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
-    # states: [ "傳承字", "教標字" ]
-  - name: tw2s
-    reset: 0
+    # states: [ "傳承字", "標準字" ]
+  - name: s2tw
+    reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。簡 → 臺
-    states: [ "教標字", "简化字" ]
+    # states: [ "简化字", "標準字" ]
     
 engine:
   processors:
@@ -62,14 +62,17 @@ engine:
   translators:
     - echo_translator
     - punct_translator
-    - script_translator
+    # - script_translator
+    - table_translator
     - script_translator@abbreviation
     - table_translator@custom_phrase
   filters:
-    - cjk_minifier     # 字符集過濾〔用於script_translator，使之支援extended_charset開關〕
     - simplifier@t2tw  # 正繁轉換
-    - simplifier@tw2s  # 簡繁轉換
+    - simplifier@s2tw  # 簡繁轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
+    # - cjk_minifier        # 最新版已刪除該功能；字符集過濾：用於script_translator，使之支援extended_charset開關
+    # - charset_filter@big5 # 最新版已刪除該功能
+    # - charset_filter@gbk  # 最新版已刪除該功能
     - reverse_lookup_filter@comment_bopomo
     - reverse_lookup_filter@comment_cangjie
     - reverse_lookup_filter@comment_pinyin
@@ -156,15 +159,15 @@ speller:
     # 左手中排：ASDFG
     # - xform/([a-z])a(?=\d)/$1_a/     # ㄚ；未作更動，故註解此行
     # - xform/([a-z])s(?=\d)/$1_s/     # ㄠ；未作更動，故註解此行
-    # - xform/([a-z])d(?=\d)/$1_d/     # ㄣ；未作更動，故註解此行
-    # - xform/([a-z])f(?=\d)/$1_f/     # ㄥ；未作更動，故註解此行
-    - xform/([a-z])(if|uh)(?=\d)/$1_g/ # ㄧㄥ、ㄨㄞ
+    - xform/([a-z])y?d(?=\d)/$1_d/   # ㄣ、ㄩㄣ
+    - xform/([a-z])y?f(?=\d)/$1_f/   # ㄥ、ㄩㄥ
+    - xform/([a-z])if|uh(?=\d)/$1_g/ # ㄧㄥ、ㄨㄞ
     # 左手下排：ZXCVB
-    - xform/([a-z])[uy]d(?=\d)/$1_z/   # ㄨㄣ、ㄩㄣ
-    - xform/([a-z])[iu]a(?=\d)/$1_x/   # ㄧㄚ、ㄨㄚ
-    - xform/([a-z])[iu]j(?=\d)/$1_c/   # ㄧㄤ、ㄨㄤ
-    - xform/([a-z])(id|uw)(?=\d)/$1_v/ # ㄧㄣ、ㄨㄟ
-    - xform/([a-z])ir(?=\d)/$1_b/      # ㄧㄡ
+    - xform/([a-z])[uy]d(?=\d)/$1_z/ # ㄨㄣ、ㄩㄣ
+    - xform/([a-z])[iu]a(?=\d)/$1_x/ # ㄧㄚ、ㄨㄚ
+    - xform/([a-z])[iu]j(?=\d)/$1_c/ # ㄧㄤ、ㄨㄤ
+    - xform/([a-z])id|uw(?=\d)/$1_v/ # ㄧㄣ、ㄨㄟ
+    - xform/([a-z])ir(?=\d)/$1_b/    # ㄧㄡ
     # 右手上排：YUIOP
     # - xform/([a-z])y(?=\d)/$1_y/     # ㄩ；未作更動，故註解此行
     # - xform/([a-z])u(?=\d)/$1_u/     # ㄨ；未作更動，故註解此行
@@ -174,7 +177,7 @@ speller:
     # 右手中排：HJKL;
     # - xform/([a-z])h(?=\d)/$1_h/     # ㄞ；未作更動，故註解此行
     # - xform/([a-z])j(?=\d)/$1_j/     # ㄤ；未作更動，故註解此行
-    # - xform/([a-z])k(?=\d)/$1_k/     # ㄢ；未作更動，故註解此行
+    - xform/([a-z])y?k(?=\d)/$1_k/   # ㄢ、ㄩㄢ
     - xform/([a-z])[uy]f(?=\d)/$1_l/ # ㄨㄥ、ㄩㄥ
     ### 本方案不佔用分號 ###
     # 右手下排：NM,./
@@ -185,35 +188,26 @@ speller:
     ### 本方案不佔用"／" ###
     - xform/([a-z])_([a-z])/$1$2/ # 去除底線
     # 到此，「雙拼 + 調」完成
-  # 進階的雙拼規則，使用更方便
-    - derive/([jqx])t/$1k/  # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
-    - derive/([jqx])z/$1d/  # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
-    - derive/([jqx])l/$1f/  # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
   # 輸入聲調（不用數字鍵）
-    - derive/([a-zA-Z]{1,2})5/$1;g/
-    - derive/([a-zA-Z]{1,2})4/$1;f/
-    - derive/([a-zA-Z]{1,2})3/$1;d/
-    - derive/([a-zA-Z]{1,2})2/$1;s/
-    - derive/([a-zA-Z]{1,2})1/$1;/
+    - derive/([a-z]{2})5/$1;g/
+    - derive/([a-z]{2})4/$1;f/
+    - derive/([a-z]{2})3/$1;d/
+    - derive/([a-z]{2})2/$1;s/
+    - derive/([a-z]{2})1/$1;/
   # 省略聲調
-    - derive/([A-Z])\d/$1/
     - derive/([a-z]{2})\d/$1/
   # 設定簡拼（abbrev）、略拼（fuzz）
-    - abbrev/([a-z])[a-z]\d/$1/
-    - abbrev/([a-z])[a-z](\d)/$1$2/
+    - fuzz/[A-Z]\d/$0/
+    - fuzz/([A-Z])\d/$1/
+    - fuzz/([a-z])[a-z]\d/$1/
+    - fuzz/([a-z])[a-z](\d)/$1$2/
 
 translator:
-  strict_spelling: true  # 影響 speller 中，fuzz運算的行爲。
-  enable_completion: true
+  enable_charset_filter: true
+  strict_spelling: true
   dictionary: terra_pinyin
   prism: double_bopomo
   preedit_format:
-    - xform/([a-zA-Z]{1,2});g/$1_5/
-    - xform/([a-zA-Z]{1,2});f/$1_4/
-    - xform/([a-zA-Z]{1,2});d/$1_3/
-    - xform/([a-zA-Z]{1,2});s/$1_2/
-    - xform/([a-zA-Z]{1,2});/$1_1/
-    - xform/_//
     #### (0) ####
     - xform/([ '])[ ']+/$1/
     - xform/(^|[ '])w/$1z/
@@ -221,7 +215,7 @@ translator:
     - xform/(^|[ '])a/$1Z/
     - xform/(^|[ '])v/$1C/
     - xform/(^|[ '])o/$1S/
-    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/   # 虛韻母ㄭㆨ
+    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/
     - xform/(^|[ '])([ZCSrzcs])i/$1$2/
     #### () ####
     - xform/yu/ㄩ/          # 衍生yu
@@ -288,7 +282,6 @@ translator:
     - xform/(?<=[bpmfdtnlgkhjqxZCSrzcsiuy])$/◌/
     - xlit/bpmfdtnlgkhjqxZCSrzcsO/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌/
     - xlit/iuyaoeR 12345/ㄧㄨㄩㄚㄛㄜㄦ　ˉˊˇˋ˙/
-    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
     - xform/(?<![⇦◌])$/⇦/ #[⇦　◌⇨]
     - xform/◌◌$/◌/
     - xform/◌(?!$)/$1/
@@ -323,16 +316,25 @@ custom_phrase:
   enable_sentence: false
   initial_quality: 1
 
+# big5:
+  # option_name: big5
+  # charset: big5
+
+# gbk:
+  # option_name: gbk
+  # charset: gbk
+
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
-  tips: char
   show_in_comment: true
+  tips: char
 
-tw2s: # 簡繁轉換
-  option_name: tw2s
-  opencc_config: tw2s.json
-  tips: all
+s2tw: # 簡繁轉換
+  option_name: s2tw
+  opencc_config: s2tw.json
+  show_in_comment: true
+  tips: char
 
 punctuator:
   import_preset: symbols
