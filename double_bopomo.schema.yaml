@@ -188,11 +188,11 @@ speller:
       # 本方案不佔用"／" #
     # 到此，「雙拼 + 調」完成
   # 輸入聲調（不用數字鍵）
-    - derive/([a-z]{2})5/$1;g/
-    - derive/([a-z]{2})4/$1;f/
-    - derive/([a-z]{2})3/$1;d/
-    - derive/([a-z]{2})2/$1;s/
-    - derive/([a-z]{2})1/$1;/
+    - derive/([a-zA-Z]{1,2})1/$1;/
+    - derive/([a-zA-Z]{1,2})2/$1;s/
+    - derive/([a-zA-Z]{1,2})3/$1;d/
+    - derive/([a-zA-Z]{1,2})4/$1;f/
+    - derive/([a-zA-Z]{1,2})5/$1;g/
   # 省略聲調
     - derive/([a-z]{2})\d/$1/
   # 設定簡拼（abbrev）、略拼（fuzz）
