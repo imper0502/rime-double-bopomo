@@ -207,84 +207,73 @@ translator:
   dictionary: terra_pinyin
   prism: double_bopomo
   preedit_format:
-    #### (0) ####
-    - xform/([ '])[ ']+/$1/
-    - xform/(^|[ '])w/$1z/
-    - xform/(^|[ '])e/$1O/
-    - xform/(^|[ '])a/$1Z/
-    - xform/(^|[ '])v/$1C/
-    - xform/(^|[ '])o/$1S/
-    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/
-    - xform/(^|[ '])([ZCSrzcs])i/$1$2/
-    #### () ####
-    - xform/yu/ㄩ/          # 衍生yu
-    - xform/([jqx])a/$1x/   # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
-    - xform/([jqx])s/$1n/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
-    - xform/([jqx])r/$1b/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
-    - xform/([jqx])j/$1c/   # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
-    - xform/f([ixpnbmvcgyqetzl])/x$1/      # 衍生ㄒ
-    - xform/(O)l/$1R/       # ㄦ*
-    - xform/(O)[qp]/$1ㄝ/   # ㄝ
-    - xform/(i)[weq]/$1ㄝ/  # ㄧㄝ
-    - xform/(y)[weq]/$1ㄝ/  # ㄩㄝ
-    - xform/(y)[k]/$1ㄢ/    # ㄩㄢ
-    - xform/(y)[d]/$1ㄣ/    # ㄩㄣ
-    - xform/(y)[fl]/$1ㄥ/   # ㄩㄥ
-    #### () ####
-    - xform/([nljqx])q/$1ㄩㄝ/
-    - xform/([jqx])e/$1ㄩㄝ/
-    - xform/([jqx])[kt]/$1ㄩㄢ/
-    - xform/([jqx])[dz]/$1ㄩㄣ/
-    - xform/([jqx])[fl]/$1ㄩㄥ/
-    #### () ####/
-    - xform/([gkhZCSr])x/$1ㄨㄚ/
-    - xform/([dtnlgkhZCSrzcs])o/$1ㄨㄛ/
-    - xform/([gkhZCS])g/$1ㄨㄞ/
-    - xform/([dtgkhZCSrzcs])v/$1ㄨㄟ/
-    - xform/([dtnlgkhZCSrzcs])t/$1ㄨㄢ/
-    - xform/(\w)z/$1ㄨㄣ/
-    - xform/([^nljqx 'zcsrw])c/$1ㄨㄤ/
-    - xform/(\w)l/$1ㄨㄥ/
-    #### () ####
-    - xform/(\w)x/$1ㄧㄚ/
-    - xform/(\w)p/$1ㄧㄝ/
-    - xform/([bpmfdtnljqx])n/$1ㄧㄠ/
-    - xform/(\w)b/$1ㄧㄡ/
-    #### () ####
-    - xform/(\w)m/$1ㄧㄢ/
-    - xform/iv/id/
-    - xform/(\w)v/$1ㄧㄣ/
-    - xform/([jqxnl])c/$1ㄧㄤ/
-    - xform/ig/if/
-    - xform/(\w)g/$1ㄧㄥ/
-    #### () ####
-    - xform/(\w)h/$1ㄞ/  # ㄞ
-    - xform/(\w)w/$1ㄟ/  # ㄟ
-    - xform/(\w)s/$1ㄠ/  # ㄠ
-    - xform/(\w)r/$1ㄡ/  # ㄡ
-    #### (40) ####
-    - xform/(\w)k/$1ㄢ/  # ㄢ
-    - xform/(\w)d/$1ㄣ/  # ㄣ
-    - xform/(\w)j/$1ㄤ/  # ㄤ
-    - xform/(\w)f/$1ㄥ/  # ㄥ
-    #### () ####
-    - xform/([jqx])u/$1y/
-    - xform/1(?!$)//
-    - xform/(..)5(?!$)/5$1/
-    - xform/y([iu])$/$1⇦/
-    - xform/y([iu])/$1/
-    - xform/([iuy])\1$/$1⇦/
-    - xform/([iuy])\1/$1/
-    - xform/O([iuyR])$/$1⇦/
-    #### () ####
-    - xform/(?<=[bpmfdtnlgkhjqxZCSrzcs][iuy])$/⇦/
-    - xform/(?<=[bpmfdtnlgkhjqxZCSrzcsiuy])$/◌/
-    - xlit/bpmfdtnlgkhjqxZCSrzcsO/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌/
-    - xlit/iuyaoeR 12345/ㄧㄨㄩㄚㄛㄜㄦ　ˉˊˇˋ˙/
-    - xform/(?<![⇦◌])$/⇦/ #[⇦　◌⇨]
-    - xform/◌◌$/◌/
-    - xform/◌(?!$)/$1/
-  comment_format:          # 提示雙拼按鍵
+  # 雙拼反運算到注音
+    # 反算聲調
+    - xform/([a-zA-Z]{1,2});g/$1_5/
+    - xform/([a-zA-Z]{1,2});f/$1_4/
+    - xform/([a-zA-Z]{1,2});d/$1_3/
+    - xform/([a-zA-Z]{1,2});s/$1_2/
+    - xform/([a-zA-Z]{1,2});/$1_1/
+    - xform/_//
+    #
+    - xform/(?<=[jqx])[kt]/YK/   # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
+    - xform/(?<=[jqx])[dz]/YD/   # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
+    - xform/(?<=[jqx])[fl]/YF/   # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
+    - xform/(?<=[jqx])[ax]/IA/   # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
+    - xform/(?<=[jqx])[sn]/IS/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
+    - xform/(?<=[jqx])[rb]/IR/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
+    - xform/(?<=[jqx])[jc]/IJ/   # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
+    - xform/(?<=f)t/YK/     # ㄒㄩㄢ
+    - xform/(?<=f)z/YD/     # ㄒㄩㄣ
+    - xform/(?<=f)c/IJ/     # ㄒㄧㄤ
+    - xform/(?<=f)l/YF/     # ㄒㄩㄥ
+    # 右下
+    - xform/(?<=[a-z])n/IS/ # ㄧㄠ
+    - xform/(?<=[a-z])m/IK/ # ㄧㄢ
+    # 右中
+    - xform/(?<=[a-z])h/H/     # ㄞ
+    - xform/(?<=[a-z])j/J/     # ㄤ
+    - xform/(?<=[a-z])k/K/     # ㄢ
+    - xform/(?<=[a-z])l/UF/    # ㄨㄥ
+    # 右下
+    - xform/(?<=[a-z])y/Y/     # ㄩ
+    - xform/(?<=[a-z])u/U/     # ㄨ
+    - xform/(?<=[a-z])i/I/     # ㄧ
+    - xform/(?<=[dtnlgkhavorzcsw])o/UO/  # ㄨㄛ
+    - xform/(?<=[a-z])o/O/  # ㄛ
+    - xform/(?<=[a-z])p/IQ/ # ㄧㄝ
+    #
+    - xform/(?<=[a-z])z/UD/   # ㄨㄣ
+    - xform/(?<=[lf])x/IA/    # ㄧㄚ
+    - xform/(?<=[a-z])x/UA/   # ㄨㄚ
+    - xform/(?<=[a-z])c/UJ/   # ㄨㄤ
+    - xform/(?<=[dtgkhZCSrzcs])v/UW/ # ㄨㄟ
+    - xform/(?<=[a-z])v/ID/   # ㄧㄣ
+    - xform/(?<=[a-z])b/IR/   # ㄧㄡ
+    #
+    - xform/(?<=[a-z])a/A/     # ㄚ
+    - xform/(?<=[a-z])s/S/     # ㄠ
+    - xform/(?<=[a-z])d/D/     # ㄣ
+    - xform/(?<=[a-z])f/F/     # ㄥ
+    - xform/(?<=[gkhZCS])g/UH/ # ㄨㄞ
+    - xform/(?<=[a-z])g/IF/    # ㄧㄥ
+    #
+    - xform/(?<=[a-z])q/YQ/    # ㄩㄝ
+    - xform/(?<=[a-z])w/W/     # ㄟ
+    - xform/(?<=[a-z])e/E/     # ㄜ
+    - xform/(?<=[a-z])r/R/     # ㄡ
+    - xform/(?<=[a-z])t/UK/    # ㄨㄢ
+    #
+    - xform/f(?=[IY])/x/
+    # - xform/([ '])[ ']+/$1/
+    - xform/(?<=[bpmfdtnlgkhjqxavorzcsiuy])$/◌/
+    - xform/(?<=[avorzcsw])I$/😬/
+    - xform/(?<=[avorzcsw])I//
+    - xlit/bpmfdtnlgkhjqxavorzcseiuyw/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩㄗ/
+    - xlit/IUYAOEQHWSRKDJFL 12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ　ˉˊˇˋ˙/
+    # - xform/◌◌$/◌/
+    - xform/◌(?!$)//
+  comment_format:          # 提示雙拼按鍵：F = x 的提示要注意
   # 在 `comment_format` 底下，xform = derive 運算
     - erase/^xx$/          # 移除【xx】編碼
     - xform/(^| )m(\d)/$1mu$2/  # ㄇ調 → ㄇㄨ調
