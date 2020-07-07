@@ -74,8 +74,8 @@ engine:
 
 # 修改候選單標籤、修改候選單大小
 menu:
-  alternative_select_labels: [ ①, ②, ③, ④, ⑤, ⑥, ⑦, ⑧, ⑨ ]
-  alternative_select_keys: 1234567890
+  alternative_select_labels: [ ６, ７, ８, ９, ０ ]
+  alternative_select_keys: 67890
   page_size: 5
 
 # 修改候選單標籤格式
