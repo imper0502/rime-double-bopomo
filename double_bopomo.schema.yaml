@@ -4,12 +4,12 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2"
+  version: "1.2.1"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
     注音的雙拼方案。
-    
+
     會注音就可以學會，不需額外學習漢語拼音。
     -----------------------------------------
     ㄧㄨㄩ在 IUY；E 當〇聲母
@@ -17,11 +17,10 @@ schema:
     未來也許會有雙碼拼音專用的詞庫吧
     -----------------------------------------
     layout version: 20191031A
-
   dependencies:
     - cangjie5
-    - terra_pinyin
 
+# 定義開關
 switches:
   - name: ascii_mode
     reset: 0
@@ -31,8 +30,6 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ "。，", "．，" ]
-  - name: extended_charset
-    reset: 1
   - name: t2tw
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
@@ -41,7 +38,8 @@ switches:
     reset: 0
     # 啓用 opencc 字形轉換，但不在選單中顯示。簡 → 臺
     states: [ "教標字", "简化字" ]
-    
+
+# 載入RIME
 engine:
   processors:
     - key_binder
@@ -62,26 +60,31 @@ engine:
   translators:
     - echo_translator
     - punct_translator
-    # - script_translator
-    - table_translator
+    - script_translator
+    - reverse_lookup_translator
     - script_translator@abbreviation
     - table_translator@custom_phrase
   filters:
     - simplifier@t2tw  # 正繁轉換
     - simplifier@tw2s  # 簡繁轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
-    # - cjk_minifier        # 最新版已刪除該功能；字符集過濾：用於script_translator，使之支援extended_charset開關
-    # - charset_filter@big5 # 最新版已刪除該功能
-    # - charset_filter@gbk  # 最新版已刪除該功能
     - reverse_lookup_filter@comment_bopomo
     - reverse_lookup_filter@comment_cangjie
     - reverse_lookup_filter@comment_pinyin
 
+# 修改候選單標籤、修改候選單大小
 menu:
-  alternative_select_keys: 67890
- 
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤, ⑥, ⑦, ⑧, ⑨ ]
+  alternative_select_keys: 1234567890
+  page_size: 5
+
+# 修改候選單標籤格式
+style:
+  label_format: ' %s '  
+
+# 定義雙碼注音拼寫規則
 speller:
-  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoe12345IUYAOEQHWSRKDJFL;"
+  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL;12345"
   initials: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL"
   finals: "12345"
   delimiter: " '"
@@ -204,9 +207,10 @@ speller:
     - abbrev/([a-z])[a-z]\d/$1/
     - abbrev/([a-z])[a-z](\d)/$1$2/
 
+# 定義主要翻譯器
 translator:
   strict_spelling: true  # 影響 speller 中，fuzz運算的行爲。
-  spelling_hints: 3
+  initial_quality: 0.99
   dictionary: terra_pinyin
   prism: double_bopomo
   preedit_format:
@@ -276,24 +280,61 @@ translator:
     - xlit/IUYAOEQHWSRKDJFL 12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ　ˉˊˇˋ˙/
     # - xform/◌◌$/◌/
     - xform/◌(?!$)//
+
+# 定義強制【縮寫注音】模式（簡拼模式）
+abbreviation:
+  tag: abbreviation
+  dictionary: terra_pinyin
+  prism:  abbreviated_bopomo
+  prefix: ";"
+  tips: "【簡拼模式】"
+  suffix: "'"
+  closing_tips: "【雙碼注音】"
+  disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
+  enable_sentence:  false               # 是否開啓自動造句
+  enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
+  enable_charset_filter: true           # 是否開啓字符集過濾
+  preedit_format:
+    - xform/1(?!$)//
+    - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
+    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
+
+# 定義使用者詞庫
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+
+# 定義用倉頡查詢雙碼注音
+reverse_lookup:
+  dictionary: cangjie5
+  enable_completion: true
+  prefix: "`"
+  suffix: "'"
+  tips: 〔倉頡〕
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
   comment_format:          # 提示雙拼按鍵：F = x 的提示要注意
   # 在 `comment_format` 底下，xform = derive 運算
     - erase/^xx$/          # 移除【xx】編碼
-    - xform/(^| )m(\d)/$1mu$2/  # ㄇ調 → ㄇㄨ調
-    - xform/(^| )r5$/$1er5/      # 〜兒
+    - xform/^m(\d)$/mu$1/  # ㄇ調 → ㄇㄨ調
+    - xform/^r5$/er5/      # 〜兒
     - xform/v/ü/           # v → ü/
     - xform/iu/iou/        # 補上漏音
     - xform/ui/uei/        # 補上漏音
     - xform/iong/üng/      # [jqx]iong → [jqx]üng
     - xform/ong/ung/       # yong, -ong → yung, -ung
-    - xform/(^| )yu/$1ü/     # yue, yuan, yun, yung  → üe, üan, ün, üng
-    - xform/(^| )yi?/$1i/    # yi, y- → i, i-
-    - xform/(^| )wu?/$1u/    # wu, w- → u, u-
+    - xform/(^| )yu/ü/     # yue, yuan, yun, yung  → üe, üan, ün, üng
+    - xform/(^| )yi?/i/    # yi, y- → i, i-
+    - xform/(^| )wu?/u/    # wu, w- → u, u-
     - xform/^([jqx])u/$1ü/ # 取消ㄐㄑㄒ的省略表示法
-    - xform/(?<=[iuü])n/en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng
-    - xform/(^| )zh/$1A/
-    - xform/(^| )ch/$1V/
-    - xform/(^| )sh/$1O/
+    - xform/([iuü])n/$1en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng
+    - xform/(^| )zh/A/
+    - xform/(^| )ch/V/
+    - xform/(^| )sh/O/
     - xform/ang/J/
     - xform/eng/F/
     - xform/ai/H/
@@ -309,7 +350,7 @@ translator:
     - xform/ü/y/     # `Y鍵`輸入ü
     - xlit/QHWSRKDJFL/qhwsrkdjfl/  # 韻母也一律小寫
     - xform/(^| )(?=[iuyaoeqhwsrkdjfl]\d)/$1e/
-    - xform/(^| )x(?<=[iy])/$1f/           # ㄈㄒ共用`F鍵`
+    - xform/(^| )x(?=[iy])/$1f/           # ㄈㄒ共用`F鍵`
     - xform/(^| )z([a-z]*[1-5])/$1w$2/    # `W鍵`也可以輸入ㄗ
     - xform/(?<=[eiy])q(?=\d)/e/     # ㄝㄜ共用`E鍵`
     - xform/(?<=[a-z])y[qe](?=\d)/q/ # ㄩㄝ
@@ -329,7 +370,7 @@ translator:
     - xform/(?<=[jqx])z/d/  # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
     - xform/(?<=[jqx])l/f/  # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
     # 到此，雙碼注音最佳指法 + 以數字表示的聲調
-    - xform/([a-zA-Z]{1,2})\d/$1 /  # 移除數字聲調；若註解此行，則提示輸入聲調時的按鍵（非數字）
+    # - xform/([a-zA-Z]{1,2})\d/$1 /  # 移除數字聲調；若註解此行，則提示輸入聲調時的按鍵（非數字）
     - xform/^([avorzcs])i(\d)/$1$2/ # ㄓㄔㄕㄖㄗㄘㄙ有聲調時，韻母可以省略
     - xform/^e([iuy]\d)/$1/         # 介音有聲調時，不需前綴零聲母
     - xform/([a-zA-Z]{1,2})5/$1;g /
@@ -337,57 +378,38 @@ translator:
     - xform/([a-zA-Z]{1,2})3/$1;d /
     - xform/([a-zA-Z]{1,2})2/$1;s /
     - xform/([a-zA-Z]{1,2})1/$1; /
-    
-affix_segmentor@abbreviation:
-  extra_tags:
-    - reverse_lookup
 
-abbreviation:
-  tag: abbreviation
-  dictionary: terra_pinyin
-  prism:  abbreviated_bopomo
-  prefix: ";"
-  tips: "【簡拼模式】"
-  suffix: "'"
-  closing_tips: "【雙碼注音】"
-  disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
-  enable_sentence:  false               # 是否開啓自動造句
-  enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
-  enable_charset_filter: true           # 是否開啓字符集過濾
-  preedit_format:
-    - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
-    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
-    - xform/^/【簡拼】/
-    - xform/1(?!$)//
-
-custom_phrase:
-  dictionary: ""
-  user_dict: custom_phrase
-  db_class: stabledb
-  enable_completion: false
-  enable_sentence: false
-  initial_quality: 1
-
-# big5:
-  # option_name: big5
-  # charset: big5
-
-# gbk:
-  # option_name: gbk
-  # charset: gbk
-
+# 設定OpenCC字體轉換
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
   show_in_comment: true
   tips: char
 
-s2tw: # 簡繁轉換
-  option_name: s2tw
-  opencc_config: s2tw.json
-  show_in_comment: true
-  tips: char
+tw2s: # 繁簡轉換
+  option_name: tw2s
+  opencc_config: tw2s.json
+  tips: all
 
+# 定義功能鍵
+editor:
+  bindings:
+    # Return: commit_script_text
+    # BackSpace: back_syllable
+    # confirm	輸出候選項
+    # commit_comment	輸出候選項備注
+    # commit_raw_input	輸出原始輸入按鍵
+    # commit_script_text	輸出注音預覽
+    # commit_composition	語句流單字上屏
+    # revert	撤消上次輸入
+    # back	按字符回退
+    # back_syllable	按音節回退
+    # delete_candidate	刪除候選項
+    # delete	向後刪除
+    # cancel	取消輸入
+    # noop	空
+
+# 定義句讀、標點符號
 punctuator:
   import_preset: symbols
   full_shape:
@@ -399,18 +421,21 @@ punctuator:
     '>' : [ '>', '》', '〉', '»', '›' ]
     '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤' ]
 
+# 定義按鍵綁定
 key_binder:
   import_preset: default
 
+# 定義標籤匹配
 recognizer:
   import_preset: default
   patterns:
     abbreviation: ";[a-df-zIUYAOEQHWSRKDJFL1-5]*'?$"
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
-    # uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
+    reverse_lookup: "`[a-z]*'?$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
 
+# 定義反查濾鏡 
 comment_bopomo:
   tags: [ none ]
   overwrite_comment: true
