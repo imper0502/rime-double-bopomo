@@ -4,12 +4,12 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2"
+  version: "1.2.1"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
     注音的雙拼方案。
-    
+
     會注音就可以學會，不需額外學習漢語拼音。
     -----------------------------------------
     ㄧㄨㄩ在 IUY；E 當〇聲母
@@ -17,10 +17,8 @@ schema:
     未來也許會有雙碼拼音專用的詞庫吧
     -----------------------------------------
     layout version: 20191031A
-
   dependencies:
     - cangjie5
-    - terra_pinyin
 
 switches:
   - name: ascii_mode
@@ -40,8 +38,8 @@ switches:
   - name: s2tw
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。簡 → 臺
-    # states: [ "简化字", "標準字" ]
-    
+    states: [ "教標字", "简化字" ]
+
 engine:
   processors:
     - key_binder
@@ -63,6 +61,7 @@ engine:
     - echo_translator
     - punct_translator
     - script_translator
+    - reverse_lookup_translator
     - script_translator@abbreviation
     - table_translator@custom_phrase
   filters:
@@ -75,10 +74,15 @@ engine:
     - reverse_lookup_filter@comment_pinyin
 
 menu:
-  alternative_select_keys: 67890
- 
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤, ⑥, ⑦, ⑧, ⑨ ]
+  alternative_select_keys: 1234567890
+  page_size: 5
+
+style:
+  label_format: ' %s '  # 候選標籤格式
+  
 speller:
-  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoe12345IUYAOEQHWSRKDJFL;"
+  alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL;12345"
   initials: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL"
   finals: "12345"
   delimiter: " '"
@@ -201,88 +205,113 @@ speller:
 
 translator:
   strict_spelling: true  # 影響 speller 中，fuzz運算的行爲。
-  spelling_hints: 3
+  enable_sentence: true
+  spelling_hints: 0
   dictionary: terra_pinyin
   prism: double_bopomo
   preedit_format:
-    #### (0) ####
-    - xform/([ '])[ ']+/$1/
-    - xform/(^|[ '])w/$1z/
-    - xform/(^|[ '])e/$1O/
-    - xform/(^|[ '])a/$1Z/
-    - xform/(^|[ '])v/$1C/
-    - xform/(^|[ '])o/$1S/
-    - xform/(^|[ '])([ZCSrzcs])i$/$1$2😬/   # 虛韻母ㄭㆨ
-    - xform/(^|[ '])([ZCSrzcs])i/$1$2/
-    #### () ####
-    - xform/yu/ㄩ/          # 衍生yu
-    - xform/([jqx])a/$1x/   # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
-    - xform/([jqx])s/$1n/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
-    - xform/([jqx])r/$1b/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
-    - xform/([jqx])j/$1c/   # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
-    - xform/f([ixpnbmvcgyqetzl])/x$1/      # 衍生ㄒ
-    - xform/(O)l/$1R/       # ㄦ*
-    - xform/(O)[qp]/$1ㄝ/   # ㄝ
-    - xform/(i)[weq]/$1ㄝ/  # ㄧㄝ
-    - xform/(y)[weq]/$1ㄝ/  # ㄩㄝ
-    - xform/(y)[k]/$1ㄢ/    # ㄩㄢ
-    - xform/(y)[d]/$1ㄣ/    # ㄩㄣ
-    - xform/(y)[fl]/$1ㄥ/   # ㄩㄥ
-    #### () ####
-    - xform/([nljqx])q/$1ㄩㄝ/
-    - xform/([jqx])e/$1ㄩㄝ/
-    - xform/([jqx])[kt]/$1ㄩㄢ/
-    - xform/([jqx])[dz]/$1ㄩㄣ/
-    - xform/([jqx])[fl]/$1ㄩㄥ/
-    #### () ####/
-    - xform/([gkhZCSr])x/$1ㄨㄚ/
-    - xform/([dtnlgkhZCSrzcs])o/$1ㄨㄛ/
-    - xform/([gkhZCS])g/$1ㄨㄞ/
-    - xform/([dtgkhZCSrzcs])v/$1ㄨㄟ/
-    - xform/([dtnlgkhZCSrzcs])t/$1ㄨㄢ/
-    - xform/(\w)z/$1ㄨㄣ/
-    - xform/([^nljqx 'zcsrw])c/$1ㄨㄤ/
-    - xform/(\w)l/$1ㄨㄥ/
-    #### () ####
-    - xform/(\w)x/$1ㄧㄚ/
-    - xform/(\w)p/$1ㄧㄝ/
-    - xform/([bpmfdtnljqx])n/$1ㄧㄠ/
-    - xform/(\w)b/$1ㄧㄡ/
-    #### () ####
-    - xform/(\w)m/$1ㄧㄢ/
-    - xform/iv/id/
-    - xform/(\w)v/$1ㄧㄣ/
-    - xform/([jqxnl])c/$1ㄧㄤ/
-    - xform/ig/if/
-    - xform/(\w)g/$1ㄧㄥ/
-    #### () ####
-    - xform/(\w)h/$1ㄞ/  # ㄞ
-    - xform/(\w)w/$1ㄟ/  # ㄟ
-    - xform/(\w)s/$1ㄠ/  # ㄠ
-    - xform/(\w)r/$1ㄡ/  # ㄡ
-    #### (40) ####
-    - xform/(\w)k/$1ㄢ/  # ㄢ
-    - xform/(\w)d/$1ㄣ/  # ㄣ
-    - xform/(\w)j/$1ㄤ/  # ㄤ
-    - xform/(\w)f/$1ㄥ/  # ㄥ
-    #### () ####
-    - xform/([jqx])u/$1y/
+  # 雙拼反運算到注音
+    # 反算聲調
+    - xform/([a-zA-Z]{1,2});g/$1_5/
+    - xform/([a-zA-Z]{1,2});f/$1_4/
+    - xform/([a-zA-Z]{1,2});d/$1_3/
+    - xform/([a-zA-Z]{1,2});s/$1_2/
+    - xform/([a-zA-Z]{1,2});/$1_1/
+    - xform/_//
+    #
+    - xform/(?<=[jqx])[kt]/YK/   # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
+    - xform/(?<=[jqx])[dz]/YD/   # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
+    - xform/(?<=[jqx])[fl]/YF/   # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
+    - xform/(?<=[jqx])[ax]/IA/   # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
+    - xform/(?<=[jqx])[sn]/IS/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
+    - xform/(?<=[jqx])[rb]/IR/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
+    - xform/(?<=[jqx])[jc]/IJ/   # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
+    - xform/(?<=f)t/YK/     # ㄒㄩㄢ
+    - xform/(?<=f)z/YD/     # ㄒㄩㄣ
+    - xform/(?<=f)c/IJ/     # ㄒㄧㄤ
+    - xform/(?<=f)l/YF/     # ㄒㄩㄥ
+    # 右下
+    - xform/(?<=[a-z])n/IS/ # ㄧㄠ
+    - xform/(?<=[a-z])m/IK/ # ㄧㄢ
+    # 右中
+    - xform/(?<=[a-z])h/H/     # ㄞ
+    - xform/(?<=[a-z])j/J/     # ㄤ
+    - xform/(?<=[a-z])k/K/     # ㄢ
+    - xform/(?<=[a-z])l/UF/    # ㄨㄥ
+    # 右下
+    - xform/(?<=[a-z])y/Y/     # ㄩ
+    - xform/(?<=[a-z])u/U/     # ㄨ
+    - xform/(?<=[a-z])i/I/     # ㄧ
+    - xform/(?<=[dtnlgkhavorzcsw])o/UO/  # ㄨㄛ
+    - xform/(?<=[a-z])o/O/  # ㄛ
+    - xform/(?<=[a-z])p/IQ/ # ㄧㄝ
+    #
+    - xform/(?<=[a-z])z/UD/   # ㄨㄣ
+    - xform/(?<=[lf])x/IA/    # ㄧㄚ
+    - xform/(?<=[a-z])x/UA/   # ㄨㄚ
+    - xform/(?<=[a-z])c/UJ/   # ㄨㄤ
+    - xform/(?<=[dtgkhZCSrzcs])v/UW/ # ㄨㄟ
+    - xform/(?<=[a-z])v/ID/   # ㄧㄣ
+    - xform/(?<=[a-z])b/IR/   # ㄧㄡ
+    #
+    - xform/(?<=[a-z])a/A/     # ㄚ
+    - xform/(?<=[a-z])s/S/     # ㄠ
+    - xform/(?<=[a-z])d/D/     # ㄣ
+    - xform/(?<=[a-z])f/F/     # ㄥ
+    - xform/(?<=[gkhZCS])g/UH/ # ㄨㄞ
+    - xform/(?<=[a-z])g/IF/    # ㄧㄥ
+    #
+    - xform/(?<=[a-z])q/YQ/    # ㄩㄝ
+    - xform/(?<=[a-z])w/W/     # ㄟ
+    - xform/(?<=[a-z])e/E/     # ㄜ
+    - xform/(?<=[a-z])r/R/     # ㄡ
+    - xform/(?<=[a-z])t/UK/    # ㄨㄢ
+    #
+    - xform/f(?=[IY])/x/
+    # - xform/([ '])[ ']+/$1/
+    - xform/(?<=[bpmfdtnlgkhjqxavorzcsiuy])$/◌/
+    - xform/(?<=[avorzcsw])I$/😬/
+    - xform/(?<=[avorzcsw])I//
+    - xlit/bpmfdtnlgkhjqxavorzcseiuyw/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩㄗ/
+    - xlit/IUYAOEQHWSRKDJFL 12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ　ˉˊˇˋ˙/
+    # - xform/◌◌$/◌/
+    - xform/◌(?!$)//
+
+abbreviation:
+  tag: abbreviation
+  dictionary: terra_pinyin
+  prism:  abbreviated_bopomo
+  prefix: ";"
+  tips: "【簡拼模式】"
+  suffix: "'"
+  closing_tips: "【雙碼注音】"
+  disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
+  enable_sentence:  false               # 是否開啓自動造句
+  enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
+  enable_charset_filter: true           # 是否開啓字符集過濾
+  preedit_format:
     - xform/1(?!$)//
-    - xform/(..)5(?!$)/5$1/
-    - xform/y([iu])$/$1⇦/
-    - xform/y([iu])/$1/
-    - xform/([iuy])\1$/$1⇦/
-    - xform/([iuy])\1/$1/
-    - xform/O([iuyR])$/$1⇦/
-    #### () ####
-    - xform/(?<=[bpmfdtnlgkhjqxZCSrzcs][iuy])$/⇦/
-    - xform/(?<=[bpmfdtnlgkhjqxZCSrzcsiuy])$/◌/
-    - xlit/bpmfdtnlgkhjqxZCSrzcsO/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌/
-    - xlit/iuyaoeR 12345/ㄧㄨㄩㄚㄛㄜㄦ　ˉˊˇˋ˙/
-    - xform/(?<![⇦◌])$/⇦/ #[⇦　◌⇨]
-    - xform/◌◌$/◌/
-    - xform/◌(?!$)/$1/
-  comment_format:          # 提示按鍵
+    - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
+    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
+
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+
+reverse_lookup:
+  dictionary: cangjie5
+  enable_completion: true
+  prefix: "`"
+  suffix: "'"
+  tips: 〔倉頡〕
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
+  comment_format:          # 提示雙拼按鍵：F = x 的提示要注意
+  # 在 `comment_format` 底下，xform = derive 運算
     - erase/^xx$/          # 移除【xx】編碼
     - xform/^m(\d)$/mu$1/  # ㄇ調 → ㄇㄨ調
     - xform/^r5$/er5/      # 〜兒
@@ -313,64 +342,35 @@ translator:
     - xlit/AVO/avo/  # 聲母一律小寫
     - xform/ü/y/     # `Y鍵`輸入ü
     - xlit/QHWSRKDJFL/qhwsrkdjfl/  # 韻母也一律小寫
-    - xform/^([iuyaoeqhwsrkdjfl]\d)/e$1/
-    - derive/(^| )x([iy])/f$1/           # ㄈㄒ共用`F鍵`
-    - derive/(^| )([avorzcs])i(\d)/$1$2/ # ㄓㄔㄕㄖㄗㄘㄙ的韻母可以省略
-    - derive/(^| )z([a-z]*[1-5])/w$1/    # `W鍵`也可以輸入ㄗ
-    - derive/^e([iuy])(\d)/$1$2/     # 介音有聲調時，不需前綴零聲母
-    - derive/([eiy])q(?=\d)/$1e/     # ㄝㄜ共用`E鍵`
-    - xform/([a-z])y[qe](?=\d)/$1_q/ # ㄩㄝ
-    - xform/([a-z])[uy]k(?=\d)/$1_t/ # ㄨㄢ、ㄩㄢ
-    - xform/([a-z])(if|uh)(?=\d)/$1_g/ # ㄧㄥ、ㄨㄞ
-    - xform/([a-z])[uy]d(?=\d)/$1_z/   # ㄨㄣ、ㄩㄣ
-    - xform/([a-z])[iu]a(?=\d)/$1_x/   # ㄧㄚ、ㄨㄚ
-    - xform/([a-z])[iu]j(?=\d)/$1_c/   # ㄧㄤ、ㄨㄤ
-    - xform/([a-z])(id|uw)(?=\d)/$1_v/ # ㄧㄣ、ㄨㄟ
-    - xform/([a-z])ir(?=\d)/$1_b/      # ㄧㄡ
-    - xform/([a-z])u?o(?=\d)/$1_o/   # ㄛ、ㄨㄛ
-    - xform/([a-z])i[qe](?=\d)/$1_p/ # ㄧㄝ
-    - xform/([a-z])[uy]f(?=\d)/$1_l/ # ㄨㄥ、ㄩㄥ
-    - xform/([a-z])is(?=\d)/$1_n/ # ㄧㄠ
-    - xform/([a-z])ik(?=\d)/$1_m/ # ㄧㄢ
-    - xform/([a-z])_([a-z])/$1$2/ # 去除底線
-    - derive/([jqx])r/$1k/  # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
-    - derive/([jqx])z/$1d/  # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
-    - derive/([jqx])l/$1f/  # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
-    - derive/([a-zA-Z]{1,2})5/$1;g /
-    - derive/([a-zA-Z]{1,2})4/$1;f /
-    - derive/([a-zA-Z]{1,2})3/$1;d /
-    - derive/([a-zA-Z]{1,2})2/$1;s /
-    - derive/([a-zA-Z]{1,2})1/$1; /
-    
-affix_segmentor@abbreviation:
-  extra_tags:
-    - reverse_lookup
-
-abbreviation:
-  tag: abbreviation
-  dictionary: terra_pinyin
-  prism:  abbreviated_bopomo
-  prefix: ","
-  tips: "【簡拼模式】"
-  suffix: "'"
-  closing_tips: "【雙碼注音】"
-  disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
-  enable_sentence:  false               # 是否開啓自動造句
-  enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
-  enable_charset_filter: true           # 是否開啓字符集過濾
-  preedit_format:
-    - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
-    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
-    - xform/$/【簡拼】/
-    - xform/1(?!$)//
-
-custom_phrase:
-  dictionary: ""
-  user_dict: custom_phrase
-  db_class: stabledb
-  enable_completion: false
-  enable_sentence: false
-  initial_quality: 1
+    - xform/(^| )(?=[iuyaoeqhwsrkdjfl]\d)/$1e/
+    - xform/(^| )x(?=[iy])/$1f/           # ㄈㄒ共用`F鍵`
+    - xform/(^| )z([a-z]*[1-5])/$1w$2/    # `W鍵`也可以輸入ㄗ
+    - xform/(?<=[eiy])q(?=\d)/e/     # ㄝㄜ共用`E鍵`
+    - xform/(?<=[a-z])y[qe](?=\d)/q/ # ㄩㄝ
+    - xform/(?<=[a-z])[uy]k(?=\d)/t/ # ㄨㄢ、ㄩㄢ
+    - xform/(?<=[a-z])(if|uh)(?=\d)/g/ # ㄧㄥ、ㄨㄞ
+    - xform/(?<=[a-z])[uy]d(?=\d)/z/   # ㄨㄣ、ㄩㄣ
+    - xform/(?<=[a-z])[iu]a(?=\d)/x/   # ㄧㄚ、ㄨㄚ
+    - xform/(?<=[a-z])[iu]j(?=\d)/c/   # ㄧㄤ、ㄨㄤ
+    - xform/(?<=[a-z])(id|uw)(?=\d)/v/ # ㄧㄣ、ㄨㄟ
+    - xform/(?<=[a-z])ir(?=\d)/b/      # ㄧㄡ
+    - xform/(?<=[a-z])u?o(?=\d)/o/   # ㄛ、ㄨㄛ
+    - xform/(?<=[a-z])i[qe](?=\d)/p/ # ㄧㄝ
+    - xform/(?<=[a-z])[uy]f(?=\d)/l/ # ㄨㄥ、ㄩㄥ
+    - xform/(?<=[a-z])is(?=\d)/n/ # ㄧㄠ
+    - xform/(?<=[a-z])ik(?=\d)/m/ # ㄧㄢ
+    - xform/(?<=[jqx])t/k/  # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
+    - xform/(?<=[jqx])z/d/  # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
+    - xform/(?<=[jqx])l/f/  # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
+    # 到此，雙碼注音最佳指法 + 以數字表示的聲調
+    # - xform/([a-zA-Z]{1,2})\d/$1 /  # 移除數字聲調；若註解此行，則提示輸入聲調時的按鍵（非數字）
+    - xform/^([avorzcs])i(\d)/$1$2/ # ㄓㄔㄕㄖㄗㄘㄙ有聲調時，韻母可以省略
+    - xform/^e([iuy]\d)/$1/         # 介音有聲調時，不需前綴零聲母
+    - xform/([a-zA-Z]{1,2})5/$1;g /
+    - xform/([a-zA-Z]{1,2})4/$1;f /
+    - xform/([a-zA-Z]{1,2})3/$1;d /
+    - xform/([a-zA-Z]{1,2})2/$1;s /
+    - xform/([a-zA-Z]{1,2})1/$1; /
 
 t2tw: # 正繁轉換
   option_name: t2tw
@@ -378,9 +378,26 @@ t2tw: # 正繁轉換
   tips: char
   show_in_comment: true
 
-s2tw: # 簡繁轉換
-  option_name: s2tw
-  opencc_config: s2tw.json
+tw2s: # 簡繁轉換
+  option_name: tw2s
+  opencc_config: tw2s.json
+  tips: all
+editor:
+  bindings:
+    # Return: commit_script_text
+    # BackSpace: back_syllable
+    # confirm	輸出候選項
+    # commit_comment	輸出候選項備注
+    # commit_raw_input	輸出原始輸入按鍵
+    # commit_script_text	輸出注音預覽
+    # commit_composition	語句流單字上屏
+    # revert	撤消上次輸入
+    # back	按字符回退
+    # back_syllable	按音節回退
+    # delete_candidate	刪除候選項
+    # delete	向後刪除
+    # cancel	取消輸入
+    # noop	空
 
 punctuator:
   import_preset: symbols
@@ -402,9 +419,9 @@ recognizer:
     abbreviation: ",[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
-    # uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
-
+    reverse_lookup: "`[a-z]*'?$"
+    
 comment_bopomo:
   tags: [ none ]
   overwrite_comment: true
