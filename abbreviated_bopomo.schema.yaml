@@ -1,0 +1,165 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: abbreviated_bopomo
+  name: "簡拼注音"
+  version: "1.1"
+  author:
+    - imper0502 <yoj845@gmail.com>
+  description: |
+    簡拼注音
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ "中", "En" ]
+  - name: full_shape
+    reset: 0
+    states: [ "半形", "全形" ]
+  - name: ascii_punct
+    reset: 0
+    states: [ "。，", "．，" ]
+  - name: t2tw
+    reset: 1
+    # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 繁
+    # states: [ "傳承字", "標準字" ]
+  - name: s2tw
+    reset: 1
+    # 啓用 opencc 字形轉換，但不在選單中顯示。簡 → 繁
+    # states: [ "简化字", "標準字" ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - echo_translator
+    - punct_translator
+    - script_translator
+  filters:
+    - simplifier@t2tw  # 正 → 繁
+    - simplifier@s2tw  # 簡 → 繁
+    - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
+
+t2tw: # 正 → 繁
+  option_name: t2tw
+  opencc_config: t2tw.json
+  tips: char
+
+s2tw: # 簡 → 繁
+  option_name: s2tw
+  opencc_config: s2tw.json
+
+menu:
+  alternative_select_keys: 67890
+
+speller:
+  alphabet: "bpmfdtnlgkhjqxavorzcsiuyewIUYAOEQHWSRKDJFL12345"
+  finals: "12345"
+  delimiter: " '"
+  algebra:
+  # 預處理
+    - erase/^xx$/          # 移除【xx】編碼
+    - xform/^m(\d)$/mu$1/  # ㄇ調 → ㄇㄨ調
+    - xform/^r5$/er5/      # 〜兒
+    - xform/v/ü/           # v → ü/
+    - xform/iu/iou/        # 補上漏音
+    - xform/ui/uei/        # 補上漏音
+    - xform/iong/üng/      # [jqx]iong → [jqx]üng
+    - xform/ong/ung/       # yong, -ong → yung, -ung
+    - xform/^yu/ü/         # yue, yuan, yun, yung  → üe, üan, ün, üng
+    - xform/^yi?/i/        # yi, y- → i, i-
+    - xform/^wu?/u/        # wu, w- → u, u-
+    - xform/^([jqx])u/$1ü/ # 取消省略的寫法
+    - xform/([iuü])n/$1en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng
+  # 開始轉換輸入鍵
+    # 三個「二合聲母」ㄓㄔㄕ
+    - xform/^zh/A/
+    - xform/^ch/V/
+    - xform/^sh/O/
+    # 兩個「三合韻母」ㄤㄥ
+    - xform/ang/J/
+    - xform/eng/F/
+    # 六個「二合韻母」ㄞㄟㄠㄡㄢㄣ
+    - xform/ai/H/
+    - xform/ei/W/
+    - xform/ao/S/
+    - xform/ou/R/
+    - xform/an/K/
+    - xform/en/D/
+    # ㄦ及ㄝ
+    - xform/er/L/
+    - xform/eh/Q/
+    - xform/([iü])e/$1Q/
+    # 到此，【terra pinyin】→【bopomofo】
+  # 輸入鍵轉換
+    - xlit/AVO/avo/  # 聲母一律小寫
+    - xform/ü/y/     # y鍵輸入ü
+    - xlit/QHWSRKDJFL/qhwsrkdjfl/ # 韻母也一律小寫
+  # 不使用零聲母，而是用大寫表示韻母獨立音節
+    - xform/^i(\d)/I$1/
+    - xform/^u(\d)/U$1/
+    - xform/^y(\d)/Y$1/
+    - xform/^a(\d)/A$1/
+    - xform/^o(\d)/O$1/
+    - xform/^e(\d)/E$1/
+    - xform/^q(\d)/Q$1/
+    - xform/^h(\d)/H$1/
+    - xform/^w(\d)/W$1/
+    - xform/^s(\d)/S$1/
+    - xform/^r(\d)/R$1/
+    - xform/^k(\d)/K$1/
+    - xform/^d(\d)/D$1/
+    - xform/^j(\d)/J$1/
+    - xform/^f(\d)/F$1/
+    - xform/^l(\d)/L$1/
+    # ㄓㄔㄕㄖㄗㄘㄙ的韻母省略，才是注音
+    - xform/^([avorzcs])i(\d)/$1$2/
+    # 到此，基本注音拼寫規則完成
+  # 設定簡拼（abbrev）、略拼（fuzz）
+    - fuzz/([A-Z])\d/$1/
+    - fuzz/([a-z])[a-z]*\d/$1/
+    - fuzz/([a-z])[a-z]*(\d)/$1$2/
+
+translator:
+  enable_charset_filter: true
+  strict_spelling: true
+  dictionary: terra_pinyin
+  prism: abbreviated_bopomo
+  preedit_format:
+    - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘ厶◌ㄧㄨㄩ/
+    - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
+
+punctuator:
+  import_preset: symbols
+  full_shape:
+    "<" : [ "<", "《", "〈", "«", "‹" ]
+    ">" : [ ">", "》", "〉", "»", "›" ]
+    "$" : [ "NT$", "$", "€", "£", "¥", "¢", "¤" ]
+  half_shape:
+    "<" : [ "<", "《", "〈", "«", "‹" ]
+    ">" : [ ">", "》", "〉", "»", "›" ]
+    "$" : [ "NT$", "$", "€", "£", "¥", "¢", "¤" ]
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: "^[a-z][-_.0-9a-z]*@.*$"
+    punct: "^/([0-9]0?|[A-Za-z]+)$"
+    url: "^(www[.]|https?:|ftp:|mailto:).*$"
