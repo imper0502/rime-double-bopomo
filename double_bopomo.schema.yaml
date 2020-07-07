@@ -234,6 +234,7 @@ translator:
     - xform/(?<=f)z/YD/     # ㄒㄩㄣ
     - xform/(?<=f)c/IJ/     # ㄒㄧㄤ
     - xform/(?<=f)l/YF/     # ㄒㄩㄥ
+    - xform/(?<=[iy])q/Q/
     # 右下
     - xform/(?<=[a-z])n/IS/ # ㄧㄠ
     - xform/(?<=[a-z])m/IK/ # ㄧㄢ
