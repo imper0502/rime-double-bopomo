@@ -3,7 +3,7 @@
   給**注音**使用者的雙拼輸入法。學習高效率的雙拼輸入法之前不再需要額外學習漢語拼音。
 
 ## 鍵位圖
-  ![KB layout](https://github.com/imper0502/rime-double-bopomo/blob/master/double_bopomo_keyboard_layout.jpg)
+  ![KB layout](https://i.imgur.com/ILvyrbM.jpg)
 
 ## 說明
   目前，這是一個 Rime 輸入法引擎與 cin 碼表的輸入方案，需要安裝以下任何一款 Rime 輸入法（推薦）或其他可讀 cin 碼表的輸入法，方可使用：
@@ -24,7 +24,7 @@
   3. 0️⃣聲母：介音與所有的韻母（ㄧㄨㄩ、ㄚㄛㄜㄝ、ㄞㄟㄠㄡ、ㄢㄣㄤㄥ及兒化韻母ㄦ）獨存時，先按零聲母，再按對應的按鍵。  零聲母放在 `E 鍵`上，用 emoji: 🈳/0️⃣ 表示，因爲`Empty`。
   
   如此，所有的注音符號音節（但不包括尖團音），全部編碼成兩碼了。
-  另外，目前是12345輸入聲調，但聲調不是必要的；67890選字。此外，ㄗ放 `W 鍵`的設計，參考了法語鍵盤（azerty keyboard）。
+  另外，目前是12345輸入聲調，但聲調不是必要的；67890選字。此外，ㄗ放 `W 鍵`的設計，參考了法語鍵盤（azerty keyboard）`Z 鍵` `W 鍵` 交換的設計。
  
 ### 簡拼規則
   1. 注音 + 聲調（數字１～５）；所以改用６～０選字（預設一頁五字）  
@@ -37,6 +37,14 @@
 	
 ### 其他規則（不知道也不影響正常使用）
   1. ㄧㄨㄩ ㄚㄛㄜㄝ ㄞㄟㄠㄡ ㄢㄣㄤㄥ ㄦ 也可以直接 `Shift` + 【對應按鍵】，效果和「輸入規則 3.」相同。**簡拼模式時非常有用。**
+  2. 預設使用聲調當輔助碼  
+     雙拼 + 【;】 = 一聲；  
+     雙拼 + 【;s】 = 二聲；2 向下移動2排  
+     雙拼 + 【;d】 = 三聲；3 向下移動2排  
+     雙拼 + 【;f】 = 四聲；4 向下移動2排  
+     雙拼 + 【;g】 = 輕聲；5 向下移動2排  
+  3. 不知道如何拼的字，按下【`】後，使用**倉頡**查詢雙碼注音。
+    > ⚠️可以自行替換反查的輸入法
   
 ### 學習指引（銜接方案）
   可以先從**全碼注音**—— `full_bopomofo.schema.yaml`，這個銜接方案開始。這個方案沒有結合韻；保留0️⃣聲母、😬韻母。  
@@ -46,16 +54,18 @@
   ![full bopomofo KB layout](https://i.imgur.com/dskVzSG.jpg)
   
 ### 檔名解釋
-  - `double_bopomo.schema.yaml`：Rime 輸入方案檔，字典檔使用 Rime 內建的「**地球拼音**」字典檔，使之與「地球拼音」、「注音」等方案**共用**詞庫。
-  - `double_bopomo_vocabulary.schema.yaml`：Rime 輸入方案檔，雙碼注音的簡拼模式。  
-    > ⚠️請務必把`double_bopomo.schema.yaml`和`double_bopomo_vocabulary.schema.yaml`「**一起**」放到 Rime 的**使用者資料夾**裡面。
+  - `double_bopomo.schema.yaml`：Rime 輸入方案檔，字典檔使用 Rime 內建的「地球拼音」字典檔，使之與「地球拼音」、「注音」等方案共用詞庫。
+  - `abbreviated_bopomo.schema.yaml`：Rime 輸入方案檔，縮寫注音，雙碼注音的簡拼模式。  
+    > ⚠️請務必把`abbreviated_bopomo.schema.yaml`跟`double_bopomo.schema.yaml`【一起】放到 Rime 的使用者資料夾裡面。
   - `cangjie.yaml`：需要使用倉頡輸入法當輔助輸入法的人，請參考。
   - `pinyin.yaml`：需要使用拼音輸入法當輔助輸入法的人，請參考。
   ---
   - `double_bopomo_keyboard_layout.jpg`：雙碼注音的基本鍵盤佈局圖。
   - `trime.custom.yaml`：同文輸入法鍵盤設定檔。
+  - `BIG5_double_bopomo_NO_tone.cin`：大五碼雙碼注音 CIN 檔。
+  - `BIG5_double_bopomo_with_tone.cin`：大五碼「三碼」注音 CIN 檔，雙碼注音 + 一碼聲調（數字）。
   - `CNS_double_bopomo_NO_tone.cin`：全字庫雙碼注音 CIN 檔。
-  - `CNS_double_bopomo_with_tone.cin`：全字庫「三碼」注音 CIN 檔，雙碼注音 + 一碼聲調。
+  - `CNS_double_bopomo_with_tone.cin`：全字庫「三碼」注音 CIN 檔，雙碼注音 + 一碼聲調（數字）。
   - `README.md`：本檔案。
 
 ## 相關連結
@@ -82,4 +92,4 @@
   由[jamessa](https://github.com/jamessa)提供的雙碼注音按鍵熱力圖
   
 ## 銘謝
-  1. [Rime](https://rime.im/) 輸入法引擎開發者 [佛振](https://github.com/lotem) 先生及所有貢獻者；
+  1. [Rime](https://rime.im/) 輸入法引擎開發者 [佛振](https://github.com/lotem) 先生及所有貢獻者。
