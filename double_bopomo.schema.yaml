@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2.1"
+  version: "1.2.2"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -74,8 +74,8 @@ engine:
 
 # 修改候選單標籤、修改候選單大小
 menu:
-  alternative_select_labels: [ ①, ②, ③, ④, ⑤, ⑥, ⑦, ⑧, ⑨ ]
-  alternative_select_keys: 1234567890
+  alternative_select_labels: [ ６, ７, ８, ９, ０ ]
+  alternative_select_keys: 67890
   page_size: 5
 
 # 修改候選單標籤格式
@@ -234,6 +234,9 @@ translator:
     - xform/(?<=f)z/YD/     # ㄒㄩㄣ
     - xform/(?<=f)c/IJ/     # ㄒㄧㄤ
     - xform/(?<=f)l/YF/     # ㄒㄩㄥ
+    - xform/(?<=[iy])e/Q/   # ㄝ
+    - xform/(?<=[eiy])q/Q/
+    - xform/(?<=e)l/L/      # ㄦ
     # 右下
     - xform/(?<=[a-z])n/IS/ # ㄧㄠ
     - xform/(?<=[a-z])m/IK/ # ㄧㄢ
