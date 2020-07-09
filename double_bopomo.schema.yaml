@@ -389,7 +389,6 @@ t2tw: # 正繁轉換
 s2tw: # 簡繁轉換
   option_name: s2tw
   opencc_config: s2tw.json
-  tips: none
 
 tw2s: # 繁簡轉換
   option_name: tw2s
@@ -434,7 +433,7 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
-    abbreviation: ";[a-df-zIUYAOEQHWSRKDJFL1-5]*'?$"
+    abbreviation: ";[a-df-vxyzIUYAOEQHWSRKDJFL1-5]*'?$"
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
     reverse_lookup: "`[a-z]*'?$"

@@ -153,7 +153,6 @@ t2tw: # 正繁轉換
 s2tw: # 簡繁轉換
   option_name: s2tw
   opencc_config: s2tw.json
-  tips: none
 
 tw2s: # 繁簡轉換
   option_name: tw2s
