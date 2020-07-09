@@ -7,7 +7,7 @@
 # ⚠️若是部署失敗，在「Rime 使用者資料夾」中，放入地球拼音，再試一次。
 
 patch:
-  # schema/dependencies/@next: terra_pinyin #這行目前不需要
+  # schema/dependencies/@next: terra_pinyin # 這行目前不需要
   engine/segmentors/@next: affix_segmentor@pinyin
   engine/translators/@next: script_translator@pinyin
   recognizer/patterns/pinyin: "`P[a-z]*=?$"

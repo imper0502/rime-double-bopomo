@@ -22,7 +22,7 @@ patch:
     ### 第二排：上排 ###
     - {label: 'ㄑ', hint: "ㄝ|ㄩㄝ", click: 'q', long_click: '~', swipe_up: '～'}
     - {label: 'ㄗ', hint: "ㄟ", click: 'w', long_click: '-', swipe_up: '——'}
-    - {label: '🈳', hint: "ㄜ(ㄝ)", click: 'e', long_click: '+'}
+    - {label: '〇', hint: "ㄜ(ㄝ)", click: 'e', long_click: '+'}
     - {label: 'ㄖ', hint: "ㄡ", click: 'r', long_click: Date}
     - {label: 'ㄊ', hint: "ㄨㄢ", click: 't', long_click: '々'}
     - {label: 'ㄩ', hint: "", click: 'y', long_click: '〃'}
@@ -35,17 +35,17 @@ patch:
     - {label: 'ㄙ', hint: "ㄠ", click: 's', long_click: '¦', swipe_up: '‖'}
     - {label: 'ㄉ', hint: "ㄣ|ㄩㄣ", click: 'd', long_click: '·', swipe_up: '・'}
     - {label: 'ㄈ', hint: "ㄥ|ㄩㄥ", click: 'f', long_click: '§'}
-    - {label: 'ㄍㄨㄞ', hint: "ㄧㄥ", click: 'g', long_click: '|', swipe_up: '｜'}
+    - {label: 'ㄍ', hint: "ㄨㄞ·ㄧㄥ", click: 'g', long_click: '|', swipe_up: '｜'}
     - {label: 'ㄏ', hint: "ㄞ", click: 'h', long_click: Left}
     - {label: 'ㄐ', hint: "ㄤ", click: 'j', long_click: Down}
     - {label: 'ㄎ', hint: "ㄢ|ㄩㄢ", click: 'k', long_click: Up}
     - {label: 'ㄌ', hint: "ㄦ|ㄨㄥ", click: 'l', long_click: Right}
-    - {label: '簡拼', hint: "", click: '`', long_click: '='}
+    - {label: '簡拼', hint: "長按反查", click: ';', long_click: '`'}
     ### 第四排：下排 ###
     - {label: 'ㄗ', hint: "ㄨㄣ", click: 'z', long_click: ''}
     - {label: 'ㄒ', hint: "ㄧ/ㄨㄚ", click: 'x', long_click: cut}
     - {label: 'ㄘ', hint: "ㄧ/ㄨㄤ", click: 'c', long_click: copy}
-    - {label: 'ㄔㄨㄟ', hint: "ㄧㄣ", click: 'v', long_click: paste}
+    - {label: 'ㄔ', hint: "ㄨㄟ·ㄧㄣ", click: 'v', long_click: paste}
     - {label: 'ㄅ', hint: "ㄧㄡ", click: 'b', long_click: ''}
     - {label: 'ㄋ', hint: "ㄧㄠ", click: 'n', long_click: ''}
     - {label: 'ㄇ', hint: "ㄧㄢ", click: 'm', long_click: ''}
@@ -53,10 +53,9 @@ patch:
     - {label: '。', hint: ".", click: ".", long_click: '>'}
     - {label: '、', hint: "/", click: '/', long_click: '?'}
     ### 第五排：控制排 ###
-    - {label: '韻母', click: Shift_L, width: 15, send_bindings: false}
-    - {click: Keyboard_symbols, width: 10, long_click: Keyboard_number}
+    - {click: Keyboard_symbols, width: 15, long_click: Keyboard_number}
     - {click: Mode_switch, width: 10, long_click: Menu}
-    - {click: space, width: 30}
-    - {click: ";", width: 10, long_click: ':'}
+    - {label: '簡拼', click: space, width: 25}
+    - {label: '下個字', click: Right, width: 25}
     - {click: BackSpace, width: 10}
     - {click: Return, long_click: CommitComment, width: 15}
