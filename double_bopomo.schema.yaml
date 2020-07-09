@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2.2"
+  version: "1.2.3"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -296,7 +296,6 @@ abbreviation: # 定義強制【縮寫注音】模式（簡拼模式）
   disable_user_dict_for_patterns: false # 禁止某些編碼錄入用戶詞典
   enable_sentence:  false               # 是否開啓自動造句
   enable_user_dict: false               # 是否開啓用戶詞典〔用戶詞典記錄動態字詞頻、用戶詞〕
-  enable_charset_filter: true           # 是否開啓字符集過濾
   preedit_format:
     - xform/1(?!$)//
     - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
