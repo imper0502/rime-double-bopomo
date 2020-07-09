@@ -16,7 +16,7 @@ schema:
     為了和「地球拼音」、「注音。臺灣正體」 共用詞庫，所以依賴地球拼音的詞庫。
     未來也許會有雙碼拼音專用的詞庫吧
     -----------------------------------------
-    layout version: 20191031A
+    layout version -> 20191031A
   dependencies:
     - cangjie5
 
@@ -36,15 +36,15 @@ switches:
     # states: [ "傳承字", "教標字" ]
   - name: tw2s
     reset: 0
-    # 啓用 opencc 字形轉換，但不在選單中顯示。簡 → 臺
+    # 啓用 opencc 字形轉換。
     states: [ "教標字", "简化字" ]
 
 # 載入RIME
 engine:
   processors:
-    - key_binder
     - ascii_composer
     - recognizer
+    - key_binder
     - speller
     - punctuator
     - selector
@@ -72,18 +72,15 @@ engine:
     - reverse_lookup_filter@comment_cangjie
     - reverse_lookup_filter@comment_pinyin
 
-# 修改候選單標籤、修改候選單大小
-menu:
+menu: # 修改候選單標籤、修改候選單大小
   alternative_select_labels: [ ６, ７, ８, ９, ０ ]
   alternative_select_keys: 67890
   page_size: 5
 
-# 修改候選單標籤格式
-style:
+style: # 修改候選單標籤格式
   label_format: ' %s '  
 
-# 定義雙碼注音拼寫規則
-speller:
+speller: # 定義雙碼注音拼寫規則
   alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL;12345"
   initials: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL"
   finals: "12345"
@@ -207,8 +204,7 @@ speller:
     - abbrev/([a-z])[a-z]\d/$1/
     - abbrev/([a-z])[a-z](\d)/$1$2/
 
-# 定義主要翻譯器
-translator:
+translator: # 定義主要翻譯器
   strict_spelling: true  # 影響 speller 中，fuzz運算的行爲。
   initial_quality: 0.99
   dictionary: terra_pinyin
@@ -284,8 +280,7 @@ translator:
     # - xform/◌◌$/◌/
     - xform/◌(?!$)//
 
-# 定義強制【縮寫注音】模式（簡拼模式）
-abbreviation:
+abbreviation: # 定義強制【縮寫注音】模式（簡拼模式）
   tag: abbreviation
   dictionary: terra_pinyin
   prism:  abbreviated_bopomo
@@ -302,8 +297,7 @@ abbreviation:
     - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
 
-# 定義使用者詞庫
-custom_phrase:
+custom_phrase: # 定義使用者詞庫
   dictionary: ""
   user_dict: custom_phrase
   db_class: stabledb
@@ -311,8 +305,7 @@ custom_phrase:
   enable_sentence: false
   initial_quality: 1
 
-# 定義用倉頡查詢雙碼注音
-reverse_lookup:
+reverse_lookup: # 定義用倉頡查詢雙碼注音
   dictionary: cangjie5
   enable_completion: true
   prefix: "`"
