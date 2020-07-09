@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2.1"
+  version: "1.2.2"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -16,10 +16,11 @@ schema:
     為了和「地球拼音」、「注音。臺灣正體」 共用詞庫，所以依賴地球拼音的詞庫。
     未來也許會有雙碼拼音專用的詞庫吧
     -----------------------------------------
-    layout version: 20191031A
+    layout version -> 20191031A
   dependencies:
     - cangjie5
 
+# 定義開關
 switches:
   - name: ascii_mode
     reset: 0
@@ -29,22 +30,21 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ "。，", "．，" ]
-  - name: extended_charset
-    reset: 1
   - name: t2tw
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
-    # states: [ "傳承字", "標準字" ]
-  - name: s2tw
-    reset: 1
-    # 啓用 opencc 字形轉換，但不在選單中顯示。簡 → 臺
+    # states: [ "傳承字", "教標字" ]
+  - name: tw2s
+    reset: 0
+    # 啓用 opencc 字形轉換。
     states: [ "教標字", "简化字" ]
 
+# 載入RIME
 engine:
   processors:
-    - key_binder
     - ascii_composer
     - recognizer
+    - key_binder
     - speller
     - punctuator
     - selector
@@ -65,23 +65,22 @@ engine:
     - script_translator@abbreviation
     - table_translator@custom_phrase
   filters:
-    - cjk_minifier     # 字符集過濾〔用於script_translator，使之支援extended_charset開關〕
     - simplifier@t2tw  # 正繁轉換
-    - simplifier@s2tw  # 簡繁轉換
+    - simplifier@tw2s  # 簡繁轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
     - reverse_lookup_filter@comment_bopomo
     - reverse_lookup_filter@comment_cangjie
     - reverse_lookup_filter@comment_pinyin
 
-menu:
+menu: # 修改候選單標籤、修改候選單大小
   alternative_select_labels: [ ６, ７, ８, ９, ０ ]
   alternative_select_keys: 67890
   page_size: 5
 
-style:
-  label_format: ' %s '  # 候選標籤格式
-  
-speller:
+style: # 修改候選單標籤格式
+  label_format: ' %s '  
+
+speller: # 定義雙碼注音拼寫規則
   alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL;12345"
   initials: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL"
   finals: "12345"
@@ -119,7 +118,7 @@ speller:
     # ㄦ及ㄝ
     - xform/er/L/
     - xform/eh/Q/
-    - xform/([iü])e/$1Q/
+    - xform/(?<=[iü])e/Q/
     # 到此，【terra pinyin】→【bopomofo】
   # 輸入鍵轉換
     - xlit/AVO/avo/  # 聲母一律小寫
@@ -149,64 +148,65 @@ speller:
     - derive/^([avorzcs])i(\d)/$1$2/ # ㄓㄔㄕㄖㄗㄘㄙ的韻母可以省略
     - derive/^z([a-z]*[1-5])/w$1/    # `W鍵`也可以輸入ㄗ
     - derive/^e([iuy])(\d)/$1$2/     # 介音有聲調時，不需前綴零聲母
-    - derive/([eiy])q(?=\d)/$1e/     # ㄝㄜ共用`E鍵`
+    - derive/(?<=[eiy])q(?=\d)/e/    # ㄝㄜ共用`E鍵`
   # 定位結合韻母
     # 左手上排：QWERT
-    - xform/([a-z])y[qe](?=\d)/$1_q/ # ㄩㄝ
-    # - xform/([a-z])w(?=\d)/$1_w/     # ㄟ；未作更動，故註解此行
-    # - xform/([a-z])e(?=\d)/$1_e/     # ㄜ；未作更動，故註解此行
-    # - xform/([a-z])r(?=\d)/$1_r/     # ㄡ；未作更動，故註解此行
-    - xform/([a-z])[uy]k(?=\d)/$1_t/ # ㄨㄢ、ㄩㄢ
+    - xform/(?<=[a-z])y[qe](?=\d)/q/ # ㄩㄝ
+    # - xform/(?<=[a-z])w(?=\d)/w/     # ㄟ；未作更動，故註解此行
+    # - xform/(?<=[a-z])e(?=\d)/e/     # ㄜ；未作更動，故註解此行
+    # - xform/(?<=[a-z])r(?=\d)/r/     # ㄡ；未作更動，故註解此行
+    - xform/(?<=[a-z])[uy]k(?=\d)/t/ # ㄨㄢ、ㄩㄢ
     # 左手中排：ASDFG
-    # - xform/([a-z])a(?=\d)/$1_a/     # ㄚ；未作更動，故註解此行
-    # - xform/([a-z])s(?=\d)/$1_s/     # ㄠ；未作更動，故註解此行
-    - xform/([a-z])y?d(?=\d)/$1_d/   # ㄣ、ㄩㄣ
-    - xform/([a-z])y?f(?=\d)/$1_f/   # ㄥ、ㄩㄥ
-    - xform/([a-z])if|uh(?=\d)/$1_g/ # ㄧㄥ、ㄨㄞ
+    # - xform/(?<=[a-z])a(?=\d)/a/     # ㄚ；未作更動，故註解此行
+    # - xform/(?<=[a-z])s(?=\d)/s/     # ㄠ；未作更動，故註解此行
+    # - xform/(?<=[a-z])d(?=\d)/d/     # ㄣ；未作更動，故註解此行
+    # - xform/(?<=[a-z])f(?=\d)/f/     # ㄥ；未作更動，故註解此行
+    - xform/(?<=[a-z])(if|uh)(?=\d)/g/ # ㄧㄥ、ㄨㄞ
     # 左手下排：ZXCVB
-    - xform/([a-z])[uy]d(?=\d)/$1_z/ # ㄨㄣ、ㄩㄣ
-    - xform/([a-z])[iu]a(?=\d)/$1_x/ # ㄧㄚ、ㄨㄚ
-    - xform/([a-z])[iu]j(?=\d)/$1_c/ # ㄧㄤ、ㄨㄤ
-    - xform/([a-z])id|uw(?=\d)/$1_v/ # ㄧㄣ、ㄨㄟ
-    - xform/([a-z])ir(?=\d)/$1_b/    # ㄧㄡ
+    - xform/(?<=[a-z])[uy]d(?=\d)/z/   # ㄨㄣ、ㄩㄣ
+    - xform/(?<=[a-z])[iu]a(?=\d)/x/   # ㄧㄚ、ㄨㄚ
+    - xform/(?<=[a-z])[iu]j(?=\d)/c/   # ㄧㄤ、ㄨㄤ
+    - xform/(?<=[a-z])(id|uw)(?=\d)/v/ # ㄧㄣ、ㄨㄟ
+    - xform/(?<=[a-z])ir(?=\d)/b/      # ㄧㄡ
     # 右手上排：YUIOP
-    # - xform/([a-z])y(?=\d)/$1_y/     # ㄩ；未作更動，故註解此行
-    # - xform/([a-z])u(?=\d)/$1_u/     # ㄨ；未作更動，故註解此行
-    # - xform/([a-z])i(?=\d)/$1_i/     # ㄧ；未作更動，故註解此行
-    - xform/([a-z])u?o(?=\d)/$1_o/   # ㄛ、ㄨㄛ
-    - xform/([a-z])i[qe](?=\d)/$1_p/ # ㄧㄝ
+    # - xform/(?<=[a-z])y(?=\d)/y/     # ㄩ；未作更動，故註解此行
+    # - xform/(?<=[a-z])u(?=\d)/u/     # ㄨ；未作更動，故註解此行
+    # - xform/(?<=[a-z])i(?=\d)/i/     # ㄧ；未作更動，故註解此行
+    - xform/(?<=[a-z])u?o(?=\d)/o/   # ㄛ、ㄨㄛ
+    - xform/(?<=[a-z])i[qe](?=\d)/p/ # ㄧㄝ
     # 右手中排：HJKL;
-    # - xform/([a-z])h(?=\d)/$1_h/     # ㄞ；未作更動，故註解此行
-    # - xform/([a-z])j(?=\d)/$1_j/     # ㄤ；未作更動，故註解此行
-    - xform/([a-z])y?k(?=\d)/$1_k/   # ㄢ、ㄩㄢ
-    - xform/([a-z])[uy]f(?=\d)/$1_l/ # ㄨㄥ、ㄩㄥ
-    ### 本方案不佔用分號 ###
+    # - xform/(?<=[a-z])h(?=\d)/h/     # ㄞ；未作更動，故註解此行
+    # - xform/(?<=[a-z])j(?=\d)/j/     # ㄤ；未作更動，故註解此行
+    # - xform/(?<=[a-z])k(?=\d)/k/     # ㄢ；未作更動，故註解此行
+    - xform/(?<=[a-z])[uy]f(?=\d)/l/ # ㄨㄥ、ㄩㄥ
+      # 本方案不佔用分號 #
     # 右手下排：NM,./
-    - xform/([a-z])is(?=\d)/$1_n/ # ㄧㄠ
-    - xform/([a-z])ik(?=\d)/$1_m/ # ㄧㄢ
-    ### 本方案不佔用逗號 ###
-    ### 本方案不佔用句號 ###
-    ### 本方案不佔用"／" ###
-    - xform/([a-z])_([a-z])/$1$2/ # 去除底線
+    - xform/(?<=[a-z])is(?=\d)/n/ # ㄧㄠ
+    - xform/(?<=[a-z])ik(?=\d)/m/ # ㄧㄢ
+      # 本方案不佔用逗號 #
+      # 本方案不佔用句號 #
+      # 本方案不佔用"／" #
     # 到此，「雙拼 + 調」完成
+  # 進階的雙拼規則，使用更方便
+    - derive/([jqx])t/$1k/  # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
+    - derive/([jqx])z/$1d/  # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
+    - derive/([jqx])l/$1f/  # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
   # 輸入聲調（不用數字鍵）
-    - derive/([a-z]{2})5/$1;g/
-    - derive/([a-z]{2})4/$1;f/
-    - derive/([a-z]{2})3/$1;d/
-    - derive/([a-z]{2})2/$1;s/
-    - derive/([a-z]{2})1/$1;/
+    - derive/([a-zA-Z]{1,2})1/$1;/
+    - derive/([a-zA-Z]{1,2})2/$1;s/
+    - derive/([a-zA-Z]{1,2})3/$1;d/
+    - derive/([a-zA-Z]{1,2})4/$1;f/
+    - derive/([a-zA-Z]{1,2})5/$1;g/
   # 省略聲調
+    - derive/([A-Z])\d/$1/
     - derive/([a-z]{2})\d/$1/
   # 設定簡拼（abbrev）、略拼（fuzz）
-    - fuzz/[A-Z]\d/$0/
-    - fuzz/([A-Z])\d/$1/
-    - fuzz/([a-z])[a-z]\d/$1/
-    - fuzz/([a-z])[a-z](\d)/$1$2/
+    - abbrev/([a-z])[a-z]\d/$1/
+    - abbrev/([a-z])[a-z](\d)/$1$2/
 
-translator:
+translator: # 定義主要翻譯器
   strict_spelling: true  # 影響 speller 中，fuzz運算的行爲。
-  enable_sentence: true
-  spelling_hints: 0
+  initial_quality: 0.99
   dictionary: terra_pinyin
   prism: double_bopomo
   preedit_format:
@@ -280,7 +280,7 @@ translator:
     # - xform/◌◌$/◌/
     - xform/◌(?!$)//
 
-abbreviation:
+abbreviation: # 定義強制【縮寫注音】模式（簡拼模式）
   tag: abbreviation
   dictionary: terra_pinyin
   prism:  abbreviated_bopomo
@@ -297,7 +297,7 @@ abbreviation:
     - xlit/bpmfdtnlgkhjqxavorzcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩ/
     - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/
 
-custom_phrase:
+custom_phrase: # 定義使用者詞庫
   dictionary: ""
   user_dict: custom_phrase
   db_class: stabledb
@@ -305,7 +305,7 @@ custom_phrase:
   enable_sentence: false
   initial_quality: 1
 
-reverse_lookup:
+reverse_lookup: # 定義用倉頡查詢雙碼注音
   dictionary: cangjie5
   enable_completion: true
   prefix: "`"
@@ -375,16 +375,19 @@ reverse_lookup:
     - xform/([a-zA-Z]{1,2})2/$1;s /
     - xform/([a-zA-Z]{1,2})1/$1; /
 
+# 設定OpenCC字體轉換
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
-  tips: char
   show_in_comment: true
+  tips: char
 
-tw2s: # 簡繁轉換
+tw2s: # 繁簡轉換
   option_name: tw2s
   opencc_config: tw2s.json
   tips: all
+
+# 定義功能鍵
 editor:
   bindings:
     # Return: commit_script_text
@@ -402,6 +405,7 @@ editor:
     # cancel	取消輸入
     # noop	空
 
+# 定義句讀、標點符號
 punctuator:
   import_preset: symbols
   full_shape:
@@ -413,18 +417,21 @@ punctuator:
     '>' : [ '>', '》', '〉', '»', '›' ]
     '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤' ]
 
+# 定義按鍵綁定
 key_binder:
   import_preset: default
 
+# 定義標籤匹配
 recognizer:
   import_preset: default
   patterns:
-    abbreviation: ",[a-zIUYAOEQHWSRKDJFL1-5]*'?$"
+    abbreviation: ";[a-df-zIUYAOEQHWSRKDJFL1-5]*'?$"
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
-    url: "^(www[.]|https?:|ftp:|mailto:).*$"
     reverse_lookup: "`[a-z]*'?$"
-    
+    url: "^(www[.]|https?:|ftp:|mailto:).*$"
+
+# 定義反查濾鏡 
 comment_bopomo:
   tags: [ none ]
   overwrite_comment: true
