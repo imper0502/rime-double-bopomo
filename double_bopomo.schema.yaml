@@ -258,7 +258,7 @@ translator: # 定義主要翻譯器
     - xform/(?<=[lf])x/IA/    # ㄧㄚ
     - xform/(?<=[a-z])x/UA/   # ㄨㄚ
     - xform/(?<=[a-z])c/UJ/   # ㄨㄤ
-    - xform/(?<=[dtgkhZCSrzcs])v/UW/ # ㄨㄟ
+    - xform/(?<=[dtgkhZCSrzcsw])v/UW/ # ㄨㄟ
     - xform/(?<=[a-z])v/ID/   # ㄧㄣ
     - xform/(?<=[a-z])b/IR/   # ㄧㄡ
     #
