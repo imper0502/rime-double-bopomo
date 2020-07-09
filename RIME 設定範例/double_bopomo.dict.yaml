@@ -19,4 +19,5 @@ sort: by_weight
 use_preset_vocabulary: true
 import_tables:
   - terra_pinyin
+  # 放你自己的詞庫 #
 ...
