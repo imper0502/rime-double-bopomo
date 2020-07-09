@@ -4,7 +4,7 @@
 schema:
   schema_id: full_bopomofo
   name: "全碼注音"
-  version: '1.01'
+  version: '1.2'
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -12,7 +12,7 @@ schema:
 
   dependencies:
     - cangjie5
-
+# 定義開關
 switches:
   - name: ascii_mode
     reset: 0
@@ -24,9 +24,10 @@ switches:
   - name: t2tw
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。
-  - name: s2tw
-    reset: 1
-    # 啓用 opencc 字形轉換，但不在選單中顯示。
+  - name: tw2s
+    reset: 0
+    # 啓用 opencc 字形轉換。
+    states: [ "教標字", "简化字" ]
 
 engine:
   processors:
@@ -38,7 +39,6 @@ engine:
     - selector
     - navigator
     - express_editor
-    # - fluency_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -56,10 +56,17 @@ engine:
     - simplifier@s2tw  # 簡繁轉換
     - uniquifier
 
+# 修改候選單標籤、修改候選單大小
 menu:
+  alternative_select_labels: [ ６, ７, ８, ９, ０ ]
   alternative_select_keys: 67890
+  page_size: 5
 
-speller:
+
+style: # 修改候選單標籤格式
+  label_format: ' %s ' 
+
+speller: # 定義雙碼注音拼寫規則
   alphabet: "abcdefghijklmnopqrstuvwxyz12345"
   finals: "12345"
   delimiter: " '"
@@ -120,10 +127,11 @@ speller:
   # 省略聲調
     - derive/^(.+)\d/$1/
 
-translator:
+translator: # 定義主要翻譯器
+  enable_completion: true
+  initial_quality: 0.99
   dictionary: terra_pinyin
   prism: full_bopomofo
-  enable_completion: true
   preedit_format:
   # 聲調的預覽（不用數字鍵輸入時）
     - xform/(^| )([a-z]{1, 3})m(| |$)/$1$2ˉ$3/
@@ -168,7 +176,7 @@ translator:
   # 韻母的預覽、聲調的預覽（使用數字鍵）
     - xlit/iuyaoeqhwsrkdjfl 12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ　ˉˊˇˋ˙/
 
-custom_phrase:
+custom_phrase: # 定義使用者詞庫
   dictionary: ""
   user_dict: custom_phrase
   db_class: stabledb
@@ -176,10 +184,10 @@ custom_phrase:
   enable_sentence: false
   initial_quality: 1
 
-reverse_lookup:
+reverse_lookup: # 定義用倉頡查詢注音
   dictionary: cangjie5
   enable_completion: true
-  prefix: ","
+  prefix: "`"
   suffix: "'"
   tips: 〔倉頡〕
   preedit_format:
@@ -211,14 +219,16 @@ reverse_lookup:
     - xform/1//
     - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
 
+# 設定OpenCC字體轉換
 t2tw:  # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
   tips: char
 
-s2tw:  # 簡繁轉換
-  option_name: s2tw
-  opencc_config: s2tw.json
+tw2s: # 繁簡轉換
+  option_name: tw2s
+  opencc_config: tw2s.json
+  tips: all
 
 punctuator:
   import_preset: symbols
@@ -239,6 +249,6 @@ recognizer:
   patterns:
     email: "^[a-z][-_.0-9a-z]*@.*$"
     punct: "^/([0-9]0?|[A-Za-z]+)$"
-    reverse_lookup: ",[a-z]*'?$"
+    reverse_lookup: "`[a-z]*'?$"
     uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
     url: "^(www[.]|https?:|ftp:|mailto:).*$"
