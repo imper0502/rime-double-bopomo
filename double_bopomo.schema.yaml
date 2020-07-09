@@ -34,6 +34,10 @@ switches:
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
     # states: [ "傳承字", "教標字" ]
+  - name: s2tw
+    reset: 1
+    # 啓用 opencc 字形轉換，但不在選單中顯示。
+    # states: [ "简化字", "教標字" ]
   - name: tw2s
     reset: 0
     # 啓用 opencc 字形轉換。
@@ -66,7 +70,8 @@ engine:
     - table_translator@custom_phrase
   filters:
     - simplifier@t2tw  # 正繁轉換
-    - simplifier@tw2s  # 簡繁轉換
+    - simplifier@s2tw  # 簡繁轉換
+    - simplifier@tw2s  # 繁簡轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
     - reverse_lookup_filter@comment_bopomo
     - reverse_lookup_filter@comment_cangjie
@@ -379,8 +384,12 @@ reverse_lookup: # 定義用倉頡查詢雙碼注音
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
-  show_in_comment: true
   tips: char
+
+s2tw: # 簡繁轉換
+  option_name: s2tw
+  opencc_config: s2tw.json
+  tips: none
 
 tw2s: # 繁簡轉換
   option_name: tw2s

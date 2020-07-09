@@ -22,8 +22,12 @@ switches:
     states: [ "。，", "．，" ]
   - name: t2tw
     reset: 1
-    # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 繁
-    # states: [ "傳承字", "標準字" ]
+    # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
+    # states: [ "傳承字", "教標字" ]
+  - name: s2tw
+    reset: 1
+    # 啓用 opencc 字形轉換，但不在選單中顯示。
+    # states: [ "简化字", "教標字" ]
   - name: tw2s
     reset: 0
     # 啓用 opencc 字形轉換。
@@ -50,8 +54,9 @@ engine:
     - punct_translator
     - script_translator
   filters:
-    - simplifier@t2tw  # 正 → 繁
-    - simplifier@s2tw  # 簡 → 繁
+    - simplifier@t2tw  # 正繁轉換
+    - simplifier@s2tw  # 簡繁轉換
+    - simplifier@tw2s  # 繁簡轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
 
 menu: # 修改候選單標籤、修改候選單大小
@@ -143,8 +148,12 @@ translator:
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
-  show_in_comment: true
   tips: char
+
+s2tw: # 簡繁轉換
+  option_name: s2tw
+  opencc_config: s2tw.json
+  tips: none
 
 tw2s: # 繁簡轉換
   option_name: tw2s
