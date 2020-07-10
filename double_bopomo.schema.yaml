@@ -231,6 +231,7 @@ translator: # 定義主要翻譯器
     - xform/(?<=[jqx])[sn]/IS/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
     - xform/(?<=[jqx])[rb]/IR/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
     - xform/(?<=[jqx])[jc]/IJ/   # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
+    - xform/(?<=[nl])c/IJ/       # ㄋㄧㄤ、ㄌㄧㄤ
     - xform/(?<=f)t/YK/     # ㄒㄩㄢ
     - xform/(?<=f)z/YD/     # ㄒㄩㄣ
     - xform/(?<=f)c/IJ/     # ㄒㄧㄤ
