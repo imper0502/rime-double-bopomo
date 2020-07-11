@@ -267,7 +267,7 @@ translator: # 定義主要翻譯器
     - xform/(?<=[a-z])s/S/     # ㄠ
     - xform/(?<=[a-z])d/D/     # ㄣ
     - xform/(?<=[a-z])f/F/     # ㄥ
-    - xform/(?<=[gkhZCS])g/UH/ # ㄨㄞ
+    - xform/(?<=[gkhavo])g/UH/ # ㄨㄞ
     - xform/(?<=[a-z])g/IF/    # ㄧㄥ
     #
     - xform/(?<=[a-z])q/YQ/    # ㄩㄝ
