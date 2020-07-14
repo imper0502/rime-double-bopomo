@@ -21,14 +21,14 @@ switches:
     states: [ 半形, 全形 ]
   - name: ascii_punct
     states: [ "。，", "．，" ]
-  - name: t2tw
-    reset: 1
-    # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
-    # states: [ "傳承字", "教標字" ]
   - name: s2tw
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。
     # states: [ "简化字", "教標字" ]
+  - name: t2tw
+    reset: 1
+    # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
+    # states: [ "傳承字", "教標字" ]
   - name: tw2s
     reset: 0
     # 啓用 opencc 字形轉換。
@@ -57,8 +57,8 @@ engine:
     - reverse_lookup_translator
     - script_translator
   filters:
-    - simplifier@t2tw  # 正繁轉換
     - simplifier@s2tw  # 簡繁轉換
+    - simplifier@t2tw  # 正繁轉換
     - simplifier@tw2s  # 繁簡轉換
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
 
@@ -226,15 +226,15 @@ reverse_lookup: # 定義用倉頡查詢注音
     - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
 
 # 設定OpenCC字體轉換
-t2tw: # 正繁轉換
-  option_name: t2tw
-  opencc_config: t2tw.json
-  tips: char
-
 s2tw: # 簡繁轉換
   option_name: s2tw
   opencc_config: s2tw.json
   tips: none
+
+t2tw: # 正繁轉換
+  option_name: t2tw
+  opencc_config: t2tw.json
+  tips: char
 
 tw2s: # 繁簡轉換
   option_name: tw2s
