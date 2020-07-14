@@ -89,7 +89,7 @@
   由[xcv123321](https://github.com/xcv123321)提供的雙碼注音按鍵佈局圖
   
   > ![Heatmap by jamessa](https://scontent.frmq2-1.fna.fbcdn.net/v/t1.0-9/104496831_10158749532160616_3681282552113193519_n.jpg?_nc_cat=108&_nc_sid=ca434c&_nc_ohc=Ji2vM0ghxH0AX9E10KW&_nc_ht=scontent.frmq2-1.fna&oh=83075bc353b082084a15d74d6f5e147f&oe=5F0DD051)  
-  由[jamessa](https://github.com/jamessa)提供的雙碼注音按鍵熱力圖
+  由[jamessa](https://github.com/jamessa)提供的雙碼注音按鍵熱力圖，這是詳細的[分析結果](http://patorjk.com/keyboard-layout-analyzer/#/load/p6bsg5Fx)
   
 ## 銘謝
   1. [Rime](https://rime.im/) 輸入法引擎開發者 [佛振](https://github.com/lotem) 先生及所有貢獻者。
