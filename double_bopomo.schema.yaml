@@ -106,10 +106,6 @@ speller: # 定義雙碼注音拼寫規則
     - xform/^([jqx])u/$1ü/ # 取消ㄐㄑㄒ的省略表示法
     - xform/([iuü])n/$1en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng
   # 開始轉換輸入鍵
-    # 三個「二合聲母」ㄓㄔㄕ
-    - xform/^zh/A/
-    - xform/^ch/V/
-    - xform/^sh/O/
     # 兩個「三合韻母」ㄤㄥ
     - xform/ang/J/
     - xform/eng/F/
@@ -124,11 +120,19 @@ speller: # 定義雙碼注音拼寫規則
     - xform/er/L/
     - xform/eh/Q/
     - xform/(?<=[iü])e/Q/
+    # 三個單韻母ㄚㄛㄜ
+    - xlit/aoe/AVE/
+    # 三個介音ㄧㄨㄩ
+    - xlit/iuy/IUY/
+    # 到此，介音、韻母全部大寫。
+    # 三個「二合聲母」ㄓㄔㄕ
+    - xform/^zh/A/
+    - xform/^ch/V/
+    - xform/^sh/O/
     # 到此，【terra pinyin】→【bopomofo】
   # 輸入鍵轉換
-    - xlit/AVO/avo/  # 聲母一律小寫
     - xform/ü/y/     # `Y鍵`輸入ü
-    - xlit/QHWSRKDJFL/qhwsrkdjfl/  # 韻母也一律小寫
+    - xlit/IUYAOEQHWSRKDJFL/iuyaoeqhwsrkdjfl/  # 介音、韻母一律小寫
   # 使用零聲母表示韻母獨立音節；也用大寫表示韻母獨立音節
     - derive/^i(?=\d)/I/
     - derive/^u(?=\d)/U/
