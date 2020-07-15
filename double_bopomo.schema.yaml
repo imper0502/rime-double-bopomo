@@ -30,14 +30,14 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ "。，", "．，" ]
-  - name: s2tw
-    reset: 1
-    # 啓用 opencc 字形轉換，但不在選單中顯示。
-    # states: [ "简化字", "教標字" ]
   - name: t2tw
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
     # states: [ "傳承字", "教標字" ]
+  - name: s2tw
+    reset: 1
+    # 啓用 opencc 字形轉換，但不在選單中顯示。
+    # states: [ "简化字", "教標字" ]
   - name: tw2s
     reset: 0
     # 啓用 opencc 字形轉換。
@@ -263,7 +263,7 @@ translator: # 定義主要翻譯器
     - xform/(?<=[lf])x/IA/    # ㄧㄚ
     - xform/(?<=[a-z])x/UA/   # ㄨㄚ
     - xform/(?<=[a-z])c/UJ/   # ㄨㄤ
-    - xform/(?<=[dtgkhZCSrzcsw])v/UW/ # ㄨㄟ
+    - xform/(?<=[dtgkhavorzcsw])v/UW/ # ㄨㄟ
     - xform/(?<=[a-z])v/ID/   # ㄧㄣ
     - xform/(?<=[a-z])b/IR/   # ㄧㄡ
     #
@@ -385,14 +385,14 @@ reverse_lookup: # 定義用倉頡查詢雙碼注音
     - xform/([a-zA-Z]{1,2})1/$1; /
 
 # 設定OpenCC字體轉換
-s2tw: # 簡繁轉換
-  option_name: s2tw
-  opencc_config: s2tw.json
-
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
   tips: char
+
+s2tw: # 簡繁轉換
+  option_name: s2tw
+  opencc_config: s2tw.json
 
 tw2s: # 繁簡轉換
   option_name: tw2s
