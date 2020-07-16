@@ -182,6 +182,7 @@ translator:
   prism: double_bopomo_tw
   preedit_format:
     - xform/ /$0¦/
+    # to do
     # - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘㄙ◌ㄧㄨㄩ/
     # - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 
 
