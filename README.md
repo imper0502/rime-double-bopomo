@@ -56,8 +56,8 @@
 ### 檔名解釋
   - `double_bopomo.schema.yaml`：Rime 輸入方案檔，字典檔使用 Rime 內建的「地球拼音」字典檔，使之與「地球拼音」、「注音」等方案共用詞庫。
   - `abbreviated_bopomo.schema.yaml`：Rime 輸入方案檔，縮寫注音，雙碼注音的簡拼模式。  
-    > ⚠️請務必把`abbreviated_bopomo.schema.yaml`跟`double_bopomo.schema.yaml`【一起】放到 Rime 的使用者資料夾裡面。
-  - `cangjie.yaml`：需要使用倉頡輸入法當輔助輸入法的人，請參考。
+    > ⚠️請務必把`abbreviated_bopomo.schema.yaml`跟`double_bopomo.schema.yaml`**一起**放到 Rime 的使用者資料夾裡面。
+  - `cangjie.yaml`：需要使用倉頡輸入法當輔助輸入法的人，請參考。【預設】
   - `pinyin.yaml`：需要使用拼音輸入法當輔助輸入法的人，請參考。
   ---
   - `double_bopomo_keyboard_layout.jpg`：雙碼注音的基本鍵盤佈局圖。
