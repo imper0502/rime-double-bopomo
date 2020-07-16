@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo_tw
   name: "雙碼注音．臺灣"
-  version: "0.1"
+  version: "0.2"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |  
@@ -20,12 +20,12 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ "。，", "．，" ]
-  - name: t2tw
-    reset: 1
-    states: [ "OpenCC標準", "台灣標準" ]  # 正繁轉換
   - name: s2tw
     reset: 1
     states: [ "简化字體", "台灣標準" ]  # 簡繁轉換
+  - name: t2tw
+    reset: 1
+    states: [ "OpenCC標準", "台灣標準" ]  # 正繁轉換
   - name: tw2t
     reset: 0
     states: [ "台灣標準", "OpenCC標準" ]  # OpenCC 標準
@@ -57,22 +57,27 @@ engine:
     - simplifier@tw2t  #
     - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
 
-t2tw: # 正繁轉換
-  option_name: t2tw
-  opencc_config: t2tw.json
-  tips: none
 s2tw: # 簡繁轉換
   option_name: s2tw
   opencc_config: s2tw.json
+  tips: none
+t2tw: # 正繁轉換
+  option_name: t2tw
+  opencc_config: t2tw.json
   tips: none
 tw2t: # 正繁轉換
   option_name: tw2t
   opencc_config: tw2t.json
   tips: none
 
-menu:
+menu: # 修改候選單標籤、修改候選單大小
+  alternative_select_labels: [ ６, ７, ８, ９, ０ ]
   alternative_select_keys: 67890
- 
+  page_size: 5
+
+style: # 修改候選單標籤格式
+  label_format: ' %s '  
+
 speller:
   alphabet: "bpmfdtnlgkhjqxvwarzcsiuyoeIUYAOEQHWSRKDJFL12345"
   finals: "12345"
@@ -99,7 +104,6 @@ speller:
     - xform/(^| )([IUYAOEQHWSRKDJFL]\d)/$1e$2/
     - derive/(^| )([eiy])Q(\d)/$1$2E$3/
     - derive/z/w/
-    
     # 到此，注音被轉換為小寫（聲母）、大寫（韻母）、數字（聲調）
     ## ㄚㄛㄜㄝ　   AOEQ
     - xform/[IU]A/x/
@@ -177,7 +181,7 @@ translator:
   dictionary: double_bopomo_tw
   prism: double_bopomo_tw
   preedit_format:
-    - xform/ /$1¦/
+    - xform/ /$0¦/
     # - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘㄙ◌ㄧㄨㄩ/
     # - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 
 
