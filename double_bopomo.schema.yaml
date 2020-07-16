@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2.3"
+  version: "1.2.4"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -106,10 +106,6 @@ speller: # 定義雙碼注音拼寫規則
     - xform/^([jqx])u/$1ü/ # 取消ㄐㄑㄒ的省略表示法
     - xform/([iuü])n/$1en/ # in, ing, un, ung, ün, üng → ien, ieng, uen, ueng, üen, üeng
   # 開始轉換輸入鍵
-    # 三個「二合聲母」ㄓㄔㄕ
-    - xform/^zh/A/
-    - xform/^ch/V/
-    - xform/^sh/O/
     # 兩個「三合韻母」ㄤㄥ
     - xform/ang/J/
     - xform/eng/F/
@@ -124,12 +120,20 @@ speller: # 定義雙碼注音拼寫規則
     - xform/er/L/
     - xform/eh/Q/
     - xform/(?<=[iü])e/Q/
+    # 三個單韻母ㄚㄛㄜ
+    - xlit/aoe/AVE/
+    # 三個介音ㄧㄨㄩ
+    - xlit/iuy/IUY/
+    # 到此，介音、韻母全部大寫。
+    # 三個「二合聲母」ㄓㄔㄕ
+    - xform/^zh/a/
+    - xform/^ch/v/
+    - xform/^sh/o/
     # 到此，【terra pinyin】→【bopomofo】
   # 輸入鍵轉換
-    - xlit/AVO/avo/  # 聲母一律小寫
     - xform/ü/y/     # `Y鍵`輸入ü
-    - xlit/QHWSRKDJFL/qhwsrkdjfl/  # 韻母也一律小寫
-  # 使用零聲母表示韻母獨立音節；也用大寫表示韻母獨立音節
+    - xlit/IUYAOEQHWSRKDJFL/iuyaoeqhwsrkdjfl/  # 介音、韻母一律小寫
+  # 使用用大寫表示韻母獨立音節；也零聲母表示韻母獨立音節
     - derive/^i(?=\d)/I/
     - derive/^u(?=\d)/U/
     - derive/^y(?=\d)/Y/
@@ -231,6 +235,7 @@ translator: # 定義主要翻譯器
     - xform/(?<=[jqx])[sn]/IS/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
     - xform/(?<=[jqx])[rb]/IR/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
     - xform/(?<=[jqx])[jc]/IJ/   # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
+    - xform/(?<=d)x/IA/          # ㄉㄧㄚ
     - xform/(?<=[nl])c/IJ/       # ㄋㄧㄤ、ㄌㄧㄤ
     - xform/(?<=f)t/YK/     # ㄒㄩㄢ
     - xform/(?<=f)z/YD/     # ㄒㄩㄣ
@@ -259,7 +264,7 @@ translator: # 定義主要翻譯器
     - xform/(?<=[lf])x/IA/    # ㄧㄚ
     - xform/(?<=[a-z])x/UA/   # ㄨㄚ
     - xform/(?<=[a-z])c/UJ/   # ㄨㄤ
-    - xform/(?<=[dtgkhZCSrzcsw])v/UW/ # ㄨㄟ
+    - xform/(?<=[dtgkhavorzcsw])v/UW/ # ㄨㄟ
     - xform/(?<=[a-z])v/ID/   # ㄧㄣ
     - xform/(?<=[a-z])b/IR/   # ㄧㄡ
     #
@@ -381,14 +386,14 @@ reverse_lookup: # 定義用倉頡查詢雙碼注音
     - xform/([a-zA-Z]{1,2})1/$1; /
 
 # 設定OpenCC字體轉換
-s2tw: # 簡繁轉換
-  option_name: s2tw
-  opencc_config: s2tw.json
-
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
   tips: char
+
+s2tw: # 簡繁轉換
+  option_name: s2tw
+  opencc_config: s2tw.json
 
 tw2s: # 繁簡轉換
   option_name: tw2s
