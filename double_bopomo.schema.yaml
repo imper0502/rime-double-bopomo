@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2.3"
+  version: "1.2.4"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -30,14 +30,14 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ "。，", "．，" ]
-  - name: t2tw
-    reset: 1
-    # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
-    # states: [ "傳承字", "教標字" ]
   - name: s2tw
     reset: 1
     # 啓用 opencc 字形轉換，但不在選單中顯示。
     # states: [ "简化字", "教標字" ]
+  - name: t2tw
+    reset: 1
+    # 啓用 opencc 字形轉換，但不在選單中顯示。正 → 臺
+    # states: [ "傳承字", "教標字" ]
   - name: tw2s
     reset: 0
     # 啓用 opencc 字形轉換。
@@ -126,14 +126,14 @@ speller: # 定義雙碼注音拼寫規則
     - xlit/iuy/IUY/
     # 到此，介音、韻母全部大寫。
     # 三個「二合聲母」ㄓㄔㄕ
-    - xform/^zh/A/
-    - xform/^ch/V/
-    - xform/^sh/O/
+    - xform/^zh/a/
+    - xform/^ch/v/
+    - xform/^sh/o/
     # 到此，【terra pinyin】→【bopomofo】
   # 輸入鍵轉換
     - xform/ü/y/     # `Y鍵`輸入ü
     - xlit/IUYAOEQHWSRKDJFL/iuyaoeqhwsrkdjfl/  # 介音、韻母一律小寫
-  # 使用零聲母表示韻母獨立音節；也用大寫表示韻母獨立音節
+  # 使用用大寫表示韻母獨立音節；也零聲母表示韻母獨立音節
     - derive/^i(?=\d)/I/
     - derive/^u(?=\d)/U/
     - derive/^y(?=\d)/Y/
