@@ -210,8 +210,8 @@ speller: # 定義雙碼注音拼寫規則
     - derive/([A-Z])\d/$1/
     - derive/([a-z]{2})\d/$1/
   # 設定簡拼（abbrev）、略拼（fuzz）
-    - abbrev/([a-z])[a-z]\d/$1/
-    - abbrev/([a-z])[a-z](\d)/$1$2/
+    # - abbrev/([a-z])[a-z]\d/$1/      # 需要簡拼者，移除註解。
+    # - abbrev/([a-z])[a-z](\d)/$1$2/  # 需要簡拼者，移除註解。
 
 translator: # 定義主要翻譯器
   strict_spelling: true  # 影響 speller 中，fuzz運算的行爲。
@@ -403,8 +403,9 @@ tw2s: # 繁簡轉換
 # 定義功能鍵
 editor:
   bindings:
-    # Return: commit_script_text
-    # BackSpace: back_syllable
+    # Return: commit_script_text  # 直接輸出注音
+    # BackSpace: back_syllable    # 一次退回一個音節
+    # ==========================
     # confirm	輸出候選項
     # commit_comment	輸出候選項備注
     # commit_raw_input	輸出原始輸入按鍵
