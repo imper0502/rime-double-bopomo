@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2.4"
+  version: "1.2.5"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
