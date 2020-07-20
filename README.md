@@ -56,14 +56,15 @@
 ### 檔名解釋
   - `double_bopomo.schema.yaml`：Rime 輸入方案檔，字典檔使用 Rime 內建的「地球拼音」字典檔，使之與「地球拼音」、「注音」等方案共用詞庫。
   - `abbreviated_bopomo.schema.yaml`：Rime 輸入方案檔，縮寫注音，雙碼注音的簡拼模式。  
-    > ⚠️請務必把`abbreviated_bopomo.schema.yaml`跟`double_bopomo.schema.yaml`**一起**放到 Rime 的使用者資料夾裡面。
+    > ⚠️需要使用簡拼模式的使用者，請務必把`abbreviated_bopomo.schema.yaml`跟`double_bopomo.schema.yaml`**一起**放到 Rime 的使用者資料夾裡面。
+    > ⚠️若是不使用簡拼的使用者，這個檔案就不要放到使用者資料夾。
   - `cangjie.yaml`：需要使用倉頡輸入法當輔助輸入法的人，請參考。【預設】
   - `pinyin.yaml`：需要使用拼音輸入法當輔助輸入法的人，請參考。
   ---
   - `double_bopomo_keyboard_layout.jpg`：雙碼注音的基本鍵盤佈局圖。
   - `trime.custom.yaml`：同文輸入法鍵盤設定檔。
   - `BIG5_double_bopomo.cin`：大五碼雙碼注音 + 大五碼「三碼」注音 CIN 檔（雙碼注音 + 一碼聲調（數字））。
-  - `CNS_double_bopomo_NO_tone.cin`：全字庫雙碼注音 + 全字庫「三碼」注音 CIN 檔（雙碼注音 + 一碼聲調（數字））。 
+  - `CNS_double_bopomo.cin`：全字庫雙碼注音 + 全字庫「三碼」注音 CIN 檔（雙碼注音 + 一碼聲調（數字））。 
   - `README.md`：本檔案。
 
 ## 相關連結
@@ -92,3 +93,4 @@
   
 ## 銘謝
   1. [Rime](https://rime.im/) 輸入法引擎開發者 [佛振](https://github.com/lotem) 先生及所有貢獻者。
+  2. [gugod](https://github.com/gugod)協助刪除CIN檔重複的字詞.
