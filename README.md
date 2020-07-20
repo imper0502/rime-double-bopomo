@@ -62,13 +62,12 @@
   ---
   - `double_bopomo_keyboard_layout.jpg`：雙碼注音的基本鍵盤佈局圖。
   - `trime.custom.yaml`：同文輸入法鍵盤設定檔。
-  - `BIG5_double_bopomo_NO_tone.cin`：大五碼雙碼注音 CIN 檔。
-  - `BIG5_double_bopomo_with_tone.cin`：大五碼「三碼」注音 CIN 檔，雙碼注音 + 一碼聲調（數字）。
-  - `CNS_double_bopomo_NO_tone.cin`：全字庫雙碼注音 CIN 檔。
-  - `CNS_double_bopomo_with_tone.cin`：全字庫「三碼」注音 CIN 檔，雙碼注音 + 一碼聲調（數字）。
+  - `BIG5_double_bopomo.cin`：大五碼雙碼注音 + 大五碼「三碼」注音 CIN 檔（雙碼注音 + 一碼聲調（數字））。
+  - `CNS_double_bopomo_NO_tone.cin`：全字庫雙碼注音 + 全字庫「三碼」注音 CIN 檔（雙碼注音 + 一碼聲調（數字））。 
   - `README.md`：本檔案。
 
 ## 相關連結
+  [Youtube影片](https://youtu.be/SD2iaUONg7A)
   [PTT發佈頁、討論頁](https://www.ptt.cc/bbs/IME/M.1572622340.A.FEA.html)
 
 ## 截圖
