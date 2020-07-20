@@ -56,19 +56,19 @@
 ### 檔名解釋
   - `double_bopomo.schema.yaml`：Rime 輸入方案檔，字典檔使用 Rime 內建的「地球拼音」字典檔，使之與「地球拼音」、「注音」等方案共用詞庫。
   - `abbreviated_bopomo.schema.yaml`：Rime 輸入方案檔，縮寫注音，雙碼注音的簡拼模式。  
-    > ⚠️請務必把`abbreviated_bopomo.schema.yaml`跟`double_bopomo.schema.yaml`**一起**放到 Rime 的使用者資料夾裡面。
+    > ⚠️需要使用簡拼模式的使用者，請務必把`abbreviated_bopomo.schema.yaml`跟`double_bopomo.schema.yaml`**一起**放到 Rime 的使用者資料夾裡面。
+    > ⚠️若是不使用簡拼的使用者，這個檔案就不要放到使用者資料夾。
   - `cangjie.yaml`：需要使用倉頡輸入法當輔助輸入法的人，請參考。【預設】
   - `pinyin.yaml`：需要使用拼音輸入法當輔助輸入法的人，請參考。
   ---
   - `double_bopomo_keyboard_layout.jpg`：雙碼注音的基本鍵盤佈局圖。
   - `trime.custom.yaml`：同文輸入法鍵盤設定檔。
-  - `BIG5_double_bopomo_NO_tone.cin`：大五碼雙碼注音 CIN 檔。
-  - `BIG5_double_bopomo_with_tone.cin`：大五碼「三碼」注音 CIN 檔，雙碼注音 + 一碼聲調（數字）。
-  - `CNS_double_bopomo_NO_tone.cin`：全字庫雙碼注音 CIN 檔。
-  - `CNS_double_bopomo_with_tone.cin`：全字庫「三碼」注音 CIN 檔，雙碼注音 + 一碼聲調（數字）。
+  - `BIG5_double_bopomo.cin`：大五碼雙碼注音 + 大五碼「三碼」注音 CIN 檔（雙碼注音 + 一碼聲調（數字））。
+  - `CNS_double_bopomo.cin`：全字庫雙碼注音 + 全字庫「三碼」注音 CIN 檔（雙碼注音 + 一碼聲調（數字））。 
   - `README.md`：本檔案。
 
 ## 相關連結
+  [Youtube影片](https://youtu.be/SD2iaUONg7A)
   [PTT發佈頁、討論頁](https://www.ptt.cc/bbs/IME/M.1572622340.A.FEA.html)
 
 ## 截圖
@@ -88,8 +88,9 @@
   > ![Layout by xcv123321](https://i.imgur.com/xq0NrR6.png)  
   由[xcv123321](https://github.com/xcv123321)提供的雙碼注音按鍵佈局圖
   
-  > ![Heatmap by jamessa](https://scontent.frmq2-1.fna.fbcdn.net/v/t1.0-9/104496831_10158749532160616_3681282552113193519_n.jpg?_nc_cat=108&_nc_sid=ca434c&_nc_ohc=Ji2vM0ghxH0AX9E10KW&_nc_ht=scontent.frmq2-1.fna&oh=83075bc353b082084a15d74d6f5e147f&oe=5F0DD051)  
+  > ![Heatmap by jamessa](https://i.imgur.com/N1o1J4K.jpg)  
   由[jamessa](https://github.com/jamessa)提供的雙碼注音按鍵熱力圖，這是詳細的[分析結果](http://patorjk.com/keyboard-layout-analyzer/#/load/p6bsg5Fx)
   
 ## 銘謝
   1. [Rime](https://rime.im/) 輸入法引擎開發者 [佛振](https://github.com/lotem) 先生及所有貢獻者。
+  2. [gugod](https://github.com/gugod)協助刪除CIN檔重複的字詞.
