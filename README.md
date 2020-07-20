@@ -1,5 +1,5 @@
 # 雙碼注音
-## 簡介
+
   給**注音**使用者的雙拼輸入法。學習高效率的雙拼輸入法之前不再需要額外學習漢語拼音。
 
 ## 鍵位圖
@@ -9,13 +9,13 @@
   目前，這是一個 Rime 輸入法引擎與 cin 碼表的輸入方案，需要安裝以下任何一款 Rime 輸入法（推薦）或其他可讀 cin 碼表的輸入法，方可使用：
 
 ### Rime 輸入法列表   
-  - 小狼毫（官方，Windows）【[如何安裝與設定](https://github.com/imper0502/rime-double-bopomo/wiki/%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%9D%E8%88%87%E8%A8%AD%E5%AE%9A%EF%BC%9F#%E5%B0%8F%E7%8B%BC%E6%AF%AB)】
-  - Prime（Windows）
-  - 鼠鬚管（官方，macOS）
-  - XIME（macOS）
-  - ibus-rime（Linux，官方，推薦）
-  - Fcitx-rime（Linux，推薦）
-  - 同文輸入法（Android）
+  - 小狼毫(https://rime.im/download/)（官方，Windows）【[如何安裝與設定](https://github.com/imper0502/rime-double-bopomo/wiki/%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%9D%E8%88%87%E8%A8%AD%E5%AE%9A%EF%BC%9F#%E5%B0%8F%E7%8B%BC%E6%AF%AB)】
+  - Prime(https://github.com/osfans/PRIME/releases)（Windows）
+  - 鼠鬚管(https://rime.im/download/)（官方，macOS）
+  - XIME(https://github.com/stackia/XIME)（macOS）
+  - ibus-rime(https://rime.im/download/)（Linux，官方，推薦）
+  - Fcitx-rime(https://github.com/fcitx/fcitx-rime)（Linux，推薦）
+  - 同文輸入法(https://github.com/osfans/trime/releases)（Android）
   - iRime（iPhone, iOS）
 
 ### 輸入規則   
@@ -38,11 +38,13 @@
 ### 其他規則（不知道也不影響正常使用）
   1. ㄧㄨㄩ ㄚㄛㄜㄝ ㄞㄟㄠㄡ ㄢㄣㄤㄥ ㄦ 也可以直接 `Shift` + 【對應按鍵】，效果和「輸入規則 3.」相同。**簡拼模式時非常有用。**
   2. 預設使用聲調當輔助碼  
-     雙拼 + 【;】 = 一聲；  
-     雙拼 + 【;s】 = 二聲；2 向下移動2排  
-     雙拼 + 【;d】 = 三聲；3 向下移動2排  
-     雙拼 + 【;f】 = 四聲；4 向下移動2排  
-     雙拼 + 【;g】 = 輕聲；5 向下移動2排  
+    ```
+	雙拼 + 【;】  = 一聲；  
+    雙拼 + 【;s】 = 二聲；2 向下移動2排  
+    雙拼 + 【;d】 = 三聲；3 向下移動2排  
+    雙拼 + 【;f】 = 四聲；4 向下移動2排  
+    雙拼 + 【;g】 = 輕聲；5 向下移動2排
+    ```	 
   3. 不知道如何拼的字，按下【`】後，使用**倉頡**查詢雙碼注音。
      > ⚠️可以自行替換反查的輸入法
   
