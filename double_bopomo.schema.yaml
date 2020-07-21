@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2.5"
+  version: "1.2.6"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -201,11 +201,11 @@ speller: # 定義雙碼注音拼寫規則
     - derive/([jqx])z/$1d/  # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
     - derive/([jqx])l/$1f/  # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
   # 輸入聲調（不用數字鍵）
-    - derive/([a-zA-Z]{1,2})1/$1;/
+    - derive/([a-zA-Z]{1,2})1/$1;a/
     - derive/([a-zA-Z]{1,2})2/$1;s/
     - derive/([a-zA-Z]{1,2})3/$1;d/
     - derive/([a-zA-Z]{1,2})4/$1;f/
-    - derive/([a-zA-Z]{1,2})5/$1;g/
+    - derive/([a-zA-Z]{1,2})5/$1;/
   # 省略聲調
     - derive/([A-Z])\d/$1/
     - derive/([a-z]{2})\d/$1/
@@ -221,11 +221,11 @@ translator: # 定義主要翻譯器
   preedit_format:
   # 雙拼反運算到注音
     # 反算聲調
-    - xform/([a-zA-Z]{1,2});g/$1_5/
-    - xform/([a-zA-Z]{1,2});f/$1_4/
-    - xform/([a-zA-Z]{1,2});d/$1_3/
+    - xform/([a-zA-Z]{1,2});a/$1_1/
     - xform/([a-zA-Z]{1,2});s/$1_2/
-    - xform/([a-zA-Z]{1,2});/$1_1/
+    - xform/([a-zA-Z]{1,2});d/$1_3/
+    - xform/([a-zA-Z]{1,2});f/$1_4/
+    - xform/([a-zA-Z]{1,2});/$1_5/
     - xform/_//
     #
     - xform/(?<=[jqx])[kt]/YK/   # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
