@@ -2,13 +2,13 @@
 # encoding: utf-8
 
 schema:
-  schema_id: double_bopomo_tw
-  name: "雙碼注音．臺灣"
-  version: "0.2"
+  schema_id: real_double_bopomo
+  name: "真・雙碼注音"
+  version: "0.3"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |  
-    雙碼注音．臺灣（注音詞庫，非漢語拼音詞庫）
+    真・雙碼注音（注音詞庫，非漢語拼音詞庫）
 
 switches:
   - name: ascii_mode
@@ -22,10 +22,10 @@ switches:
     states: [ "。，", "．，" ]
   - name: s2tw
     reset: 1
-    states: [ "简化字體", "台灣標準" ]  # 簡繁轉換
+    # states: [ "简化字體", "台灣標準" ]  # 簡繁轉換
   - name: t2tw
     reset: 1
-    states: [ "OpenCC標準", "台灣標準" ]  # 正繁轉換
+    # states: [ "OpenCC標準", "台灣標準" ]  # 正繁轉換
   - name: tw2t
     reset: 0
     states: [ "台灣標準", "OpenCC標準" ]  # OpenCC 標準
@@ -51,11 +51,10 @@ engine:
     - punct_translator
     - script_translator
   filters:
-    - cjk_minifier     # 過濾少用字
-    - simplifier@s2tw  # 簡繁轉換
-    - simplifier@t2tw  # 正繁轉換
-    - simplifier@tw2t  #
-    - uniquifier       # 過濾重複的候選字，有可能來自簡正繁轉換
+    - simplifier@s2tw  # 簡台轉換
+    - simplifier@t2tw  # 正台轉換
+    - simplifier@tw2t  # 台正轉換
+    - uniquifier       # 過濾重複的候選字，有可能來自簡正台轉換
 
 s2tw: # 簡繁轉換
   option_name: s2tw
@@ -64,11 +63,11 @@ s2tw: # 簡繁轉換
 t2tw: # 正繁轉換
   option_name: t2tw
   opencc_config: t2tw.json
-  tips: none
+  tips: char
 tw2t: # 正繁轉換
   option_name: tw2t
   opencc_config: tw2t.json
-  tips: none
+  tips: all
 
 menu: # 修改候選單標籤、修改候選單大小
   alternative_select_labels: [ ６, ７, ８, ９, ０ ]
@@ -85,7 +84,7 @@ speller:
   # ㄅㄆㄇㄈ  bpmf
   # ㄉㄊㄋㄌ  dtnl
   # ㄍㄎㄏ    gkh 
-  # ㄐㄑㄒ    jqx
+  # ㄐㄑㄒ    jqx/jqf
   # ㄓㄔㄕㄖ  avor
   # ㄗㄘㄙ    zcs/wcs
   # ㄧㄨㄩ（聲） iuy 丨ㄨㄩ
@@ -98,11 +97,11 @@ speller:
     - xlit/i😬ˉˊˇˋ˙/II12345/
     - xlit/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ/bpmfdtnlgkhjqxavorzcs/
     - xlit/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ/IUYAOEQHWSRKDJFL/
-    - xform/( |^)I(?=[AOEQHWSRKDJF])/$1i/
-    - xform/( |^)U(?=[AOEQHWSRKDJF])/$1u/
-    - xform/( |^)Y(?=[AOEQHWSRKDJF])/$1y/
-    - xform/(^| )([IUYAOEQHWSRKDJFL]\d)/$1e$2/
-    - derive/(^| )([eiy])Q(\d)/$1$2E$3/
+    - xform/^I(?=[AOEQHWSRKDJF])/i/
+    - xform/^U(?=[AOEQHWSRKDJF])/u/
+    - xform/^Y(?=[AOEQHWSRKDJF])/y/
+    - xform/^(?=[IUYAOEQHWSRKDJFL]\d)/e/
+    - derive/^([eiy])Q(\d)/$1E$2/
     - derive/z/w/
     # 到此，注音被轉換為小寫（聲母）、大寫（韻母）、數字（聲調）
     ## ㄚㄛㄜㄝ　   AOEQ
@@ -178,10 +177,9 @@ speller:
 translator:
   enable_charset_filter: true
   strict_spelling: true
-  dictionary: double_bopomo_tw
-  prism: double_bopomo_tw
+  dictionary: real_double_bopomo
+  prism: real_double_bopomo
   preedit_format:
-    - xform/ /$0¦/
     # to do
     # - xlit/bpmfdtnlgkhjqxavorzwcseiuy/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄗㄘㄙ◌ㄧㄨㄩ/
     # - xlit/IUYAOEQHWSRKDJFL12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙/ 
