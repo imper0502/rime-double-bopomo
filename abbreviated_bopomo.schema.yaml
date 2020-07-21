@@ -102,7 +102,7 @@ speller:
     - xform/eh/Q/
     - xform/(?<=[iü])e/Q/
     # 三個單韻母ㄚㄛㄜ
-    - xlit/aoe/AVE/
+    - xlit/aoe/AOE/
     # 三個介音ㄧㄨㄩ
     - xlit/iuy/IUY/
     # 到此，介音、韻母全部大寫。
