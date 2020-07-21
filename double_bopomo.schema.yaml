@@ -254,7 +254,7 @@ translator: # 定義主要翻譯器
     - xform/(?<=[a-z])y/Y/   # ㄩ
     - xform/(?<=[a-z])u/U/   # ㄨ
     - xform/(?<=[a-z])i/I/   # ㄧ
-    - xform/(?<=[bpmf])o/O/  # ㄨㄛ
+    - xform/(?<=[bpmfeiu])o/O/  # ㄨㄛ
     - xform/(?<=[a-z])o/UO/  # ㄛ
     - xform/(?<=[a-z])p/IQ/  # ㄧㄝ
     #
