@@ -121,7 +121,7 @@ speller: # 定義雙碼注音拼寫規則
     - xform/eh/Q/
     - xform/(?<=[iü])e/Q/
     # 三個單韻母ㄚㄛㄜ
-    - xlit/aoe/AVE/
+    - xlit/aoe/AOE/
     # 三個介音ㄧㄨㄩ
     - xlit/iuy/IUY/
     # 到此，介音、韻母全部大寫。
@@ -235,34 +235,33 @@ translator: # 定義主要翻譯器
     - xform/(?<=[jqx])[sn]/IS/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
     - xform/(?<=[jqx])[rb]/IR/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
     - xform/(?<=[jqx])[jc]/IJ/   # ㄐㄑㄒ + ㄤ = ㄐㄑㄒ + ㄧㄤ
-    - xform/(?<=d)x/IA/          # ㄉㄧㄚ
-    - xform/(?<=[nl])c/IJ/       # ㄋㄧㄤ、ㄌㄧㄤ
     - xform/(?<=f)t/YK/     # ㄒㄩㄢ
     - xform/(?<=f)z/YD/     # ㄒㄩㄣ
     - xform/(?<=f)c/IJ/     # ㄒㄧㄤ
     - xform/(?<=f)l/YF/     # ㄒㄩㄥ
     - xform/(?<=[iy])e/Q/   # ㄝ
-    - xform/(?<=[eiy])q/Q/
+    - xform/(?<=[eiy])q/Q/  # ㄝ
     - xform/(?<=e)l/L/      # ㄦ
     # 右下
     - xform/(?<=[a-z])n/IS/ # ㄧㄠ
     - xform/(?<=[a-z])m/IK/ # ㄧㄢ
     # 右中
-    - xform/(?<=[a-z])h/H/     # ㄞ
-    - xform/(?<=[a-z])j/J/     # ㄤ
-    - xform/(?<=[a-z])k/K/     # ㄢ
-    - xform/(?<=[a-z])l/UF/    # ㄨㄥ
+    - xform/(?<=[a-z])h/H/   # ㄞ
+    - xform/(?<=[a-z])j/J/   # ㄤ
+    - xform/(?<=[a-z])k/K/   # ㄢ
+    - xform/(?<=[a-z])l/UF/  # ㄨㄥ
     # 右下
-    - xform/(?<=[a-z])y/Y/     # ㄩ
-    - xform/(?<=[a-z])u/U/     # ㄨ
-    - xform/(?<=[a-z])i/I/     # ㄧ
-    - xform/(?<=[dtnlgkhavorzcsw])o/UO/  # ㄨㄛ
-    - xform/(?<=[a-z])o/O/  # ㄛ
-    - xform/(?<=[a-z])p/IQ/ # ㄧㄝ
+    - xform/(?<=[a-z])y/Y/   # ㄩ
+    - xform/(?<=[a-z])u/U/   # ㄨ
+    - xform/(?<=[a-z])i/I/   # ㄧ
+    - xform/(?<=[bpmf])o/O/  # ㄨㄛ
+    - xform/(?<=[a-z])o/UO/  # ㄛ
+    - xform/(?<=[a-z])p/IQ/  # ㄧㄝ
     #
     - xform/(?<=[a-z])z/UD/   # ㄨㄣ
-    - xform/(?<=[lf])x/IA/    # ㄧㄚ
+    - xform/(?<=[pfdln])x/IA/ # ㄧㄚ
     - xform/(?<=[a-z])x/UA/   # ㄨㄚ
+    - xform/(?<=[nl])c/IJ/    # ㄋㄧㄤ、ㄌㄧㄤ
     - xform/(?<=[a-z])c/UJ/   # ㄨㄤ
     - xform/(?<=[dtgkhavorzcsw])v/UW/ # ㄨㄟ
     - xform/(?<=[a-z])v/ID/   # ㄧㄣ
