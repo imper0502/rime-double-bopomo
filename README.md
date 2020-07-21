@@ -51,7 +51,7 @@
      > ⚠️可以自行替換反查的輸入法
   
 ### 學習指引（銜接方案）
-  可以先從**[全碼注音](https://github.com/imper0502/rime-full-bopomofo)** —— `full_bopomofo.schema.yaml`，這個銜接方案開始。這個方案沒有結合韻；保留0️⃣聲母、😬韻母。  
+  可以先從[全碼注音](https://github.com/imper0502/rime-full-bopomofo) —— `full_bopomofo.schema.yaml`，這個銜接方案開始。這個方案沒有結合韻；保留0️⃣聲母、😬韻母。  
   - ㄓㄔㄕㄖ ㄗㄘㄙ 有輸入聲調時，可以省略😬韻母。  
   - ㄧㄨㄩ 有輸入聲調時，可以省略0️⃣聲母。  
   - 聲調可以省略。  
