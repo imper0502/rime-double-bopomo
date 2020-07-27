@@ -4,7 +4,7 @@
 schema:
   schema_id: double_bopomo
   name: "雙碼注音"
-  version: "1.2.6"
+  version: "1.2.7"
   author:
     - imper0502 <yoj845@gmail.com>
   description: |
@@ -122,9 +122,9 @@ speller: # 定義雙碼注音拼寫規則
     - xform/(?<=[iü])e/Q/
     # 三個單韻母ㄚㄛㄜ
     - xlit/aoe/AOE/
-    # 三個介音ㄧㄨㄩ
+    # 三個介音（韻頭）ㄧㄨㄩ
     - xlit/iuy/IUY/
-    # 到此，介音、韻母全部大寫。
+    # 到此，韻頭、韻母全部大寫。
     # 三個「二合聲母」ㄓㄔㄕ
     - xform/^zh/a/
     - xform/^ch/v/
@@ -132,39 +132,24 @@ speller: # 定義雙碼注音拼寫規則
     # 到此，【terra pinyin】→【bopomofo】
   # 輸入鍵轉換
     - xform/ü/y/     # `Y鍵`輸入ü
-    - xlit/IUYAOEQHWSRKDJFL/iuyaoeqhwsrkdjfl/  # 介音、韻母一律小寫
+    - xlit/IUYAOEQHWSRKDJFL/iuyaoeqhwsrkdjfl/  # 介音（韻頭）、韻母也一律小寫
   # 使用用大寫表示韻母獨立音節；也零聲母表示韻母獨立音節
-    - derive/^i(?=\d)/I/
-    - derive/^u(?=\d)/U/
-    - derive/^y(?=\d)/Y/
-    - derive/^a(?=\d)/A/
-    - derive/^o(?=\d)/O/
-    - derive/^e(?=\d)/E/
-    - derive/^q(?=\d)/Q/
-    - derive/^h(?=\d)/H/
-    - derive/^w(?=\d)/W/
-    - derive/^s(?=\d)/S/
-    - derive/^r(?=\d)/R/
-    - derive/^k(?=\d)/K/
-    - derive/^d(?=\d)/D/
-    - derive/^j(?=\d)/J/
-    - derive/^f(?=\d)/F/
-    - derive/^l(?=\d)/L/
+    - derive/^([iuyaoeqhwsrkdjfl])(?=\d)/\u$1/
     - xform/^([iuyaoeqhwsrkdjfl]\d)/e$1/
-    # 到此，基本拼寫規則完成
+    # 到此，「全碼注音」基本拼寫規則完成
   # 進階的拼寫規則，使用更方便
     - derive/^x([iy])/f$1/           # ㄈㄒ共用`F鍵`
-    - derive/^([avorzcs])i(\d)/$1$2/ # ㄓㄔㄕㄖㄗㄘㄙ的韻母可以省略
+    - derive/^([avorzcs])i(\d)/$1$2/ # ㄓㄔㄕㄖㄗㄘㄙ的韻母😬可以省略
     - derive/^z([a-z]*[1-5])/w$1/    # `W鍵`也可以輸入ㄗ
-    - derive/^e([iuy])(\d)/$1$2/     # 介音有聲調時，不需前綴零聲母
+    - derive/^e([iuy])(\d)/$1$2/     # 介音有聲調時，既韻頭當韻母且有聲調時，不需前綴零聲母
     - derive/(?<=[eiy])q(?=\d)/e/    # ㄝㄜ共用`E鍵`
   # 定位結合韻母
     # 左手上排：QWERT
-    - xform/(?<=[a-z])y[qe](?=\d)/q/ # ㄩㄝ
+    - xform/(?<=[a-z])y[qe](?=\d)/q/   # ㄝ、ㄩㄝ
     # - xform/(?<=[a-z])w(?=\d)/w/     # ㄟ；未作更動，故註解此行
-    # - xform/(?<=[a-z])e(?=\d)/e/     # ㄜ；未作更動，故註解此行
+    - derive/(?<=[a-z])yf(?=\d)/e/     # ㄜ、ㄩㄥ
     # - xform/(?<=[a-z])r(?=\d)/r/     # ㄡ；未作更動，故註解此行
-    - xform/(?<=[a-z])[uy]k(?=\d)/t/ # ㄨㄢ、ㄩㄢ
+    - xform/(?<=[a-z])[uy]k(?=\d)/t/   # ㄨㄢ、ㄩㄢ
     # 左手中排：ASDFG
     # - xform/(?<=[a-z])a(?=\d)/a/     # ㄚ；未作更動，故註解此行
     # - xform/(?<=[a-z])s(?=\d)/s/     # ㄠ；未作更動，故註解此行
@@ -181,13 +166,13 @@ speller: # 定義雙碼注音拼寫規則
     # - xform/(?<=[a-z])y(?=\d)/y/     # ㄩ；未作更動，故註解此行
     # - xform/(?<=[a-z])u(?=\d)/u/     # ㄨ；未作更動，故註解此行
     # - xform/(?<=[a-z])i(?=\d)/i/     # ㄧ；未作更動，故註解此行
-    - xform/(?<=[a-z])u?o(?=\d)/o/   # ㄛ、ㄨㄛ
-    - xform/(?<=[a-z])i[qe](?=\d)/p/ # ㄧㄝ
+    - xform/(?<=[a-z])u?o(?=\d)/o/     # ㄛ、ㄨㄛ
+    - xform/(?<=[a-z])i[qe](?=\d)/p/   # ㄧㄝ
     # 右手中排：HJKL;
     # - xform/(?<=[a-z])h(?=\d)/h/     # ㄞ；未作更動，故註解此行
     # - xform/(?<=[a-z])j(?=\d)/j/     # ㄤ；未作更動，故註解此行
     # - xform/(?<=[a-z])k(?=\d)/k/     # ㄢ；未作更動，故註解此行
-    - xform/(?<=[a-z])[uy]f(?=\d)/l/ # ㄨㄥ、ㄩㄥ
+    - xform/(?<=[a-z])[uy]f(?=\d)/l/   # ㄨㄥ、ㄩㄥ
       # 本方案不佔用分號 #
     # 右手下排：NM,./
     - xform/(?<=[a-z])is(?=\d)/n/ # ㄧㄠ
@@ -210,8 +195,8 @@ speller: # 定義雙碼注音拼寫規則
     - derive/([A-Z])\d/$1/
     - derive/([a-z]{2})\d/$1/
   # 設定簡拼（abbrev）、略拼（fuzz）
-    # - abbrev/([a-z])[a-z]\d/$1/      # 需要簡拼者，移除註解。
-    # - abbrev/([a-z])[a-z](\d)/$1$2/  # 需要簡拼者，移除註解。
+    - abbrev/([a-z])[a-z]\d/$1/
+    - abbrev/([a-z])[a-z](\d)/$1$2/
 
 translator: # 定義主要翻譯器
   strict_spelling: true  # 影響 speller 中，fuzz運算的行爲。
@@ -220,17 +205,14 @@ translator: # 定義主要翻譯器
   prism: double_bopomo
   preedit_format:
   # 雙拼反運算到注音
-    # 反算聲調
-    - xform/([a-zA-Z]{1,2});a/$1_1/
-    - xform/([a-zA-Z]{1,2});s/$1_2/
-    - xform/([a-zA-Z]{1,2});d/$1_3/
-    - xform/([a-zA-Z]{1,2});f/$1_4/
-    - xform/([a-zA-Z]{1,2});/$1_5/
-    - xform/_//
-    #
+    - xform/([a-zA-Z]{1,2});a/${1}1/
+    - xform/([a-zA-Z]{1,2});s/${1}2/
+    - xform/([a-zA-Z]{1,2});d/${1}3/
+    - xform/([a-zA-Z]{1,2});f/${1}4/
+    - xform/([a-zA-Z]{1,2});/${1}5/
     - xform/(?<=[jqx])[kt]/YK/   # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
     - xform/(?<=[jqx])[dz]/YD/   # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
-    - xform/(?<=[jqx])[fl]/YF/   # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
+    - xform/(?<=[jqx])[fle]/YF/  # ㄐㄑㄒ + ㄥ／ㄜ = ㄐㄑㄒ + ㄩㄥ（ㄧ工）
     - xform/(?<=[jqx])[ax]/IA/   # ㄐㄑㄒ + ㄚ = ㄐㄑㄒ + ㄧㄚ
     - xform/(?<=[jqx])[sn]/IS/   # ㄐㄑㄒ + ㄠ = ㄐㄑㄒ + ㄧㄠ
     - xform/(?<=[jqx])[rb]/IR/   # ㄐㄑㄒ + ㄡ = ㄐㄑㄒ + ㄧㄡ
@@ -238,56 +220,47 @@ translator: # 定義主要翻譯器
     - xform/(?<=f)t/YK/     # ㄒㄩㄢ
     - xform/(?<=f)z/YD/     # ㄒㄩㄣ
     - xform/(?<=f)c/IJ/     # ㄒㄧㄤ
-    - xform/(?<=f)l/YF/     # ㄒㄩㄥ
+    - xform/(?<=f)[le]/YF/  # ㄒㄩㄥ（ㄒㄧ工）
     - xform/(?<=[iy])e/Q/   # ㄝ
     - xform/(?<=[eiy])q/Q/  # ㄝ
     - xform/(?<=e)l/L/      # ㄦ
-    # 右下
     - xform/(?<=[a-z])n/IS/ # ㄧㄠ
     - xform/(?<=[a-z])m/IK/ # ㄧㄢ
-    # 右中
-    - xform/(?<=[a-z])h/H/   # ㄞ
-    - xform/(?<=[a-z])j/J/   # ㄤ
-    - xform/(?<=[a-z])k/K/   # ㄢ
-    - xform/(?<=[a-z])l/UF/  # ㄨㄥ
-    # 右下
-    - xform/(?<=[a-z])y/Y/   # ㄩ
-    - xform/(?<=[a-z])u/U/   # ㄨ
-    - xform/(?<=[a-z])i/I/   # ㄧ
-    - xform/(?<=[bpmfeiu])o/O/  # ㄨㄛ
-    - xform/(?<=[a-z])o/UO/  # ㄛ
-    - xform/(?<=[a-z])p/IQ/  # ㄧㄝ
-    #
-    - xform/(?<=[a-z])z/UD/   # ㄨㄣ
-    - xform/(?<=[pfdln])x/IA/ # ㄧㄚ
-    - xform/(?<=[a-z])x/UA/   # ㄨㄚ
-    - xform/(?<=[nl])c/IJ/    # ㄋㄧㄤ、ㄌㄧㄤ
-    - xform/(?<=[a-z])c/UJ/   # ㄨㄤ
+    - xform/(?<=[a-z])h/H/  # ㄞ
+    - xform/(?<=[a-z])j/J/  # ㄤ
+    - xform/(?<=[a-z])k/K/  # ㄢ
+    - xform/(?<=[a-z])l/UF/ # ㄨㄥ（工）
+    - xform/(?<=[a-z])y/Y/     # ㄩ
+    - xform/(?<=[a-z])u/U/     # ㄨ
+    - xform/(?<=[a-z])i/I/     # ㄧ
+    - xform/(?<=[bpmfeiu])o/O/ # ㄛ  
+    - xform/(?<=[a-z])o/UO/    # ㄨㄛ
+    - xform/(?<=[a-z])p/IQ/    # ㄧㄝ
+    - xform/(?<=[a-z])z/UD/    # ㄨㄣ
+    - xform/(?<=[pfdln])x/IA/  # ㄧㄚ
+    - xform/(?<=[a-z])x/UA/    # ㄨㄚ
+    - xform/(?<=[nl])c/IJ/     # ㄋㄧㄤ、ㄌㄧㄤ
+    - xform/(?<=[a-z])c/UJ/    # ㄨㄤ
     - xform/(?<=[dtgkhavorzcsw])v/UW/ # ㄨㄟ
-    - xform/(?<=[a-z])v/ID/   # ㄧㄣ
-    - xform/(?<=[a-z])b/IR/   # ㄧㄡ
-    #
+    - xform/(?<=[a-z])v/ID/    # ㄧㄣ
+    - xform/(?<=[a-z])b/IR/    # ㄧㄡ
     - xform/(?<=[a-z])a/A/     # ㄚ
     - xform/(?<=[a-z])s/S/     # ㄠ
     - xform/(?<=[a-z])d/D/     # ㄣ
     - xform/(?<=[a-z])f/F/     # ㄥ
     - xform/(?<=[gkhavo])g/UH/ # ㄨㄞ
     - xform/(?<=[a-z])g/IF/    # ㄧㄥ
-    #
     - xform/(?<=[a-z])q/YQ/    # ㄩㄝ
     - xform/(?<=[a-z])w/W/     # ㄟ
     - xform/(?<=[a-z])e/E/     # ㄜ
     - xform/(?<=[a-z])r/R/     # ㄡ
     - xform/(?<=[a-z])t/UK/    # ㄨㄢ
-    #
     - xform/f(?=[IY])/x/
-    # - xform/([ '])[ ']+/$1/
     - xform/(?<=[bpmfdtnlgkhjqxavorzcsiuy])$/◌/
     - xform/(?<=[avorzcsw])I$/😬/
     - xform/(?<=[avorzcsw])I//
     - xlit/bpmfdtnlgkhjqxavorzcseiuyw/ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ◌ㄧㄨㄩㄗ/
-    - xlit/IUYAOEQHWSRKDJFL 12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ　ˉˊˇˋ˙/
-    # - xform/◌◌$/◌/
+    - xlit/IUYAOEQHWSRKDJFL 12345/ㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ␣ˉˊˇˋ˙/
     - xform/◌(?!$)//
 
 abbreviation: # 定義強制【縮寫注音】模式（簡拼模式）
@@ -353,48 +326,48 @@ reverse_lookup: # 定義用倉頡查詢雙碼注音
     - xform/([iü])e/$1Q/
     - xlit/AVO/avo/  # 聲母一律小寫
     - xform/ü/y/     # `Y鍵`輸入ü
-    - xlit/QHWSRKDJFL/qhwsrkdjfl/  # 韻母也一律小寫
+    - xlit/QHWSRKDJFL/qhwsrkdjfl/      # 韻母也一律小寫
     - xform/(^| )(?=[iuyaoeqhwsrkdjfl]\d)/$1e/
-    - xform/(^| )x(?=[iy])/$1f/           # ㄈㄒ共用`F鍵`
-    - xform/(^| )z([a-z]*[1-5])/$1w$2/    # `W鍵`也可以輸入ㄗ
-    - xform/(?<=[eiy])q(?=\d)/e/     # ㄝㄜ共用`E鍵`
-    - xform/(?<=[a-z])y[qe](?=\d)/q/ # ㄩㄝ
-    - xform/(?<=[a-z])[uy]k(?=\d)/t/ # ㄨㄢ、ㄩㄢ
+    - xform/(^| )x(?=[iy])/$1f/        # ㄈㄒ共用`F鍵`
+    - xform/(^| )z([a-z]*[1-5])/$1w$2/ # `W鍵`也可以輸入ㄗ
+    - xform/(?<=[eiy])q(?=\d)/e/       # ㄝㄜ共用`E鍵`
+    - xform/(?<=[a-z])y[qe](?=\d)/q/   # ㄩㄝ
+    - xform/(?<=[a-z])[uy]k(?=\d)/t/   # ㄨㄢ、ㄩㄢ
     - xform/(?<=[a-z])(if|uh)(?=\d)/g/ # ㄧㄥ、ㄨㄞ
     - xform/(?<=[a-z])[uy]d(?=\d)/z/   # ㄨㄣ、ㄩㄣ
     - xform/(?<=[a-z])[iu]a(?=\d)/x/   # ㄧㄚ、ㄨㄚ
     - xform/(?<=[a-z])[iu]j(?=\d)/c/   # ㄧㄤ、ㄨㄤ
     - xform/(?<=[a-z])(id|uw)(?=\d)/v/ # ㄧㄣ、ㄨㄟ
     - xform/(?<=[a-z])ir(?=\d)/b/      # ㄧㄡ
-    - xform/(?<=[a-z])u?o(?=\d)/o/   # ㄛ、ㄨㄛ
-    - xform/(?<=[a-z])i[qe](?=\d)/p/ # ㄧㄝ
-    - xform/(?<=[a-z])[uy]f(?=\d)/l/ # ㄨㄥ、ㄩㄥ
-    - xform/(?<=[a-z])is(?=\d)/n/ # ㄧㄠ
-    - xform/(?<=[a-z])ik(?=\d)/m/ # ㄧㄢ
-    - xform/(?<=[jqx])t/k/  # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
-    - xform/(?<=[jqx])z/d/  # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
-    - xform/(?<=[jqx])l/f/  # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
+    - xform/(?<=[a-z])u?o(?=\d)/o/     # ㄛ、ㄨㄛ
+    - xform/(?<=[a-z])i[qe](?=\d)/p/   # ㄧㄝ
+    - xform/(?<=[a-z])[uy]f(?=\d)/l/   # ㄨㄥ、ㄩㄥ
+    - xform/(?<=[a-z])is(?=\d)/n/      # ㄧㄠ
+    - xform/(?<=[a-z])ik(?=\d)/m/      # ㄧㄢ
+    - xform/(?<=[jqx])t/k/      # ㄐㄑㄒ + ㄢ = ㄐㄑㄒ + ㄩㄢ
+    - xform/(?<=[jqx])z/d/      # ㄐㄑㄒ + ㄣ = ㄐㄑㄒ + ㄩㄣ
+    - xform/(?<=[jqx])l/f/      # ㄐㄑㄒ + ㄥ = ㄐㄑㄒ + ㄩㄥ
     # 到此，雙碼注音最佳指法 + 以數字表示的聲調
     # - xform/([a-zA-Z]{1,2})\d/$1 /  # 移除數字聲調；若註解此行，則提示輸入聲調時的按鍵（非數字）
     - xform/^([avorzcs])i(\d)/$1$2/ # ㄓㄔㄕㄖㄗㄘㄙ有聲調時，韻母可以省略
     - xform/^e([iuy]\d)/$1/         # 介音有聲調時，不需前綴零聲母
-    - xform/([a-zA-Z]{1,2})5/$1;g /
-    - xform/([a-zA-Z]{1,2})4/$1;f /
-    - xform/([a-zA-Z]{1,2})3/$1;d /
+    - xform/([a-zA-Z]{1,2})1/$1;a /
     - xform/([a-zA-Z]{1,2})2/$1;s /
-    - xform/([a-zA-Z]{1,2})1/$1; /
+    - xform/([a-zA-Z]{1,2})3/$1;d /
+    - xform/([a-zA-Z]{1,2})4/$1;f /
+    - xform/([a-zA-Z]{1,2})5/$1; /
 
 # 設定OpenCC字體轉換
-t2tw: # 正繁轉換
+t2tw: # 正台轉換
   option_name: t2tw
   opencc_config: t2tw.json
   tips: char
 
-s2tw: # 簡繁轉換
+s2tw: # 簡台轉換
   option_name: s2tw
   opencc_config: s2tw.json
 
-tw2s: # 繁簡轉換
+tw2s: # 台簡轉換
   option_name: tw2s
   opencc_config: tw2s.json
   tips: all
@@ -523,6 +496,12 @@ punctuator:
     '<' : [ '<', '《', '〈', '«', '‹' ]
     '>' : [ '>', '》', '〉', '»', '›' ]
     '$' : [ 'NT$', '$', '€', '£', '¥', '¢', '¤' ]
+    "'" : [ "'",
+            "ㄐ𝕁 ㄑⓆ ㄒ𝔽 ¦ ㄓ𝔸 ㄔ𝕍 ㄕ𝕆 ㄖℝ ¦ ㄗ𝕎 ㄘℂ ㄙ𝕊 ¦ 𝟎𝔼 ㄧ𝕀 ㄨ𝕌 ㄩ𝕐 😬𝕀",
+            "ㄚ𝔸 ㄛ𝕆 ㄜ𝔼 ㄝ𝔼ℚ ¦ ㄞℍ ㄟ𝕎 ㄠ𝕊 ㄡℝ ¦ ㄢ𝕂 ㄣ𝔻 ㄤ𝕁 ㄥ𝔽 ¦ ㄦ𝕃",
+            "ㄧㄚ𝕏 ㄧㄝℙ ¦ ㄧㄠℕ ㄧㄡ𝔹 ¦ ㄧㄢ𝕄 ㄧㄣ𝕍 ㄧㄤℂ ㄧㄥ𝔾 ¦¦ ㄩㄝℚ ㄩㄢ𝕋",
+            "ㄨㄚ𝕏 ㄨㄛ𝕆 ¦ ㄨㄞ𝔾 ㄨㄟ𝕍 ¦ ㄨㄢ𝕋 ㄨㄣℤ ㄨㄤℂ ㄨㄥ𝕃 ¦¦ ㄩㄣℤ ㄩㄥ𝕃" ]
+            # ㄅ𝔹ㄆℙㄇ𝕄ㄈ𝔽 ㄉ𝔻ㄊ𝕋ㄋℕㄌ𝕃 ㄍ𝔾ㄎ𝕂ㄏℍ
  #使用雙碼注音首字母縮寫，而非漢語拼音
   symbols:
   #符號、電腦
