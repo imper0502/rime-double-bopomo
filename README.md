@@ -4,7 +4,7 @@
   按鍵定位類似漢語拼音、通用拼音，但是拼音規則為注音的拼音規則。
 
 ## 鍵位圖
-  ![KB layout](https://i.imgur.com/ILvyrbM.jpg)
+  ![KB layout](https://i.imgur.com/fXLonhD.jpg)
   按下【'】鍵，可以查詢佈局。 
 
 ## 說明
