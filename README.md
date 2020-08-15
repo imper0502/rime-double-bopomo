@@ -1,4 +1,4 @@
-# 雙碼注音
+# 雙碼注音輸入法
 
   給**注音**使用者的雙拼輸入法。學習高效率的雙拼輸入法之前不再需要額外學習漢語拼音。
   按鍵定位類似漢語拼音、通用拼音，但是拼音規則為注音的拼音規則。
@@ -8,14 +8,13 @@
   按下【'】鍵，可以查詢佈局。 
 
 ## 說明
-  目前，這是一個 Rime 輸入法引擎與 cin 碼表的輸入方案，需要安裝以下任何一款 Rime 輸入法（推薦）或其他可讀 cin 碼表的輸入法，方可使用：
+  這是一個符合 Rime 輸入法引擎格式的輸入方案，需要安裝以下任何一款 Rime 輸入法，方可使用：
   
-  > - 可被 Rime 輸入法引擎讀取的「Rime 雙碼注音輸入法實作」要用什麼授權我還要研究一下。  
-  看看是跟隨 rimelib(BSD-3-Clause), rime-terra-pinyin(LGPLv3), rime-double-pinyin(GPLv3)哪個方案
-  > - cin 檔的實作是 **MIT** 授權。之後會分到別的 Repo
+  > <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="創用 CC 授權條款" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />本著作【雙碼注音輸入法】係採用<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">創用 CC 姓名標示-相同方式分享 4.0 國際 授權條款</a>授權。
   
-  > - 雙碼注音歡迎各種不同的輸入法實作。請保留作者。
-  > - 雙碼注音的第一目標是【**普及率**】
+  > - 雙碼注音歡迎各種不同的輸入法實作。
+  > - 本「Rime 雙碼注音輸入法實作」採用 **LGPLv3** 授權。
+  > - 雙碼注音的第一目標是【**普及率**】。
   
   > - 雙碼注音是一種輸入法，不是檢字法。
   > - 不適合大量輸入人名這種需要*精確*定位到某個字的情況。
@@ -125,4 +124,4 @@
   
 ## 銘謝
   1. [Rime](https://rime.im/) 輸入法引擎開發者 [佛振](https://github.com/lotem) 先生及所有貢獻者。
-  2. [gugod](https://github.com/gugod) 協助刪除CIN檔重複的字詞.
+  2. [gugod](https://github.com/gugod) 協助刪除[CIN檔](https://github.com/imper0502/cin-double-bopomo)重複的字詞。
