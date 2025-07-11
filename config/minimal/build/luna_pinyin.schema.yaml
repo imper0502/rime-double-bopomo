@@ -1,0 +1,239 @@
+__build_info:
+  rime_version: 1.11.0
+alphabet:
+  closing_tips: "〔中文〕"
+  prefix: ":"
+  suffix: ";"
+  tag: alphabet
+  tips: "〔西文〕"
+cangjie:
+  closing_tips: "〔拼音〕"
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符～|"
+  dictionary: cangjie5
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
+  prefix: "C:"
+  suffix: ";"
+  tag: cangjie
+  tips: "〔倉頡〕"
+cangjie_lookup:
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz ~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符、～|"
+  dictionary: cangjie5
+  tags:
+    - pinyin
+engine:
+  filters:
+    - "reverse_lookup_filter@cangjie_lookup"
+    - "simplifier@zh_simp"
+    - "simplifier@zh_tw"
+    - uniquifier
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - "affix_segmentor@alphabet"
+    - "affix_segmentor@cangjie"
+    - "affix_segmentor@pinyin"
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    - script_translator
+    - "table_translator@cangjie"
+    - "script_translator@pinyin"
+key_binder:
+  bindings:
+    - {accept: "Control+p", send: Up, when: composing}
+    - {accept: "Control+n", send: Down, when: composing}
+    - {accept: "Control+b", send: Left, when: composing}
+    - {accept: "Control+f", send: Right, when: composing}
+    - {accept: "Control+a", send: Home, when: composing}
+    - {accept: "Control+e", send: End, when: composing}
+    - {accept: "Control+d", send: Delete, when: composing}
+    - {accept: "Control+k", send: "Shift+Delete", when: composing}
+    - {accept: "Control+g", send: Escape, when: composing}
+    - {accept: "Alt+v", send: Page_Up, when: composing}
+    - {accept: "Control+v", send: Page_Down, when: composing}
+    - {accept: ISO_Left_Tab, send: "Shift+Left", when: composing}
+    - {accept: "Shift+Tab", send: "Shift+Left", when: composing}
+    - {accept: Tab, send: "Shift+Right", when: composing}
+    - {accept: minus, send: Page_Up, when: paging}
+    - {accept: equal, send: Page_Down, when: has_menu}
+    - {accept: comma, send: Page_Up, when: paging}
+    - {accept: period, send: Page_Down, when: has_menu}
+    - {accept: comma, send: comma, when: predicting}
+    - {accept: period, send: period, when: predicting}
+    - {accept: "Control+Shift+1", select: .next, when: always}
+    - {accept: "Control+Shift+2", toggle: ascii_mode, when: always}
+    - {accept: "Control+Shift+3", toggle: full_shape, when: always}
+    - {accept: "Control+Shift+4", toggle: simplification, when: always}
+    - {accept: "Control+Shift+5", toggle: extended_charset, when: always}
+    - {accept: "Shift+space", toggle: full_shape, when: always}
+    - {accept: "Control+period", toggle: ascii_punct, when: always}
+  import_preset: default
+menu:
+  page_size: 5
+pinyin:
+  dictionary: luna_pinyin
+  enable_user_dict: false
+  preedit_format:
+    - "xform/([nl])v/$1ü/"
+  prefix: "P:"
+  suffix: ";"
+  tag: pinyin
+  tips: "〔拼音〕"
+punctuator:
+  full_shape:
+    " ": {commit: "　"}
+    "!": {commit: "！"}
+    "\"": {pair: ["“", "”"]}
+    "#": ["＃", "⌘"]
+    "$": ["￥", "$", "€", "£", "¥", "¢", "¤"]
+    "%": ["％", "°", "℃"]
+    "&": "＆"
+    "'": {pair: ["‘", "’"]}
+    "(": "（"
+    ")": "）"
+    "*": ["＊", "・", "·", "×", "※", "❂"]
+    "+": "＋"
+    ",": {commit: "，"}
+    "-": "－"
+    .: {commit: "。"}
+    "/": ["／", "÷"]
+    ":": {commit: "："}
+    ";": {commit: "；"}
+    "<": ["《", "〈", "«", "‹"]
+    "=": "＝"
+    ">": ["》", "〉", "»", "›"]
+    "?": {commit: "？"}
+    "@": ["＠", "☯"]
+    "[": ["「", "【", "〔", "［"]
+    "\\": ["、", "＼"]
+    "]": ["」", "】", "〕", "］"]
+    "^": {commit: "……"}
+    _: "——"
+    "`": "｀"
+    "{": ["『", "〖", "｛"]
+    "|": ["・", "｜", "§", "¦"]
+    "}": ["』", "〗", "｝"]
+    "~": ["〜", "～", "〰"]
+  half_shape:
+    "!": {commit: "！"}
+    "\"": {pair: ["“", "”"]}
+    "#": "#"
+    "$": ["￥", "$", "€", "£", "¥", "¢", "¤"]
+    "%": ["%", "％", "°", "℃"]
+    "&": "&"
+    "'": {pair: ["‘", "’"]}
+    "(": "（"
+    ")": "）"
+    "*": ["*", "＊", "・", "·", "×", "※", "❂"]
+    "+": "+"
+    ",": {commit: "，"}
+    "-": "-"
+    .: {commit: "。"}
+    "/": ["、", "/", "／", "÷"]
+    ":": {commit: "："}
+    ";": {commit: "；"}
+    "<": ["《", "〈", "«", "‹"]
+    "=": "="
+    ">": ["》", "〉", "»", "›"]
+    "?": {commit: "？"}
+    "@": "@"
+    "[": ["「", "【", "〔", "［"]
+    "\\": ["、", "\\", "＼"]
+    "]": ["」", "】", "〕", "］"]
+    "^": {commit: "……"}
+    _: "——"
+    "`": "`"
+    "{": ["『", "〖", "｛"]
+    "|": ["・", "|", "｜", "§", "¦"]
+    "}": ["』", "〗", "｝"]
+    "~": ["~", "〜", "～", "〰"]
+  import_preset: default
+recognizer:
+  import_preset: default
+  patterns:
+    alphabet: "(?<![A-Z]):[^;]*;?$"
+    cangjie: "C:[a-z']*;?$"
+    email: "^[a-z][-_.0-9a-z]*@.*$"
+    pinyin: "P:[a-z']*;?$"
+    reverse_lookup: "`[a-z]*'?$"
+    uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+    url: "^(www[.]|https?:|ftp:|mailto:).*$|^[a-z]+[.].+$"
+reverse_lookup:
+  comment_format:
+    - "xform/([nl])v/$1ü/"
+  dictionary: cangjie5
+  enable_completion: true
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
+  prefix: "`"
+  suffix: "'"
+  tips: "〔倉頡〕"
+schema:
+  author:
+    - "佛振 <chen.sst@gmail.com>"
+  description: |
+    Rime 預設的拼音輸入方案。
+    參考以下作品而創作：
+      * CC-CEDICT
+      * Android open source project
+      * Chewing - 新酷音
+      * opencc - 開放中文轉換
+
+  name: "朙月拼音"
+  schema_id: luna_pinyin
+  version: 0.15.test
+speller:
+  algebra:
+    - "erase/^xx$/"
+    - "abbrev/^([a-z]).+$/$1/"
+    - "abbrev/^([zcs]h).+$/$1/"
+    - "derive/^([nl])ve$/$1ue/"
+    - "derive/^([jqxy])u/$1v/"
+    - "derive/un$/uen/"
+    - "derive/ui$/uei/"
+    - "derive/iu$/iou/"
+    - "derive/([aeiou])ng$/$1gn/"
+    - "derive/([dtngkhrzcs])o(u|ng)$/$1o/"
+    - "derive/ong$/on/"
+    - "derive/ao$/oa/"
+    - "derive/([iu])a(o|ng?)$/a$1$2/"
+  alphabet: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " '"
+switches:
+  - abbrev: ["中", "Ａ"]
+    name: ascii_mode
+    reset: 0
+    states: ["中文", ABC]
+  - name: full_shape
+    states: ["半寬文字", "全寬文字"]
+  - abbrev: ["繁", "简", "港", "臺"]
+    options: [zh_trad, zh_simp, zh_hk, zh_tw]
+    states: ["傳統漢字", "简化字", "香港字形", "臺灣字形"]
+  - abbrev: ["。", "．"]
+    name: ascii_punct
+    states: ["中文標點", "西文標點"]
+translator:
+  dictionary: luna_pinyin
+  preedit_format:
+    - "xform/([nljqxy])v/$1ü/"
+zh_simp:
+  option_name: zh_simp
+  tips: all
+zh_tw:
+  opencc_config: t2tw.json
+  option_name: zh_tw
